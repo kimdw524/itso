@@ -1,0 +1,32 @@
+export const typography = {
+  size: {
+    xs: '0.75em',
+    sm: '0.875em',
+    md: '1em',
+    lg: '1.125em',
+    xl: '1.25em',
+    '2xl': '1.5em',
+    '3xl': '1.875em',
+    '4xl': '2.25em',
+    '5xl': '3em',
+    '1rem': '1rem',
+  },
+  weight: {
+    thin: '100',
+    extraLight: '200',
+    light: '300',
+    normal: '400',
+    medium: '500',
+    semiBold: '600',
+    bold: '700',
+    extraBold: '800',
+    black: '900',
+  },
+  lineHeight: {
+    xs: 1,
+    sm: 1.25,
+    md: 1.5,
+    lg: 1.75,
+    xl: 2,
+  },
+} as const;
