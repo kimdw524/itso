@@ -1,0 +1,15 @@
+{
+  "name": "@repo/postcss-hover-fallback",
+  "version": "1.0.0",
+  "description": "This plugin automatically generates hover media queries for mobile environments.",
+  "main": "index.js",
+  "keywords": [
+    "postcss",
+    "postcss-plugin"
+  ],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "postcss": "^8.1.4"
+  }
+}
