@@ -15,7 +15,10 @@ export class CrawlerService {
     await Promise.all(
       GREETING_LIST.map(async (company) =>
         result.push(
-          ...(await this.greetingCrawler.getJobPostings(company.url)),
+          ...(await this.greetingCrawler.getJobPostings(
+            company.name,
+            company.url,
+          )),
         ),
       ),
     );

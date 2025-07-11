@@ -5,6 +5,7 @@ export interface JobPosting {
   job: string;
   dueDate: string | null;
   link: string;
+  company: string;
 }
 
 export interface JobPostingDetail {
@@ -13,6 +14,6 @@ export interface JobPostingDetail {
 }
 
 export interface Crawler {
-  getJobPostings(url: string): Promise<JobPosting[]>;
+  getJobPostings(company: string, url: string): Promise<JobPosting[]>;
   getJobPostingDetail(url: string): Promise<JobPostingDetail>;
 }

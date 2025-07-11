@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { removeHTMLAttributes, stripHTML } from 'src/utils/parser';
-
+import { removeHTMLAttributes, stripHTML } from '../../utils/parser';
 import { Crawler, JobPosting, JobPostingDetail } from '../crawler.interface';
 
 const headers = {
@@ -35,7 +34,7 @@ interface GreetingPostingsResponse {
 
 @Injectable()
 export class GreetingCrawler implements Crawler {
-  async getJobPostings(url: string): Promise<JobPosting[]> {
+  async getJobPostings(company: string, url: string): Promise<JobPosting[]> {
     const result = await fetch(url, {
       headers,
       method: 'GET',
@@ -51,17 +50,15 @@ export class GreetingCrawler implements Crawler {
       (query) => (JSON.parse(query.queryHash) as string[])[0] === 'openings',
     )!.state.data;
 
-    return postings.map(
-      (posting) =>
-        ({
-          postingId: String(posting.openingId),
-          job: posting.job,
-          title: posting.title,
-          openDate: posting.openDate,
-          dueDate: posting.dueDate,
-          link: `https://${url.split('/')[2]}/ko/o/${posting.openingId}`,
-        }) as JobPosting,
-    );
+    return postings.map((posting) => ({
+      postingId: String(posting.openingId),
+      job: posting.job,
+      title: posting.title,
+      openDate: posting.openDate,
+      dueDate: posting.dueDate,
+      link: `https://${url.split('/')[2]}/ko/o/${posting.openingId}`,
+      company,
+    }));
   }
 
   async getJobPostingDetail(url: string): Promise<JobPostingDetail> {

@@ -8,7 +8,8 @@ describe('그리팅 크롤러', () => {
     GREETING_LIST.map((company) => {
       it(`${company.name}에 1개 이상의 공고가 존재한다.`, async () => {
         expect(
-          (await greetingCrawler.getJobPostings(company.url)).length,
+          (await greetingCrawler.getJobPostings(company.name, company.url))
+            .length,
         ).toBeGreaterThanOrEqual(1);
       });
     });
