@@ -1,3 +1,5 @@
+import { EMPLOYMENT_TYPE } from '@/constats/job';
+
 export interface JobPosting {
   title: string;
   postingId: string;
@@ -11,6 +13,9 @@ export interface JobPosting {
 export interface JobPostingDetail {
   html: string;
   textForLLM: string;
+  minExperience: number | null;
+  maxExperience: number | null;
+  employmentType: (typeof EMPLOYMENT_TYPE)[keyof typeof EMPLOYMENT_TYPE];
 }
 
 export interface Crawler {

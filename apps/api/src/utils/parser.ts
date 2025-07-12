@@ -2,6 +2,10 @@ import serialize from 'dom-serializer';
 import { Element, Node } from 'domhandler';
 import { DomHandler, ElementType, Parser } from 'htmlparser2';
 
+export const sanitizeText = (text: string): string => {
+  return text.replace(/[-._ ]/g, '').toLowerCase();
+};
+
 export const stripHTML = (html: string): string => {
   return html
     .replace(/<[^>]*>/g, ' ')

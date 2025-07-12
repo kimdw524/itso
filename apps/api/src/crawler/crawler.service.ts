@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { GREETING_LIST } from 'src/constats/greeting';
 
-import { JobPosting } from './crawler.interface';
+import { JobPosting, JobPostingDetail } from './crawler.interface';
 import { GreetingCrawler } from './crawlers/greeting.crawler';
 
 @Injectable()
@@ -32,5 +32,9 @@ export class CrawlerService {
     result.push(...(await this.getGreetingJobPostings()));
 
     return result;
+  }
+
+  async getJobPostingDetail(url: string): Promise<JobPostingDetail> {
+    return await this.greetingCrawler.getJobPostingDetail(url);
   }
 }
