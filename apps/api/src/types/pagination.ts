@@ -5,3 +5,9 @@ export interface PaginatedResponse<T> {
   total: number;
   totalPages: number;
 }
+
+export interface CursorPaginatedResponse<T> {
+  data: T[];
+  nextCursor: number | null;
+  hasNext: boolean;
+}

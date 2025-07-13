@@ -29,8 +29,8 @@ export class JobPostingFilterDto {
 
   @IsOptional()
   @Type(() => Number)
-  @Min(1)
-  page?: number;
+  @Min(0)
+  cursor?: number;
 
   @IsOptional()
   @Type(() => Number)

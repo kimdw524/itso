@@ -6,12 +6,13 @@ import {
   FindOptionsWhere,
   ILike,
   In,
+  LessThan,
   LessThanOrEqual,
   MoreThanOrEqual,
   Repository,
 } from 'typeorm';
 
-import { PaginatedResponse } from '@/types/pagination';
+import { CursorPaginatedResponse, PaginatedResponse } from '@/types/pagination';
 
 import { JobPostingFilterDto, JobPostingSummaryDto } from './dto';
 import { JobPosting } from './job-posting.entity';
@@ -38,7 +39,7 @@ export class JobPostingService {
 
   async getFilteredPostings(
     filter: JobPostingFilterDto,
-  ): Promise<PaginatedResponse<JobPostingSummaryDto>> {
+  ): Promise<CursorPaginatedResponse<JobPostingSummaryDto>> {
     const {
       companyId,
       title,
@@ -46,7 +47,7 @@ export class JobPostingService {
       minExperience,
       maxExperience,
       employmentType,
-      page = 1,
+      cursor,
       limit = 20,
     } = filter;
 
@@ -76,19 +77,24 @@ export class JobPostingService {
       where.employmentType = employmentType;
     }
 
-    const [data, total] = await this.jobPostingRepo.findAndCount({
+    if (cursor !== undefined) {
+      where.id = LessThan(cursor);
+    }
+
+    const [data] = await this.jobPostingRepo.findAndCount({
       where,
       order: { id: 'DESC' },
-      skip: (page - 1) * limit,
-      take: limit,
+      take: limit + 1,
     });
 
+    const hasNext = data.length > limit;
+    const slicedData = hasNext ? data.slice(0, limit) : data;
+    const nextCursor = hasNext ? slicedData[slicedData.length - 1].id : null;
+
     return {
-      data: plainToInstance(JobPostingSummaryDto, data),
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
+      data: plainToInstance(JobPostingSummaryDto, slicedData),
+      nextCursor,
+      hasNext,
     };
   }
 }
