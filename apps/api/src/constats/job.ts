@@ -20,7 +20,7 @@ export const JOB_ID = {
 } as const;
 
 // 소문자 기준으로 키워드를 찾으며, [' ', '.', '-', '_']는 무시된다.
-export const JOB_KEYWORD: Record<keyof typeof JOB_ID, string[]> = {
+export const JOB_KEYWORD = {
   Frontend: [
     'frontend',
     'react',
@@ -127,7 +127,7 @@ export const JOB_KEYWORD: Record<keyof typeof JOB_ID, string[]> = {
     '클라이언트',
     '테크',
   ],
-};
+} satisfies Record<keyof typeof JOB_ID, string[]>;
 
 export const EMPLOYMENT_TYPE = {
   FULL_TIME: 1,
