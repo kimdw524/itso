@@ -44,8 +44,8 @@ export class GreetingCrawler implements Crawler {
   }
 
   static getExperience(text: string | undefined): {
-    min: number | null;
-    max: number | null;
+    min: number;
+    max: number;
   } {
     try {
       switch (text) {
@@ -53,12 +53,12 @@ export class GreetingCrawler implements Crawler {
           return { min: 0, max: 0 };
         case '경력 무관':
         case undefined:
-          return { min: null, max: null };
+          return { min: 0, max: 99 };
         default: {
           if (text.slice(-2) === '이상') {
             return {
               min: Number(text.split('경력 ')[1].split('년')[0]),
-              max: null,
+              max: 99,
             };
           }
 
@@ -70,8 +70,8 @@ export class GreetingCrawler implements Crawler {
       }
     } catch (_) {
       return {
-        min: null,
-        max: null,
+        min: 0,
+        max: 99,
       };
     }
   }

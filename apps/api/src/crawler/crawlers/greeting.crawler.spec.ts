@@ -23,8 +23,8 @@ describe('그리팅 크롤러', () => {
     });
 
     expect(GreetingCrawler.getExperience('경력 무관')).toEqual({
-      min: null,
-      max: null,
+      min: 0,
+      max: 99,
     });
 
     expect(GreetingCrawler.getExperience('경력 1~5년')).toEqual({

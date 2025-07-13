@@ -70,8 +70,8 @@ export class JobCrawlerTask {
           dueDate: post.dueDate === null ? undefined : new Date(post.dueDate),
           description: detail.html,
           employmentType: detail.employmentType,
-          minExperience: detail.minExperience ?? undefined,
-          maxExperience: detail.maxExperience ?? undefined,
+          minExperience: detail.minExperience,
+          maxExperience: detail.maxExperience,
         });
       })();
     }
