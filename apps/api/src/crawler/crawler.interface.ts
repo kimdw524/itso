@@ -13,8 +13,8 @@ export interface JobPosting {
 export interface JobPostingDetail {
   html: string;
   textForLLM: string;
-  minExperience: number | null;
-  maxExperience: number | null;
+  minExperience: number;
+  maxExperience: number;
   employmentType: (typeof EMPLOYMENT_TYPE)[keyof typeof EMPLOYMENT_TYPE];
 }
 

@@ -33,11 +33,11 @@ export class JobPosting {
   @Column({ name: 'views', default: 0 })
   views: number;
 
-  @Column({ name: 'min_experience', type: 'tinyint', nullable: true })
-  minExperience?: number;
+  @Column({ name: 'min_experience', type: 'tinyint' })
+  minExperience: number;
 
-  @Column({ name: 'max_experience', type: 'tinyint', nullable: true })
-  maxExperience?: number;
+  @Column({ name: 'max_experience', type: 'tinyint' })
+  maxExperience: number;
 
   @Column({ name: 'employment_type', type: 'tinyint' })
   employmentType: number;
