@@ -2,17 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { plainToInstance } from 'class-transformer';
-import {
-  FindOptionsWhere,
-  ILike,
-  In,
-  LessThan,
-  LessThanOrEqual,
-  MoreThanOrEqual,
-  Repository,
-} from 'typeorm';
+import { Repository } from 'typeorm';
 
-import { CursorPaginatedResponse, PaginatedResponse } from '@/types/pagination';
+import { CursorPaginatedResponse } from '@/types/pagination';
 
 import { JobPostingFilterDto, JobPostingSummaryDto } from './dto';
 import { JobPosting } from './job-posting.entity';
@@ -51,42 +43,44 @@ export class JobPostingService {
       limit = 20,
     } = filter;
 
-    const where: FindOptionsWhere<JobPosting> = {};
+    const qb = this.jobPostingRepo
+      .createQueryBuilder('posting')
+      .leftJoin('posting.company', 'company')
+      .addSelect(['company.id', 'company.name', 'company.logo'])
+      .orderBy('posting.id', 'DESC')
+      .take(limit + 1);
 
     if (companyId !== undefined) {
-      where.companyId = companyId;
+      qb.andWhere('company.id = :companyId', { companyId });
     }
 
     if (title) {
-      where.title = ILike(`%${title}%`);
+      qb.andWhere('posting.title ILIKE :title', { title: `%${title}%` });
     }
 
-    if (jobIds && jobIds.length > 0) {
-      where.jobId = In(jobIds);
+    if (jobIds?.length) {
+      qb.andWhere('posting.jobId IN (:...jobIds)', { jobIds });
     }
 
     if (minExperience !== undefined) {
-      where.minExperience = MoreThanOrEqual(minExperience);
+      qb.andWhere('posting.minExperience >= :minExperience', { minExperience });
     }
 
     if (maxExperience !== undefined) {
-      where.maxExperience = LessThanOrEqual(maxExperience);
+      qb.andWhere('posting.maxExperience <= :maxExperience', { maxExperience });
     }
 
     if (employmentType !== undefined) {
-      where.employmentType = employmentType;
+      qb.andWhere('posting.employmentType = :employmentType', {
+        employmentType,
+      });
     }
 
     if (cursor !== undefined) {
-      where.id = LessThan(cursor);
+      qb.andWhere('posting.id < :cursor', { cursor });
     }
 
-    const [data] = await this.jobPostingRepo.findAndCount({
-      where,
-      order: { id: 'DESC' },
-      take: limit + 1,
-    });
-
+    const data = await qb.getMany();
     const hasNext = data.length > limit;
     const slicedData = hasNext ? data.slice(0, limit) : data;
     const nextCursor = hasNext ? slicedData[slicedData.length - 1].id : null;
