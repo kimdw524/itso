@@ -21,4 +21,5 @@ export interface JobPostingDetail {
 export interface Crawler {
   getJobPostings(company: string, url: string): Promise<JobPosting[]>;
   getJobPostingDetail(url: string): Promise<JobPostingDetail>;
+  getLogoImageURL(url: string): Promise<string>;
 }

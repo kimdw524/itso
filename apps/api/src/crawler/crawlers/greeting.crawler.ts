@@ -154,4 +154,18 @@ export class GreetingCrawler implements Crawler {
       employmentType,
     };
   }
+
+  async getLogoImageURL(url: string): Promise<string> {
+    const result = await fetch(url, {
+      headers,
+      method: 'GET',
+    });
+    const text = await result.text();
+
+    return (
+      text.split('logoUrl="')?.[1]?.split('"')?.[0] ||
+      text.split('alt="logo"')?.[1]?.split('src="')?.[1]?.split('"')?.[0] ||
+      ''
+    );
+  }
 }

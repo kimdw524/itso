@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { GREETING_LIST } from '@/constats/greeting';
+import { GreetingCrawler } from '@/crawler/crawlers/greeting.crawler';
 
 import { Company } from './company.entity';
 
@@ -28,9 +29,14 @@ export class CompanyService {
   }
 
   async syncCompany(): Promise<void> {
+    const greetingCrawler = new GreetingCrawler();
+
     for (const company of GREETING_LIST) {
       if ((await this.find({ name: company.name })) === null) {
-        await this.create({ name: company.name });
+        await this.create({
+          name: company.name,
+          logo: await greetingCrawler.getLogoImageURL(company.url),
+        });
       }
     }
 
