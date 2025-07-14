@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
-import { UIProvider } from '@repo/ui';
+import { Provider } from '@/components/Provider';
+import '@/styles/globalStyle.css';
 
 export const metadata: Metadata = {
   title: 'Itso',
@@ -15,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className="light">
-        <UIProvider>{children}</UIProvider>
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
