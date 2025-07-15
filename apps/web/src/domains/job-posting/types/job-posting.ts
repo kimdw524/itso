@@ -6,6 +6,8 @@ export type EmploymentType = keyof typeof JOB_POSTING.EMPLOYMENT_TYPE;
 
 export type JobId = keyof typeof JOB_POSTING.JOB_NAME;
 
+export type ExperienceType = 'ENTRY' | 'EXPERIENCED' | 'NO-MATTER';
+
 export interface JobPostingSummary {
   id: number;
   title: string;
