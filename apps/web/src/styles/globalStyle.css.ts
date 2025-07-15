@@ -16,5 +16,7 @@ globalStyle('body', {
 });
 
 globalStyle('main', {
-  overflow: 'auto',
+  margin: '0 auto',
+  width: '100%',
+  maxWidth: '1440px',
 });
