@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { UIProvider } from '@repo/ui';
 
+import { ThemeProvider } from './ThemeProvider';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -19,8 +21,10 @@ const queryClient = new QueryClient({
 
 export const Provider = ({ children }: { children: ReactNode }) => {
   return (
-    <UIProvider>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </UIProvider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <UIProvider>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      </UIProvider>
+    </ThemeProvider>
   );
 };

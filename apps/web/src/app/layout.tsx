@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
-import { Provider } from '@/components/Provider';
+import { Provider } from '@/contexts/Provider';
+import { NavBar } from '@/domains/layout/components/NavBar';
 import '@/styles/globalStyle.css';
 
 export const metadata: Metadata = {
@@ -15,8 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className="light">
-        <Provider>{children}</Provider>
+      <body>
+        <Provider>
+          <NavBar />
+          <main>{children}</main>
+        </Provider>
       </body>
     </html>
   );
