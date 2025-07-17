@@ -147,6 +147,20 @@ export const button = recipeWithLayer({
         },
       },
 
+      outlined: {
+        boxShadow: `inset 0 0 0 1px rgb(${backgroundVar})`,
+        backgroundColor: `rgb(${theme.color.background})`,
+        color: `rgb(${theme.color.foreground})`,
+
+        ':disabled': {
+          backgroundColor: `rgb(${theme.color.muted})`,
+
+          color: `rgb(${theme.color['muted-foreground']})`,
+
+          cursor: 'default',
+        },
+      },
+
       ghost: {
         background: 'transparent',
 
