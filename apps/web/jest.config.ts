@@ -22,7 +22,7 @@ const config: Config = {
 
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1', // <-- 이 부분 중요
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
 };
 
