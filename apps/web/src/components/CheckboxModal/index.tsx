@@ -10,12 +10,13 @@ import {
 } from '@repo/ui';
 import { useOverlay } from '@repo/utils';
 
-import { useCheckboxes, type CheckboxData } from '@/hooks/useCheckboxes';
+import { useCheckboxes } from '@/hooks/useCheckboxes';
 
 interface CheckboxModalProps<T>
-  extends Omit<ComponentProps<typeof Dialog>, 'onSelect'> {
+  extends Omit<ComponentProps<typeof Dialog>, 'onSelect' | 'defaultChecked'> {
   header: ReactNode;
-  items: CheckboxData<T>[] | (() => CheckboxData<T>[]);
+  items: T[];
+  defaultChecked: T[];
   renderChildren: (data: T) => ReactNode;
   onConfirm: (checked: T[]) => void;
 }
@@ -23,26 +24,23 @@ interface CheckboxModalProps<T>
 export const CheckboxModal = <T extends number | string>({
   header,
   items,
+  defaultChecked,
   renderChildren,
   onConfirm,
   ...rest
 }: CheckboxModalProps<T>) => {
   const { close } = useOverlay();
   const {
-    checkboxes,
+    checked,
     isAllChecked,
     isAllUnchecked,
     toggle,
     checkAll,
     uncheckAll,
-  } = useCheckboxes<T>(items);
+  } = useCheckboxes<T>(items, defaultChecked);
 
   const handleConfirmClick = () => {
-    onConfirm(
-      checkboxes
-        .filter((checkbox) => checkbox.checked)
-        .map((checkbox) => checkbox.name),
-    );
+    onConfirm(checked);
     close();
   };
 
@@ -51,16 +49,20 @@ export const CheckboxModal = <T extends number | string>({
       <DialogHeader onCloseClick={close}>{header}</DialogHeader>
       <DialogContent>
         <Box flex flexWrap="wrap" gap="md" padding="lg" rounded>
-          {checkboxes.map((checkbox) => (
-            <Button
-              key={checkbox.name}
-              variant={checkbox.checked ? 'contained' : 'outlined'}
-              color={checkbox.checked ? 'primary' : 'secondary'}
-              onClick={() => toggle(checkbox.name)}
-            >
-              {renderChildren(checkbox.name)}
-            </Button>
-          ))}
+          {items.map((name) => {
+            const isChecked = checked.includes(name);
+
+            return (
+              <Button
+                key={name}
+                variant={isChecked ? 'contained' : 'outlined'}
+                color={isChecked ? 'primary' : 'secondary'}
+                onClick={() => toggle(name)}
+              >
+                {renderChildren(name)}
+              </Button>
+            );
+          })}
         </Box>
       </DialogContent>
       <DialogFooter sx={{ display: 'flex', justifyContent: 'space-between' }}>

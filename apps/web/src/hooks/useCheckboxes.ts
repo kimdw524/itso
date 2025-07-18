@@ -1,61 +1,50 @@
 import { useCallback, useMemo, useState } from 'react';
 
-export interface CheckboxData<T> {
-  name: T;
-  checked: boolean;
-}
-
 export const useCheckboxes = <T>(
-  initialData: CheckboxData<T>[] | (() => CheckboxData<T>[]),
+  items: T[],
+  defaultChecked: T[],
 ): {
   isAllChecked: boolean;
   isAllUnchecked: boolean;
-  checkboxes: CheckboxData<T>[];
+  checked: T[];
   toggle: (name: T) => void;
   checkAll: () => void;
   uncheckAll: () => void;
 } => {
-  const [checkboxes, setCheckboxes] = useState<CheckboxData<T>[]>(initialData);
+  const [checked, setChecked] = useState<T[]>(defaultChecked);
 
-  const isAllChecked = useMemo(() => checkboxes.every((checkbox) => checkbox.checked), [checkboxes]);
-  const isAllUnchecked = useMemo(() => checkboxes.every((checkbox) => !checkbox.checked), [checkboxes]);
+  const isAllChecked = checked.length === items.length;
+  const isAllUnchecked = checked.length === 0;
 
   const toggle = useCallback((name: T) => {
-    setCheckboxes((checkboxes) =>
-      checkboxes.map((checkbox) => ({
-        ...checkbox,
-        checked: checkbox.name === name ? !checkbox.checked : checkbox.checked,
-      })),
-    );
+    setChecked((prev) => {
+      const index = prev.indexOf(name);
+
+      if (index === -1) {
+        return [...prev, name];
+      }
+
+      return prev.splice(index);
+    });
   }, []);
 
   const checkAll = useCallback(() => {
-    setCheckboxes((checkboxes) =>
-      checkboxes.map((checkbox) => ({
-        ...checkbox,
-        checked: true,
-      })),
-    );
-  }, []);
+    setChecked([...items]);
+  }, [items]);
 
   const uncheckAll = useCallback(() => {
-    setCheckboxes((checkboxes) =>
-      checkboxes.map((checkbox) => ({
-        ...checkbox,
-        checked: false,
-      })),
-    );
+    setChecked([]);
   }, []);
 
   return useMemo(
     () => ({
       isAllChecked,
       isAllUnchecked,
-      checkboxes,
+      checked,
       toggle,
       checkAll,
       uncheckAll,
     }),
-    [isAllChecked, isAllUnchecked, checkboxes, toggle, checkAll, uncheckAll],
+    [isAllChecked, isAllUnchecked, checked, toggle, checkAll, uncheckAll],
   );
 };

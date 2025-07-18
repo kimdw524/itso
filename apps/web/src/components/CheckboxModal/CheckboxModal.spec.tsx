@@ -2,17 +2,12 @@ import { ComponentProps } from 'react';
 
 import { fireEvent, screen } from '@testing-library/react';
 
-import { CheckboxData } from '@/hooks/useCheckboxes';
 import { renderWithProviders } from '@/test/utils';
 
 import { CheckboxModal } from '.';
 
 describe('CheckboxModal', () => {
-  const items: CheckboxData<string>[] = [
-    { name: '1번', checked: false },
-    { name: '2번', checked: false },
-    { name: '3번', checked: true },
-  ];
+  const items = ['1번', '2번', '3번'];
 
   const renderComponent = ({
     onConfirm,
@@ -23,6 +18,7 @@ describe('CheckboxModal', () => {
       <CheckboxModal
         header="header test"
         items={items}
+        defaultChecked={['1번', '3번']}
         renderChildren={(data) => `${data} 아이템`}
         onConfirm={onConfirm}
       />,
@@ -41,7 +37,7 @@ describe('CheckboxModal', () => {
     renderComponent({ onConfirm: handleConfirm });
 
     for (const item of items) {
-      expect(screen.getByText(`${item.name} 아이템`)).toBeInTheDocument();
+      expect(screen.getByText(`${item} 아이템`)).toBeInTheDocument();
     }
   });
 
