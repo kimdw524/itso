@@ -18,13 +18,13 @@ export const useCheckboxes = <T>(
 
   const toggle = useCallback((name: T) => {
     setChecked((prev) => {
-      const index = prev.indexOf(name);
+      const isExist = prev.includes(name);
 
-      if (index === -1) {
+      if (!isExist) {
         return [...prev, name];
       }
 
-      return prev.splice(index);
+      return prev.filter((item) => item !== name);
     });
   }, []);
 
