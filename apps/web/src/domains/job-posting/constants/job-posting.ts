@@ -1,3 +1,5 @@
+import { getKeys } from '@/utils/getKeys';
+
 const EMPLOYMENT_TYPE = {
   1: '정규직',
   2: '계약직',
@@ -34,3 +36,8 @@ export const JOB_POSTING = {
   JOB_NAME,
   LIST_LIMIT,
 };
+
+export const JOB_ID = getKeys(JOB_POSTING.JOB_NAME).map((jobId) => jobId);
+export const EMPLOYMENT_TYPE_KEY = getKeys(JOB_POSTING.EMPLOYMENT_TYPE).map(
+  (type) => type,
+);

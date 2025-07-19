@@ -23,7 +23,7 @@ interface JobPostingStatisticsProps {
 
 export const JobPostingStatistics = ({ jobPosting }: JobPostingStatisticsProps) => {
   return (
-    <Box flex justifyContent="space-between">
+    <Box flex justifyContent="flex-end" gap="lg">
       <Item icon={<EyeIcon />} value={<>{jobPosting.views}</>} />
       <Item icon={<StarIcon />} value={<>{jobPosting.views}</>} />
     </Box>
