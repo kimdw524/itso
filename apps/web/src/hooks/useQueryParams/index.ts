@@ -16,7 +16,7 @@ export const useQueryParams = <
 
   const setParam = useCallback(
     <K extends keyof Params>(key: K, value: Params[K] | undefined): void => {
-      params.current[key] = value;
+      params.current = { ...params.current, [key]: value };
     },
     [],
   );
@@ -27,6 +27,12 @@ export const useQueryParams = <
     },
     [],
   );
+
+  const removeParam = useCallback(<K extends keyof Params>(key: K): void => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { [key]: _, ...rest } = params.current;
+    params.current = rest as Partial<Params>;
+  }, []);
 
   const getParams = useCallback((): string => {
     const current = params.current;
@@ -54,10 +60,12 @@ export const useQueryParams = <
 
   return useMemo(
     () => ({
+      rawParams: params.current,
       setParam,
       getParam,
+      removeParam,
       getParams,
     }),
-    [setParam, getParam, getParams],
+    [setParam, getParam, removeParam, getParams],
   );
 };

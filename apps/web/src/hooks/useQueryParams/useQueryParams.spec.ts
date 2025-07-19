@@ -29,4 +29,18 @@ describe('useQueryParams', () => {
     expect(result.current.getParam('a')).toEqual(['1', '2']);
     expect(result.current.getParams()).toBe('a=1&a=2');
   });
+
+  it('removeParam으로 파라미터를 제거할 수 있다.', () => {
+    const { result } = renderHook(() =>
+      useQueryParams<{ a: string[]; b: string[] }>(),
+    );
+
+    result.current.setParam('a', ['1', '2']);
+    result.current.setParam('b', ['1', '2']);
+    expect(result.current.getParam('a')).toEqual(['1', '2']);
+
+    result.current.removeParam('a');
+    expect(result.current.getParam('a')).toBe(undefined);
+    expect(result.current.getParams()).toBe('b=1&b=2');
+  });
 });
