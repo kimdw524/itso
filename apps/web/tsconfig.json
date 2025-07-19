@@ -2,7 +2,7 @@
   "extends": "@repo/typescript-config/nextjs.json",
   "compilerOptions": {
     "lib": ["ESNext", "DOM"],
-    "verbatimModuleSyntax": false,
+    "verbatimModuleSyntax": true,
     "plugins": [
       {
         "name": "next"

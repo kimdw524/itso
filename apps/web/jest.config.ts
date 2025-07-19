@@ -1,6 +1,5 @@
-import type { Config } from 'jest';
-
-const config: Config = {
+/** @type {import('jest').Config} */
+const config = {
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
@@ -10,7 +9,12 @@ const config: Config = {
       '@swc/jest',
       {
         jsc: {
+          parser: {
+            syntax: 'typescript',
+            tsx: true,
+          },
           transform: {
+            verbatimModuleSyntax: false,
             react: {
               runtime: 'automatic',
             },
@@ -26,4 +30,4 @@ const config: Config = {
   },
 };
 
-export default config;
+module.exports = config;
