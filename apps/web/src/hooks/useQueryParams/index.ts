@@ -1,6 +1,15 @@
 import { useCallback, useMemo, useRef } from 'react';
 
-export const useQueryParams = <Params extends Record<string, unknown>>(
+export const useQueryParams = <
+  Params extends {
+    [K in keyof Params]:
+      | string
+      | number
+      | boolean
+      | (string | number | boolean)[]
+      | undefined;
+  },
+>(
   initialValue: Partial<Params> = {},
 ) => {
   const params = useRef<Partial<Params>>(initialValue);
@@ -13,7 +22,7 @@ export const useQueryParams = <Params extends Record<string, unknown>>(
   );
 
   const getParam = useCallback(
-    (key: keyof Params): Params[keyof Params] | undefined => {
+    <K extends keyof Params>(key: K): Params[K] | undefined => {
       return params.current[key];
     },
     [],
@@ -37,7 +46,7 @@ export const useQueryParams = <Params extends Record<string, unknown>>(
         continue;
       }
 
-      result.push(`${key}=${value}`);
+      result.push(`${key}=${encodeURIComponent(value)}`);
     }
 
     return result.join('&');
