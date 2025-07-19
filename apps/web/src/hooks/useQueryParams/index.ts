@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 export const useQueryParams = <
   Params extends {
@@ -12,34 +12,36 @@ export const useQueryParams = <
 >(
   initialValue: Partial<Params> = {},
 ) => {
-  const params = useRef<Partial<Params>>(initialValue);
+  const [params, setParams] = useState<Partial<Params>>(initialValue);
 
   const setParam = useCallback(
     <K extends keyof Params>(key: K, value: Params[K] | undefined): void => {
-      params.current = { ...params.current, [key]: value };
+      setParams((prev) => ({ ...prev, [key]: value }));
     },
     [],
   );
 
   const getParam = useCallback(
     <K extends keyof Params>(key: K): Params[K] | undefined => {
-      return params.current[key];
+      return params[key];
     },
-    [],
+    [params],
   );
 
   const removeParam = useCallback(<K extends keyof Params>(key: K): void => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [key]: _, ...rest } = params.current;
-    params.current = rest as Partial<Params>;
+    setParams((prev) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [key]: _, ...rest } = prev;
+
+      return rest as Partial<Params>;
+    });
   }, []);
 
   const getParams = useCallback((): string => {
-    const current = params.current;
     const result: string[] = [];
 
-    for (const key in current) {
-      const value = current[key];
+    for (const key in params) {
+      const value = params[key];
 
       if (value === undefined) {
         continue;
@@ -56,16 +58,16 @@ export const useQueryParams = <
     }
 
     return result.join('&');
-  }, []);
+  }, [params]);
 
   return useMemo(
     () => ({
-      rawParams: params.current,
+      rawParams: params,
       setParam,
       getParam,
       removeParam,
       getParams,
     }),
-    [setParam, getParam, removeParam, getParams],
+    [params, setParam, getParam, removeParam, getParams],
   );
 };

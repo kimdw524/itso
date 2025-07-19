@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 
 import { useQueryParams } from '.';
 
@@ -11,7 +11,9 @@ describe('useQueryParams', () => {
       }),
     );
 
-    result.current.setParam('a', undefined);
+    act(() => {
+      result.current.setParam('a', undefined);
+    });
 
     expect(result.current.getParam('a')).toBe(undefined);
     expect(result.current.getParam('b')).toBe(undefined);
@@ -24,7 +26,9 @@ describe('useQueryParams', () => {
       useQueryParams<{ a: string[]; b: string[] }>(),
     );
 
-    result.current.setParam('a', ['1', '2']);
+    act(() => {
+      result.current.setParam('a', ['1', '2']);
+    });
 
     expect(result.current.getParam('a')).toEqual(['1', '2']);
     expect(result.current.getParams()).toBe('a=1&a=2');
@@ -35,11 +39,15 @@ describe('useQueryParams', () => {
       useQueryParams<{ a: string[]; b: string[] }>(),
     );
 
-    result.current.setParam('a', ['1', '2']);
-    result.current.setParam('b', ['1', '2']);
+    act(() => {
+      result.current.setParam('a', ['1', '2']);
+      result.current.setParam('b', ['1', '2']);
+    });
     expect(result.current.getParam('a')).toEqual(['1', '2']);
 
-    result.current.removeParam('a');
+    act(() => {
+      result.current.removeParam('a');
+    });
     expect(result.current.getParam('a')).toBe(undefined);
     expect(result.current.getParams()).toBe('b=1&b=2');
   });
