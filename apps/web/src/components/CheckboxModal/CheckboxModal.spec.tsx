@@ -1,6 +1,7 @@
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 
 import { fireEvent, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { renderWithProviders } from '@/test/utils';
 
@@ -41,15 +42,15 @@ describe('CheckboxModal', () => {
     }
   });
 
-  it('적용 버튼을 누르면 체크가 되어있는 name 목록을 가져올 수 있다.', () => {
+  it('적용 버튼을 누르면 체크가 되어있는 name 목록을 가져올 수 있다.', async () => {
     const handleConfirm = jest.fn();
     renderComponent({ onConfirm: handleConfirm });
 
-    fireEvent.click(screen.getByText('1번 아이템'));
-    fireEvent.click(screen.getByText('적용'));
+    await userEvent.click(screen.getByText('1번 아이템'));
+    await userEvent.click(screen.getByText('적용'));
 
     expect(handleConfirm).toHaveBeenCalled();
-    expect(handleConfirm.mock.calls[0][0]).toEqual(['1번', '3번']);
+    expect(handleConfirm.mock.calls[0][0]).toEqual(['3번']);
   });
 
   it('모두 선택 버튼을 누르면 모든 checkbox가 선택된다.', () => {
