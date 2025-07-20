@@ -72,6 +72,7 @@ export const thumb = styleWithLayer({
 
   borderRadius: '50%',
 
+  boxShadow: `0 0 0.375em 0.125em rgba(${backgroundVar}, 0.33)`,
   backgroundColor: `rgb(${backgroundVar})`,
 
   transform: 'translate(-50%, -50%)',
@@ -80,14 +81,7 @@ export const thumb = styleWithLayer({
 
   '::before': {
     position: 'absolute',
-    inset: '0',
-
-    borderRadius: '50%',
-
-    boxShadow: `0 0 0.375em 0.125em rgba(${backgroundVar}, 0.33)`,
-
-    opacity: '1',
-    transition: 'opacity 0.2s ease',
+    inset: '-0.75em',
 
     content: '',
   },
@@ -98,7 +92,7 @@ export const thumb = styleWithLayer({
 
     borderRadius: '50%',
 
-    boxShadow: `0 0 0.5em 0.125em rgba(${backgroundVar}, 0.66)`,
+    boxShadow: `0 0 0.5em 0.125em rgba(${backgroundVar}, 0.5)`,
 
     opacity: '0',
     transition: 'opacity 0.2s ease',
@@ -107,10 +101,6 @@ export const thumb = styleWithLayer({
   },
 
   selectors: {
-    '&:hover::before': {
-      opacity: '0',
-    },
-
     '&:hover::after': {
       opacity: '1',
     },
