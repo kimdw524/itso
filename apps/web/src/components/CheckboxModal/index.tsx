@@ -13,7 +13,7 @@ import { useOverlay } from '@repo/utils';
 import { useCheckboxes } from '@/hooks/useCheckboxes';
 
 interface CheckboxModalProps<T>
-  extends Omit<ComponentProps<typeof Dialog>, 'onSelect' | 'defaultChecked'> {
+  extends Omit<ComponentProps<typeof Dialog>, 'defaultChecked'> {
   header: ReactNode;
   items: T[];
   defaultChecked: T[];
