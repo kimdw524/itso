@@ -7,6 +7,7 @@ import { useQueryParams } from '@/hooks/useQueryParams';
 
 import { EMPLOYMENT_TYPE_KEY, JOB_ID } from '../../constants/job-posting';
 import { JobPostingList } from '../JobPostingList';
+import { JobPostingListLoading } from '../JobPostingList/loading';
 import { SearchFilter } from '../SearchFilter';
 import * as s from './style.css';
 
@@ -20,7 +21,7 @@ export const JobPostingContainer = () => {
     <>
       <SearchFilter queryParams={queryParams} />
       <div className={s.container}>
-        <Suspense fallback={<>loading...</>}>
+        <Suspense fallback={<JobPostingListLoading />}>
           <JobPostingList queryParams={queryParams} />
         </Suspense>
       </div>
