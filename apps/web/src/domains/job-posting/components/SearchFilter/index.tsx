@@ -6,6 +6,7 @@ import { useOverlay } from '@repo/utils';
 import type { FetchJobPostingParams } from '@/api/job-posting/fetchJobPosting';
 import { CheckboxModal } from '@/components/CheckboxModal';
 import { FilterButton } from '@/components/FilterButton';
+import { RangeModal } from '@/components/RangeModal';
 import { useQueryParams } from '@/hooks/useQueryParams';
 
 import {
@@ -13,6 +14,7 @@ import {
   JOB_ID,
   JOB_POSTING,
 } from '../../constants/job-posting';
+import { formatExperienceRange } from '../../utils';
 
 interface SearchFilterProps {
   queryParams: ReturnType<typeof useQueryParams<FetchJobPostingParams>>;
@@ -68,7 +70,37 @@ export const SearchFilter = ({ queryParams }: SearchFilterProps) => {
       </FilterButton>
 
       {/* 경력 선택 */}
-      <FilterButton width="130px">10~20년차</FilterButton>
+      <FilterButton
+        width="140px"
+        onClick={() =>
+          push(
+            <RangeModal
+              header="경력 선택"
+              min={0}
+              max={16}
+              defaultMinValue={getParam('minExperience') || 0}
+              defaultMaxValue={
+                getParam('maxExperience') === 99
+                  ? 16
+                  : getParam('maxExperience') || 16
+              }
+              renderDescription={(min, max) =>
+                formatExperienceRange(min, max == 16 ? 99 : max)
+              }
+              style={{ width: '480px' }}
+              onConfirm={(min, max) => {
+                setParam('minExperience', min);
+                setParam('maxExperience', max === 16 ? 99 : max);
+              }}
+            />,
+          )
+        }
+      >
+        {formatExperienceRange(
+          getParam('minExperience') || 0,
+          getParam('maxExperience') || 99,
+        )}
+      </FilterButton>
     </Box>
   );
 };

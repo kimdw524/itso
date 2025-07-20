@@ -1,17 +1,11 @@
-import { Suspense } from 'react';
-
 import { Box } from '@repo/ui';
 
-import { JobPostingList } from '@/domains/job-posting/components/JobPostingList';
+import { JobPostingContainer } from '@/domains/job-posting/components/JobPostingContainer';
 
 export default async function Home() {
   return (
-    <main>
-      <Box padding="2xl">
-        <Suspense fallback={<div>loading...</div>}>
-          <JobPostingList />
-        </Suspense>
-      </Box>
-    </main>
+    <Box padding="2xl">
+      <JobPostingContainer />
+    </Box>
   );
 }
