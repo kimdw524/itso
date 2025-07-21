@@ -62,12 +62,15 @@ export class JobPostingService {
       qb.andWhere('posting.jobId IN (:...jobIds)', { jobIds });
     }
 
-    if (minExperience !== undefined) {
-      qb.andWhere('posting.minExperience >= :minExperience', { minExperience });
-    }
-
-    if (maxExperience !== undefined) {
-      qb.andWhere('posting.maxExperience <= :maxExperience', { maxExperience });
+    if (minExperience !== undefined && maxExperience !== undefined) {
+      qb.andWhere(
+        '(posting.minExperience <= :maxExperience AND posting.maxExperience >= :minExperience)',
+        { minExperience, maxExperience },
+      );
+    } else if (minExperience !== undefined) {
+      qb.andWhere('posting.maxExperience >= :minExperience', { minExperience });
+    } else if (maxExperience !== undefined) {
+      qb.andWhere('posting.minExperience <= :maxExperience', { maxExperience });
     }
 
     if (employmentTypes?.length) {
