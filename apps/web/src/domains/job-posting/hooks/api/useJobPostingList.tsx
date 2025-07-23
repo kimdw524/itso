@@ -45,7 +45,12 @@ export const useFetchJobPostingListSuspense = (
     return () => observer.disconnect();
   }, [hasNextPage, fetchNextPage]);
 
-  const trigger = <div ref={loaderRef} />;
+  const trigger = (
+    <div
+      ref={loaderRef}
+      style={{ display: isFetchingNextPage ? 'none' : 'block' }}
+    />
+  );
 
   return { data, hasNextPage, isFetchingNextPage, trigger };
 };
