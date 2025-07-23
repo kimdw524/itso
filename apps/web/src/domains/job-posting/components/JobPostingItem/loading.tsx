@@ -16,7 +16,7 @@ export const JobPostingItemLoading = () => {
         <Skeleton
           width="4em"
           height="1em"
-          sx={{ display: 'block', marginBottom: 'md', fontSize: 'sm' }}
+          sx={{ marginBottom: 'md', fontSize: 'sm' }}
         />
         <Skeleton width="100%" height="2.5em" />
         <Box flex flexWrap="wrap" gap="md" marginY="lg">
@@ -24,9 +24,12 @@ export const JobPostingItemLoading = () => {
           <Skeleton width="4em" height="1.75em" />
           <Skeleton width="4em" height="1.75em" />
         </Box>
-        <div style={{ textAlign: 'right' }}>
-          <Skeleton width="4em" height="1em" />
-        </div>
+        <Box flex alignItems="center" justifyContent="space-between" gap="lg">
+          <Skeleton width="4em" height="1em" sx={{ fontSize: 'sm' }} />
+          <Box flex gap="lg">
+            <Skeleton width="4em" height="1em" />
+          </Box>
+        </Box>
       </CardContent>
     </Card>
   );

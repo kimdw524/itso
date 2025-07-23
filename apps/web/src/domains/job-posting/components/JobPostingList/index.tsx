@@ -8,13 +8,14 @@ import { useQueryParams } from '@/hooks/useQueryParams';
 import { JOB_POSTING } from '../../constants/job-posting';
 import { useFetchJobPostingListSuspense } from '../../hooks/api/useJobPostingList';
 import { JobPostingItem } from '../JobPostingItem';
+import { JobPostingListLoading } from './loading';
 
 interface JobPostingListProps {
   queryParams: ReturnType<typeof useQueryParams<FetchJobPostingParams>>;
 }
 
 export const JobPostingList = ({ queryParams }: JobPostingListProps) => {
-  const { data, trigger } = useFetchJobPostingListSuspense({
+  const { data, trigger, isFetchingNextPage } = useFetchJobPostingListSuspense({
     ...queryParams.rawParams,
     limit: JOB_POSTING.LIST_LIMIT,
   });
@@ -32,6 +33,7 @@ export const JobPostingList = ({ queryParams }: JobPostingListProps) => {
           ))}
         </React.Fragment>
       ))}
+      {isFetchingNextPage && <JobPostingListLoading />}
       {trigger}
     </>
   );
