@@ -14,7 +14,7 @@ const shimmer = keyframes({
 });
 
 export const skeleton = styleWithLayer({
-  display: 'inline-block',
+  display: 'block',
 
   maxWidth: '100%',
   borderRadius: theme.borderRadius,

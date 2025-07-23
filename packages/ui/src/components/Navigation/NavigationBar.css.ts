@@ -12,11 +12,14 @@ export const navigationBar = recipeWithLayer({
     justifyContent: 'space-between',
     gap: '0.5em',
     zIndex: '20',
+    position: 'sticky',
+    top: '0',
 
     width: '100%',
     borderBottom: `1px solid rgba(${theme.color.border}, 0.5)`,
 
-    backgroundColor: `rgb(${theme.color.background})`,
+    backgroundColor: 'transparent',
+    backdropFilter: 'blur(2rem)',
 
     color: `rgb(${theme.color.foreground})`,
 

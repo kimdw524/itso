@@ -38,7 +38,7 @@ export class JobPostingService {
       jobIds,
       minExperience,
       maxExperience,
-      employmentType,
+      employmentTypes,
       cursor,
       limit = 20,
     } = filter;
@@ -62,17 +62,20 @@ export class JobPostingService {
       qb.andWhere('posting.jobId IN (:...jobIds)', { jobIds });
     }
 
-    if (minExperience !== undefined) {
-      qb.andWhere('posting.minExperience >= :minExperience', { minExperience });
+    if (minExperience !== undefined && maxExperience !== undefined) {
+      qb.andWhere(
+        '(posting.minExperience <= :maxExperience AND posting.maxExperience >= :minExperience)',
+        { minExperience, maxExperience },
+      );
+    } else if (minExperience !== undefined) {
+      qb.andWhere('posting.maxExperience >= :minExperience', { minExperience });
+    } else if (maxExperience !== undefined) {
+      qb.andWhere('posting.minExperience <= :maxExperience', { maxExperience });
     }
 
-    if (maxExperience !== undefined) {
-      qb.andWhere('posting.maxExperience <= :maxExperience', { maxExperience });
-    }
-
-    if (employmentType !== undefined) {
-      qb.andWhere('posting.employmentType = :employmentType', {
-        employmentType,
+    if (employmentTypes?.length) {
+      qb.andWhere('posting.employmentType IN (:...employmentTypes)', {
+        employmentTypes,
       });
     }
 

@@ -147,6 +147,20 @@ export const button = recipeWithLayer({
         },
       },
 
+      outlined: {
+        boxShadow: `inset 0 0 0 1px rgb(${backgroundVar})`,
+        backgroundColor: `rgb(${theme.color.background})`,
+        color: `rgb(${theme.color.foreground})`,
+
+        ':disabled': {
+          backgroundColor: `rgb(${theme.color.muted})`,
+
+          color: `rgb(${theme.color['muted-foreground']})`,
+
+          cursor: 'default',
+        },
+      },
+
       ghost: {
         background: 'transparent',
 
@@ -173,7 +187,8 @@ export const button = recipeWithLayer({
           position: 'absolute',
           inset: '0',
 
-          background: 'linear-gradient(90deg, transparent 30%, #ffffff33 65%, transparent 100%)',
+          background:
+            'linear-gradient(90deg, transparent 30%, #ffffff33 65%, transparent 100%)',
           backgroundSize: '300% 100%',
 
           animation: `${pulse} 5s linear 0s infinite`,

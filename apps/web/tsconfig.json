@@ -2,6 +2,7 @@
   "extends": "@repo/typescript-config/nextjs.json",
   "compilerOptions": {
     "lib": ["ESNext", "DOM"],
+    "verbatimModuleSyntax": true,
     "plugins": [
       {
         "name": "next"
@@ -11,6 +12,12 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", "next.config.js", ".next/types/**/*.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "next.config.js",
+    ".next/types/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }

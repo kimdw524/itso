@@ -11,8 +11,8 @@ export class JobPostingFilterDto {
   title?: string;
 
   @IsOptional()
+  @Transform(({ value }) => ([] as unknown[]).concat(value))
   @IsArray()
-  @Transform(({ value }) => ([] as unknown[]).concat(value).map(Number))
   jobIds?: number[];
 
   @IsOptional()
@@ -24,8 +24,9 @@ export class JobPostingFilterDto {
   maxExperience?: number;
 
   @IsOptional()
-  @Type(() => Number)
-  employmentType?: number;
+  @Transform(({ value }) => ([] as unknown[]).concat(value))
+  @IsArray()
+  employmentTypes?: number[];
 
   @IsOptional()
   @Type(() => Number)

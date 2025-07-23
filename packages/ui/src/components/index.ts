@@ -8,6 +8,7 @@ export * from './Confirm';
 export * from './Dialog';
 export * from './Navigation';
 export * from './Range';
+export * from './ScrollArea';
 export * from './Select';
 export * from './Skeleton';
 export * from './Table';

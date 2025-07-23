@@ -41,7 +41,7 @@ export const chip = recipeWithLayer({
     gap: '0.125em',
 
     height: '2em',
-    padding: '0 0.875em',
+    padding: '0 0.75em',
     borderRadius: theme.borderRadius,
 
     backgroundColor: `rgb(${backgroundVar})`,

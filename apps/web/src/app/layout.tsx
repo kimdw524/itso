@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 
-import { UIProvider } from '@repo/ui';
+import { Provider } from '@/contexts/Provider';
+import { NavBar } from '@/domains/layout/components/NavBar';
+import '@/styles/globalStyle.css';
 
 export const metadata: Metadata = {
   title: 'Itso',
@@ -14,8 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className="light">
-        <UIProvider>{children}</UIProvider>
+      <body>
+        <Provider>
+          <NavBar />
+          <main>{children}</main>
+        </Provider>
       </body>
     </html>
   );
