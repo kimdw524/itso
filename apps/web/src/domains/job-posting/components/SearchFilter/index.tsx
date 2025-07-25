@@ -5,7 +5,7 @@ import { useRef, type ReactNode } from 'react';
 import { Box, ScrollArea } from '@repo/ui';
 import { useOverlay } from '@repo/utils';
 
-import type { FetchJobPostingParams } from '@/api/job-posting/fetchJobPostingList';
+import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList.client';
 import { CheckboxModal } from '@/components/CheckboxModal';
 import { DisableWrapper } from '@/components/DisableWrapper';
 import { FilterButton } from '@/components/FilterButton';
@@ -24,7 +24,7 @@ import * as s from './style.css';
 
 interface SearchFilterProps {
   children?: ReactNode;
-  queryParams: ReturnType<typeof useQueryParams<FetchJobPostingParams>>;
+  queryParams: ReturnType<typeof useQueryParams<FetchJobPostingListParams>>;
   isDisabled?: boolean;
 }
 

@@ -1,4 +1,4 @@
-import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList';
+import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList.client';
 
 export const QUERY_KEYS = {
   'job-posting': {

@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react';
 
-import type { FetchJobPostingParams } from '@/api/job-posting/fetchJobPostingList';
+import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList.client';
 import { useQueryParams } from '@/hooks/useQueryParams';
 
 import { EMPLOYMENT_TYPE_KEY, JOB_ID } from '../../constants/job-posting';
@@ -14,12 +14,12 @@ import * as s from './style.css';
 
 export const JobPostingContainer = () => {
   const [isShowAll, setShowAll] = useState<boolean>(false);
-  const queryParams = useQueryParams<FetchJobPostingParams>({
+  const queryParams = useQueryParams<FetchJobPostingListParams>({
     jobIds: JOB_ID,
     employmentTypes: EMPLOYMENT_TYPE_KEY,
   });
   // 필터를 비활성화 했을 때 보여줄 비어있는 필터
-  const emptyQueryParams = useQueryParams<FetchJobPostingParams>();
+  const emptyQueryParams = useQueryParams<FetchJobPostingListParams>();
 
   const handleShowAllClick = () => {
     setShowAll((prev) => !prev);

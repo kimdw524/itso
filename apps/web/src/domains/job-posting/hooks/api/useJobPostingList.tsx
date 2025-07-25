@@ -9,7 +9,7 @@ import {
   fetchJobPostingList,
   type FetchJobPostingListParams,
   type FetchJobPostingListResponse,
-} from '@/api/job-posting/fetchJobPostingList';
+} from '@/api/job-posting/fetchJobPostingList.client';
 import { QUERY_KEYS } from '@/constants/query-keys';
 
 export const useFetchJobPostingListSuspense = (

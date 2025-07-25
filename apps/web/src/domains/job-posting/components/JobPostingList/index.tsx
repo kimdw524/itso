@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import type { FetchJobPostingParams } from '@/api/job-posting/fetchJobPostingList';
+import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList.client';
 import { useQueryParams } from '@/hooks/useQueryParams';
 
 import { JOB_POSTING } from '../../constants/job-posting';
@@ -11,7 +11,7 @@ import { JobPostingItem } from '../JobPostingItem';
 import { JobPostingListLoading } from './loading';
 
 interface JobPostingListProps {
-  queryParams: ReturnType<typeof useQueryParams<FetchJobPostingParams>>;
+  queryParams: ReturnType<typeof useQueryParams<FetchJobPostingListParams>>;
 }
 
 export const JobPostingList = ({ queryParams }: JobPostingListProps) => {
