@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { CursorPaginatedResponse } from '@/types/pagination';
 
 import { JobPostingFilterDto, JobPostingSummaryDto } from './dto';
+import { JobPostingDto } from './dto/job-posting.dto';
 import { JobPosting } from './job-posting.entity';
 
 @Injectable()
@@ -23,6 +24,17 @@ export class JobPostingService {
 
   async findById(id: number): Promise<JobPosting | null> {
     const jobPosting = await this.jobPostingRepo.findOneBy({ id });
+    if (!jobPosting) {
+      throw new NotFoundException(`posting ${id} not found`);
+    }
+    return { ...jobPosting, description: jobPosting.description };
+  }
+
+  async getPosting(id: number): Promise<JobPostingDto | null> {
+    const jobPosting = await this.jobPostingRepo.findOne({
+      where: { id },
+      relations: ['company'],
+    });
     if (!jobPosting) {
       throw new NotFoundException(`posting ${id} not found`);
     }
