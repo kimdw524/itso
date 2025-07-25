@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react';
 
-import type { FetchJobPostingParams } from '@/api/job-posting/fetchJobPosting';
+import type { FetchJobPostingParams } from '@/api/job-posting/fetchJobPostingList';
 import { useQueryParams } from '@/hooks/useQueryParams';
 
 import { EMPLOYMENT_TYPE_KEY, JOB_ID } from '../../constants/job-posting';

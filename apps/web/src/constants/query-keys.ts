@@ -1,7 +1,11 @@
-import type { FetchJobPostingParams } from '@/api/job-posting/fetchJobPosting';
+import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList';
 
 export const QUERY_KEYS = {
   'job-posting': {
-    list: (params: FetchJobPostingParams) => ['job-posting', 'list', params],
+    list: (params: FetchJobPostingListParams) => [
+      'job-posting',
+      'list',
+      params,
+    ],
   },
 };
