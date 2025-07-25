@@ -174,6 +174,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      jotai:
+        specifier: ^2.12.5
+        version: 2.12.5(@types/react@19.0.10)(react@19.1.0)
       lucide-react:
         specifier: ^0.503.0
         version: 0.503.0(react@19.1.0)
@@ -4638,6 +4641,18 @@ packages:
       node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
     peerDependenciesMeta:
       node-notifier:
+        optional: true
+
+  jotai@2.12.5:
+    resolution: {integrity: sha512-G8m32HW3lSmcz/4mbqx0hgJIQ0ekndKWiYP7kWVKi0p6saLXdSoye+FZiOFyonnd7Q482LCzm8sMDl7Ar1NWDw==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
         optional: true
 
   js-tokens@4.0.0:
@@ -11725,6 +11740,11 @@ snapshots:
       - babel-plugin-macros
       - supports-color
       - ts-node
+
+  jotai@2.12.5(@types/react@19.0.10)(react@19.1.0):
+    optionalDependencies:
+      '@types/react': 19.0.10
+      react: 19.1.0
 
   js-tokens@4.0.0: {}
 

@@ -21,13 +21,14 @@ export const ripple = recipe({
     pointerEvents: 'none',
 
     vars: {
-      [colorVar]: `color-mix(in srgb, rgba(${theme.color.accent}, 0.3) 80%, rgba(${theme.color.foreground}, 0.3) 20%)`,
+      [colorVar]: `color-mix(in srgb, rgba(${theme.color.accent}, 0.2) 20%, rgba(${theme.color.foreground}, 0.2) 80%)`,
     },
   },
   variants: {
     animation: {
       true: {
-        transition: 'opacity 0.25s linear, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+        transition:
+          'opacity 0.25s linear, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
         transform: 'translate(-50%, -50%) scale(1, 1)',
       },
 

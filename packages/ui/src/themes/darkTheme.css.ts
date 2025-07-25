@@ -1,10 +1,10 @@
 export const darkThemeVars = {
   borderRadius: '6px',
   color: {
-    background: '10, 10, 18',
+    background: '12, 12, 14',
     foreground: '238, 238, 238',
-    primary: '66, 128, 255',
-    'primary-foreground': '33, 34, 38',
+    primary: '36, 81, 173',
+    'primary-foreground': '238, 238, 238',
     secondary: '32, 38, 45',
     'secondary-foreground': '186, 212, 255',
     muted: '30, 36, 44',

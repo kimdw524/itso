@@ -1,13 +1,15 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
-import { theme } from '@repo/ui/themes';
+import { fadeIn } from '@/styles/keyframes.css';
 
 export const container = style({
-  transition: 'all 0.1s ease',
+  cursor: 'pointer',
 
   ':hover': {
-    boxShadow: `0 0 1em 0 rgb(${theme.color.accent})`,
-
-    transform: 'scale(1.02)',
+    transform: 'translateY(-0.5rem)',
   },
+});
+
+globalStyle(`${container} > *`, {
+  animation: `${fadeIn} 0.3s linear`,
 });

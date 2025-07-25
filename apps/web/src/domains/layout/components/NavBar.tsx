@@ -2,9 +2,13 @@
 
 import Link from 'next/link';
 
-import { Button, NavigationAside, NavigationBar, NavigationItem, NavigationLogo } from '@repo/ui';
-
-import { ThemeToggleButton } from './ThemeToggleButton';
+import {
+  Button,
+  NavigationAside,
+  NavigationBar,
+  NavigationItem,
+  NavigationLogo,
+} from '@repo/ui';
 
 export const NavBar = () => {
   return (
@@ -13,9 +17,6 @@ export const NavBar = () => {
         <Link href="/">Itso</Link>
       </NavigationLogo>
       <NavigationAside>
-        <NavigationItem>
-          <ThemeToggleButton />
-        </NavigationItem>
         <NavigationItem>
           <Button size="sm">로그인</Button>
         </NavigationItem>

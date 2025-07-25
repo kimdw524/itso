@@ -5,11 +5,11 @@ import { theme } from '#themes';
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '0.75rem',
+  gap: '1rem',
 
   maxWidth: 'calc(100vw - 2rem)',
   minWidth: 'min(20rem, calc(100vw - 2rem))',
-  padding: '1rem',
+  padding: '1.5rem',
   borderRadius: theme.borderRadius,
   boxSizing: 'border-box',
 

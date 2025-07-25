@@ -4,7 +4,7 @@ import { JobPostingContainer } from '@/domains/job-posting/components/JobPosting
 
 export default async function Home() {
   return (
-    <Box padding="2xl">
+    <Box padding={{ desktop: '2xl', mobile: 'xl' }}>
       <JobPostingContainer />
     </Box>
   );

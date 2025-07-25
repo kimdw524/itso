@@ -28,7 +28,11 @@ export const Button = ({
 
   return (
     <button
-      className={clsx(className, s.button({ color, size, variant, pulse }), sx(propSx))}
+      className={clsx(
+        className,
+        s.button({ color, size, variant, pulse }),
+        sx(propSx),
+      )}
       ref={ref || elementRef}
       {...props}
     >

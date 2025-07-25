@@ -48,7 +48,7 @@ export const CheckboxModal = <T extends number | string>({
     <Dialog {...rest}>
       <DialogHeader onCloseClick={close}>{header}</DialogHeader>
       <DialogContent>
-        <Box flex flexWrap="wrap" gap="md" padding="lg" rounded>
+        <Box flex flexWrap="wrap" gap="lg" padding="lg" rounded>
           {items.map((name) => {
             const isChecked = checked.includes(name);
 
@@ -77,7 +77,7 @@ export const CheckboxModal = <T extends number | string>({
             </Button>
           )}
         </span>
-        <Box flex gap="md">
+        <Box flex gap="lg">
           <Button color="secondary" onClick={close}>
             취소
           </Button>

@@ -25,8 +25,8 @@ const scaleColors = Object.entries(color).reduce(
     ...prev,
     [key]: styleWithLayer({
       vars: {
-        [backgroundVar]: value[100],
-        [foregroundVar]: value[900],
+        [backgroundVar]: value[900],
+        [foregroundVar]: value[100],
       },
     }),
   }),

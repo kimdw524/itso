@@ -69,7 +69,7 @@ export const RangeModal = ({
         </Box>
       </DialogContent>
       <DialogFooter sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Box flex gap="md">
+        <Box flex gap="lg">
           <Button color="secondary" onClick={close}>
             취소
           </Button>

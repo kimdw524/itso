@@ -17,11 +17,7 @@ const Item = ({ icon, value }: { icon: ReactNode; value: ReactNode }) => {
       sx={{ color: 'secondary-foreground' }}
     >
       {icon}
-      <Typography
-        color="secondary-foreground"
-        fontSize="xs"
-        fontWeight="medium"
-      >
+      <Typography color="secondary-foreground" fontSize="xs" fontWeight="light">
         {value}
       </Typography>
     </Box>
@@ -40,11 +36,17 @@ export const JobPostingStatistics = ({
       <Typography fontSize="sm">
         {jobPosting.dueDate === null
           ? '상시채용'
-          : `~ ${formatTime(jobPosting.dueDate)} (${getDday(jobPosting.dueDate)})`}
+          : `${formatTime(jobPosting.dueDate)} 마감 (${getDday(jobPosting.dueDate)})`}
       </Typography>
       <Box flex gap="lg">
-        <Item icon={<EyeIcon />} value={<>{jobPosting.views}</>} />
-        <Item icon={<StarIcon />} value={<>{jobPosting.views}</>} />
+        <Item
+          icon={<EyeIcon strokeWidth="1" />}
+          value={<>{jobPosting.views}</>}
+        />
+        <Item
+          icon={<StarIcon strokeWidth="1" />}
+          value={<>{jobPosting.views}</>}
+        />
       </Box>
     </Box>
   );

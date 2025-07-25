@@ -15,11 +15,16 @@ const colors = Object.assign(
     ...Object.entries(color).reduce(
       (prev, [name, scales]) => [
         ...prev,
-        ...Object.entries(scales).map(([scale, value]) => ({ [`${name}-${scale}`]: `rgb(${value})` }) as Color),
+        ...Object.entries(scales).map(
+          ([scale, value]) =>
+            ({ [`${name}-${scale}`]: `rgb(${value})` }) as Color,
+        ),
       ],
       [] as Color[],
     ),
-    ...Object.entries(theme.color).map(([name, value]) => ({ [name]: `rgb(${value})` }) as SemanticColor),
+    ...Object.entries(theme.color).map(
+      ([name, value]) => ({ [name]: `rgb(${value})` }) as SemanticColor,
+    ),
   ],
 ) as Record<keyof Color | keyof SemanticColor, string>;
 
@@ -62,7 +67,14 @@ export const boxProperties = defineProperties({
       '1': 1,
     },
     flexBasis: size,
-    justifyContent: ['stretch', 'flex-start', 'center', 'flex-end', 'space-around', 'space-between'],
+    justifyContent: [
+      'stretch',
+      'flex-start',
+      'center',
+      'flex-end',
+      'space-around',
+      'space-between',
+    ],
     alignItems: ['stretch', 'flex-start', 'center', 'flex-end'],
     gap: spacing,
     paddingTop: spacing,
@@ -102,6 +114,11 @@ export const boxProperties = defineProperties({
 
 export const typographyProperties = defineProperties({
   '@layer': sprinklesLayer,
+  conditions: {
+    mobile: {},
+    desktop: { '@media': 'screen and (min-width: 1024px)' },
+  },
+  defaultCondition: 'mobile',
   properties: {
     lineHeight: typography.lineHeight,
     fontSize: typography.size,
@@ -120,6 +137,11 @@ export const miscProperties = defineProperties({
   },
 });
 
-export const sprinkles = createSprinkles(boxProperties, colorProperties, typographyProperties, miscProperties);
+export const sprinkles = createSprinkles(
+  boxProperties,
+  colorProperties,
+  typographyProperties,
+  miscProperties,
+);
 
 export type SprinklesProps = Parameters<typeof sprinkles>[0];

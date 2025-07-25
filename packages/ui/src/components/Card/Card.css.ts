@@ -39,11 +39,11 @@ export const card = recipeWithLayer({
 
     selectors: {
       [`&:has(${cardInteraction}:hover)`]: {
-        borderColor: `color-mix(in srgb, rgb(${theme.color.primary}) 30%, rgb(${theme.color.border}) 70%)`,
+        borderColor: `color-mix(in srgb, rgb(${theme.color.primary}) 10%, rgb(${theme.color.border}) 90%)`,
       },
 
       [`&:has(${cardInteraction}:active)`]: {
-        borderColor: `color-mix(in srgb, rgb(${theme.color.primary}) 60%, rgb(${theme.color.border}) 40%)`,
+        borderColor: `color-mix(in srgb, rgb(${theme.color.primary}) 40%, rgb(${theme.color.border}) 60%)`,
       },
     },
   },
@@ -54,6 +54,36 @@ export const card = recipeWithLayer({
       outlined: {
         border: '1px solid',
         borderColor: `rgb(${theme.color.border})`,
+      },
+
+      glass: {
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        borderRadius: '0.75rem',
+
+        background:
+          'linear-gradient(rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)',
+        backdropFilter: 'blur(1rem)',
+
+        transition: 'all 0.4s ease',
+
+        '::before': {
+          position: 'absolute',
+          inset: '0',
+
+          background:
+            'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%)',
+
+          opacity: '0',
+          transition: 'all 0.3s ease',
+
+          content: '',
+        },
+
+        selectors: {
+          '&:hover::before': {
+            opacity: '1',
+          },
+        },
       },
     },
 
