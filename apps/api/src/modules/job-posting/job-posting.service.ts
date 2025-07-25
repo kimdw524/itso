@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { plainToInstance } from 'class-transformer';
@@ -22,7 +22,11 @@ export class JobPostingService {
   }
 
   async findById(id: number): Promise<JobPosting | null> {
-    return await this.jobPostingRepo.findOneBy({ id });
+    const jobPosting = await this.jobPostingRepo.findOneBy({ id });
+    if (!jobPosting) {
+      throw new NotFoundException(`posting ${id} not found`);
+    }
+    return { ...jobPosting, description: jobPosting.description };
   }
 
   async isExists(data: Partial<JobPosting>): Promise<boolean> {
