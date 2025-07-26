@@ -56,7 +56,7 @@ export const boxProperties = defineProperties({
   defaultCondition: 'mobile',
   properties: {
     display: ['flex', 'block', 'none', 'inline', 'inline-block', 'inline-flex'],
-    flexDirection: ['row', 'column'],
+    flexDirection: ['row', 'column', 'row-reverse', 'column-reverse'],
     flexWrap: ['nowrap', 'wrap', 'wrap-reverse', 'revert', 'revert-layer'],
     flexShrink: {
       '0': 0,
