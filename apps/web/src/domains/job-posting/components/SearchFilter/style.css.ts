@@ -10,8 +10,6 @@ export const container = recipe({
 
     padding: `${spacing['2xl']} 0`,
 
-    backgroundColor: `rgb(${theme.color.background})`,
-
     '::after': {
       position: 'absolute',
       right: '0',
@@ -29,12 +27,16 @@ export const container = recipe({
   variants: {
     isPinned: {
       true: {
+        backgroundColor: `rgb(${theme.color.background})`,
+
         '::after': {
           opacity: '1',
         },
       },
 
       false: {
+        backgroundColor: 'transparent',
+
         '::after': {
           opacity: '0',
         },
