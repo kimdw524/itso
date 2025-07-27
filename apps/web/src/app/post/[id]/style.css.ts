@@ -2,13 +2,13 @@ import { style } from '@vanilla-extract/css';
 
 import { breakpoint } from '@repo/ui/tokens';
 
-import { STYLE } from '@/constants/style';
+import { STYLE_VARS } from '@/styles/vars.css';
 
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
 
-  height: `calc(100vh - ${STYLE.NAVBAR_HEIGHT})`,
+  height: `calc(100vh - ${STYLE_VARS.NAVBAR_HEIGHT})`,
 });
 
 export const fullContainer = style({
