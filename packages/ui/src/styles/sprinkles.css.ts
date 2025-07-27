@@ -123,6 +123,7 @@ export const typographyProperties = defineProperties({
     lineHeight: typography.lineHeight,
     fontSize: typography.size,
     fontWeight: typography.weight,
+    wordBreak: ['break-all', 'break-word', 'keep-all'],
   },
 });
 
