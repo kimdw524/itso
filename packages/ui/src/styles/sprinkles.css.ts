@@ -116,7 +116,7 @@ export const typographyProperties = defineProperties({
   '@layer': sprinklesLayer,
   conditions: {
     mobile: {},
-    desktop: { '@media': `screen and (min-width: ${breakpoint.md})` },
+    desktop: { '@media': `screen and (min-width: ${breakpoint.md}px)` },
   },
   defaultCondition: 'mobile',
   properties: {
