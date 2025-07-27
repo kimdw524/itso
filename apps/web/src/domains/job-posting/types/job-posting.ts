@@ -20,3 +20,20 @@ export interface JobPostingSummary {
   employmentType: EmploymentType;
   company: CompanySummary;
 }
+
+export interface JobPosting {
+  id: number;
+  companyId: number;
+  postingId: number;
+  title: string;
+  openDate: string;
+  dueDate: string | null;
+  link: string;
+  jobId: JobId;
+  views: number;
+  minExperience: number;
+  maxExperience: number;
+  employmentType: EmploymentType;
+  description: string;
+  company: CompanySummary;
+}
