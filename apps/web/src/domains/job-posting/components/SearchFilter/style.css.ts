@@ -1,24 +1,16 @@
-import { recipe } from '@vanilla-extract/recipes';
+import { style } from '@vanilla-extract/css';
 
 import { theme } from '@repo/ui/themes';
 import { spacing } from '@repo/ui/tokens';
 
-export const container = recipe({
-  base: {
-    position: 'sticky',
-    zIndex: '10',
+import { STYLE } from '@/constants/style';
 
-    padding: `${spacing['3xl']} 0`,
-  },
-  variants: {
-    isPinned: {
-      true: {
-        backgroundColor: `rgb(${theme.color.background})`,
-      },
+export const container = style({
+  position: 'sticky',
+  top: `${STYLE.STICKY.JOB_POSTING_FILTER}px`,
+  zIndex: '10',
 
-      false: {
-        backgroundColor: 'transparent',
-      },
-    },
-  },
+  padding: `${spacing['3xl']} 0`,
+
+  backgroundColor: `rgb(${theme.color.background})`,
 });

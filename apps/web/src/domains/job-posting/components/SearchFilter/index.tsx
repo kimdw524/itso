@@ -10,9 +10,7 @@ import { CheckboxModal } from '@/components/CheckboxModal';
 import { DisableWrapper } from '@/components/DisableWrapper';
 import { FilterButton } from '@/components/FilterButton';
 import { RangeModal } from '@/components/RangeModal';
-import { STYLE } from '@/constants/style';
 import { useQueryParams } from '@/hooks/useQueryParams';
-import { useSticky } from '@/hooks/useSticky';
 
 import {
   EMPLOYMENT_TYPE_KEY,
@@ -38,12 +36,11 @@ export const SearchFilter = ({
   const { getParam, setParam } = queryParams;
 
   const ref = useRef<HTMLDivElement>(null);
-  const isPinned = useSticky(ref, STYLE.STICKY.JOB_POSTING_FILTER);
 
   return (
     <Box
       ref={ref}
-      className={s.container({ isPinned })}
+      className={s.container}
       sx={{ fontSize: { mobile: 'sm', desktop: 'md' } }}
     >
       <ScrollArea>
