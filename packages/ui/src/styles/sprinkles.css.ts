@@ -2,7 +2,7 @@ import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 
 import { sprinklesLayer } from '#styles';
 import { theme } from '#themes';
-import { color, spacing, typography } from '#tokens';
+import { breakpoint, color, spacing, typography } from '#tokens';
 
 type ColorName = keyof typeof color;
 type ColorScale<C extends ColorName> = keyof (typeof color)[C];
@@ -116,7 +116,7 @@ export const typographyProperties = defineProperties({
   '@layer': sprinklesLayer,
   conditions: {
     mobile: {},
-    desktop: { '@media': 'screen and (min-width: 1024px)' },
+    desktop: { '@media': `screen and (min-width: ${breakpoint.md})` },
   },
   defaultCondition: 'mobile',
   properties: {
