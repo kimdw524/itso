@@ -8,38 +8,16 @@ export const container = recipe({
     position: 'sticky',
     zIndex: '10',
 
-    padding: `${spacing['2xl']} 0`,
-
-    '::after': {
-      position: 'absolute',
-      right: '0',
-      bottom: '-1.5em',
-      left: '0',
-
-      height: '1.5em',
-      background: `linear-gradient(to bottom, rgb(${theme.color.background}), transparent)`,
-
-      transition: 'opacity 0.2s ease',
-
-      content: '',
-    },
+    padding: `${spacing['3xl']} 0`,
   },
   variants: {
     isPinned: {
       true: {
         backgroundColor: `rgb(${theme.color.background})`,
-
-        '::after': {
-          opacity: '1',
-        },
       },
 
       false: {
         backgroundColor: 'transparent',
-
-        '::after': {
-          opacity: '0',
-        },
       },
     },
   },

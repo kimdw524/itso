@@ -10,7 +10,7 @@ import { CheckboxModal } from '@/components/CheckboxModal';
 import { DisableWrapper } from '@/components/DisableWrapper';
 import { FilterButton } from '@/components/FilterButton';
 import { RangeModal } from '@/components/RangeModal';
-import { STICKY_TOP } from '@/constants/sticky';
+import { STYLE } from '@/constants/style';
 import { useQueryParams } from '@/hooks/useQueryParams';
 import { useSticky } from '@/hooks/useSticky';
 
@@ -38,7 +38,7 @@ export const SearchFilter = ({
   const { getParam, setParam } = queryParams;
 
   const ref = useRef<HTMLDivElement>(null);
-  const isPinned = useSticky(ref, STICKY_TOP.JOB_POSTING_FILTER);
+  const isPinned = useSticky(ref, STYLE.STICKY.JOB_POSTING_FILTER);
 
   return (
     <Box
@@ -47,10 +47,10 @@ export const SearchFilter = ({
       sx={{ fontSize: { mobile: 'sm', desktop: 'md' } }}
     >
       <ScrollArea>
-        <Box flex gap="md" alignItems="center">
+        <Box flex gap="lg" alignItems="center">
           <DisableWrapper
             condition={isDisabled}
-            sx={{ display: 'flex', gap: 'md', alignItems: 'center' }}
+            sx={{ display: 'flex', gap: 'lg', alignItems: 'center' }}
           >
             {/* 직무 선택 */}
             <FilterButton
