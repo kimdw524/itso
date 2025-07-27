@@ -5,14 +5,12 @@ import { useRef, type ReactNode } from 'react';
 import { Box, ScrollArea } from '@repo/ui';
 import { useOverlay } from '@repo/utils';
 
-import type { FetchJobPostingParams } from '@/api/job-posting/fetchJobPosting';
+import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList.client';
 import { CheckboxModal } from '@/components/CheckboxModal';
 import { DisableWrapper } from '@/components/DisableWrapper';
 import { FilterButton } from '@/components/FilterButton';
 import { RangeModal } from '@/components/RangeModal';
-import { STICKY_TOP } from '@/constants/sticky';
 import { useQueryParams } from '@/hooks/useQueryParams';
-import { useSticky } from '@/hooks/useSticky';
 
 import {
   EMPLOYMENT_TYPE_KEY,
@@ -24,7 +22,7 @@ import * as s from './style.css';
 
 interface SearchFilterProps {
   children?: ReactNode;
-  queryParams: ReturnType<typeof useQueryParams<FetchJobPostingParams>>;
+  queryParams: ReturnType<typeof useQueryParams<FetchJobPostingListParams>>;
   isDisabled?: boolean;
 }
 
@@ -38,19 +36,18 @@ export const SearchFilter = ({
   const { getParam, setParam } = queryParams;
 
   const ref = useRef<HTMLDivElement>(null);
-  const isPinned = useSticky(ref, STICKY_TOP.JOB_POSTING_FILTER);
 
   return (
     <Box
       ref={ref}
-      className={s.container({ isPinned })}
+      className={s.container}
       sx={{ fontSize: { mobile: 'sm', desktop: 'md' } }}
     >
       <ScrollArea>
-        <Box flex gap="md" alignItems="center">
+        <Box flex gap="lg" alignItems="center">
           <DisableWrapper
             condition={isDisabled}
-            sx={{ display: 'flex', gap: 'md', alignItems: 'center' }}
+            sx={{ display: 'flex', gap: 'lg', alignItems: 'center' }}
           >
             {/* 직무 선택 */}
             <FilterButton

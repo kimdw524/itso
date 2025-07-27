@@ -7,10 +7,10 @@ import type {
 import { axiosInstance } from '../axiosInstance';
 import type { CursorPaginatedResponse } from '../types';
 
-export type FetchJobPostingResponse =
+export type FetchJobPostingListResponse =
   CursorPaginatedResponse<JobPostingSummary>;
 
-export interface FetchJobPostingParams {
+export interface FetchJobPostingListParams {
   companyId?: number;
   title?: string;
   jobIds?: JobId[];
@@ -21,10 +21,15 @@ export interface FetchJobPostingParams {
   limit?: number;
 }
 
-export const fetchJobPosting = async (params: FetchJobPostingParams) => {
-  const res = await axiosInstance.get<FetchJobPostingResponse>('/job-posting', {
-    params,
-  });
+export const fetchJobPostingList = async (
+  params: FetchJobPostingListParams,
+) => {
+  const res = await axiosInstance.get<FetchJobPostingListResponse>(
+    '/job-posting',
+    {
+      params,
+    },
+  );
 
   return res.data;
 };

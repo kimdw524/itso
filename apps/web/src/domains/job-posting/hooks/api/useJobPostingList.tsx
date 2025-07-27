@@ -6,21 +6,21 @@ import {
 } from '@tanstack/react-query';
 
 import {
-  fetchJobPosting,
-  type FetchJobPostingParams,
-  type FetchJobPostingResponse,
-} from '@/api/job-posting/fetchJobPosting';
+  fetchJobPostingList,
+  type FetchJobPostingListParams,
+  type FetchJobPostingListResponse,
+} from '@/api/job-posting/fetchJobPostingList.client';
 import { QUERY_KEYS } from '@/constants/query-keys';
 
 export const useFetchJobPostingListSuspense = (
-  params: FetchJobPostingParams,
+  params: FetchJobPostingListParams,
 ) => {
   const loaderRef = useRef<HTMLDivElement>(null);
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useSuspenseInfiniteQuery<
-      FetchJobPostingResponse,
+      FetchJobPostingListResponse,
       Error,
-      InfiniteData<FetchJobPostingResponse>,
+      InfiniteData<FetchJobPostingListResponse>,
       unknown[],
       number | undefined
     >({
@@ -28,7 +28,7 @@ export const useFetchJobPostingListSuspense = (
       initialPageParam: undefined,
       gcTime: 0,
       queryFn: ({ pageParam }) =>
-        fetchJobPosting({ ...params, cursor: pageParam }),
+        fetchJobPostingList({ ...params, cursor: pageParam }),
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     });
 

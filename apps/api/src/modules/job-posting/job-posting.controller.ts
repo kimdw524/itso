@@ -14,6 +14,6 @@ export class JobPostingController {
 
   @Get(':id')
   getPosting(@Param('id', ParseIntPipe) id: number) {
-    return this.jobPostingService.findById(id);
+    return this.jobPostingService.getPosting(id);
   }
 }

@@ -2,7 +2,7 @@ import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 
 import { sprinklesLayer } from '#styles';
 import { theme } from '#themes';
-import { color, spacing, typography } from '#tokens';
+import { breakpoint, color, spacing, typography } from '#tokens';
 
 type ColorName = keyof typeof color;
 type ColorScale<C extends ColorName> = keyof (typeof color)[C];
@@ -56,7 +56,7 @@ export const boxProperties = defineProperties({
   defaultCondition: 'mobile',
   properties: {
     display: ['flex', 'block', 'none', 'inline', 'inline-block', 'inline-flex'],
-    flexDirection: ['row', 'column'],
+    flexDirection: ['row', 'column', 'row-reverse', 'column-reverse'],
     flexWrap: ['nowrap', 'wrap', 'wrap-reverse', 'revert', 'revert-layer'],
     flexShrink: {
       '0': 0,
@@ -116,13 +116,14 @@ export const typographyProperties = defineProperties({
   '@layer': sprinklesLayer,
   conditions: {
     mobile: {},
-    desktop: { '@media': 'screen and (min-width: 1024px)' },
+    desktop: { '@media': `screen and (min-width: ${breakpoint.md}px)` },
   },
   defaultCondition: 'mobile',
   properties: {
     lineHeight: typography.lineHeight,
     fontSize: typography.size,
     fontWeight: typography.weight,
+    wordBreak: ['break-all', 'break-word', 'keep-all'],
   },
 });
 

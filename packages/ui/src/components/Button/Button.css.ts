@@ -118,7 +118,7 @@ export const button = recipeWithLayer({
       },
 
       'icon-sm': {
-        width: '2em',
+        width: '2.25em',
         height: '2em',
       },
 
@@ -128,8 +128,8 @@ export const button = recipeWithLayer({
       },
 
       'icon-lg': {
-        width: '3em',
-        height: '3em',
+        width: '2.75em',
+        height: '2.75em',
       },
     },
 

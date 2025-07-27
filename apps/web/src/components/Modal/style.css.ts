@@ -1,16 +1,16 @@
 import { style } from '@vanilla-extract/css';
 
 import { theme } from '@repo/ui/themes';
-import { spacing } from '@repo/ui/tokens';
 
 import { STYLE_VARS } from '@/styles/vars.css';
 
 export const container = style({
-  position: 'sticky',
-  top: STYLE_VARS.STICKY_JOB_POSTING_FILTER_TOP,
-  zIndex: '10',
+  position: 'fixed',
+  top: STYLE_VARS.NAVBAR_HEIGHT,
 
-  padding: `${spacing['3xl']} 0`,
+  height: '100%',
+  width: '100%',
+  maxWidth: STYLE_VARS.CONTAINER_WIDTH,
 
   backgroundColor: `rgb(${theme.color.background})`,
 });
