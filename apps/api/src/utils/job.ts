@@ -1,4 +1,4 @@
-import { JOB_ID, JOB_KEYWORD } from 'src/constats/job';
+import { JOB_ID, JOB_KEYWORD, JOB_KEYWORD_EXACT } from 'src/constats/job';
 
 import { sanitizeText } from './parser';
 
@@ -10,6 +10,14 @@ export const getJobIdByKeyword = (body: string): number => {
   for (const job in JOB_KEYWORD) {
     for (const keyword of JOB_KEYWORD[job as keyof typeof JOB_KEYWORD]) {
       if (sanitizeText(body).includes(keyword)) {
+        return JOB_ID[job as keyof typeof JOB_KEYWORD];
+      }
+    }
+
+    for (const keyword of JOB_KEYWORD_EXACT[
+      job as keyof typeof JOB_KEYWORD_EXACT
+    ]) {
+      if (body.includes(keyword)) {
         return JOB_ID[job as keyof typeof JOB_KEYWORD];
       }
     }
