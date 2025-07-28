@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { JobPostingModule } from './modules/job-posting/job-posting.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AppService } from './app.service';
       database: process.env.DB_NAME,
       entities: [__dirname + '/**/*.entity.{ts,js}'],
     }),
+    JobPostingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
