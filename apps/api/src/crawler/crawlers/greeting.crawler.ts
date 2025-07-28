@@ -11,7 +11,7 @@ const headers = {
   'accept-language': 'ko-KR,ko;q=0.9',
 };
 
-interface Greetingposting {
+interface GreetingPosting {
   openingId: number;
   job: string;
   title: string;
@@ -26,7 +26,7 @@ interface GreetingPostingsResponse {
         queries: {
           queryHash: string;
           state: {
-            data: Greetingposting[];
+            data: GreetingPosting[];
           };
         }[];
       };
