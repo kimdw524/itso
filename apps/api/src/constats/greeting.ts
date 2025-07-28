@@ -3,7 +3,7 @@ interface Greething {
   url: string;
 }
 
-export const GREETING_LIST: Greething[] = [
+export const GREETING_LIST = [
   { name: '현대오토에버', url: 'https://career.hyundai-autoever.com/ko/apply' },
   { name: '와드', url: 'https://career.catchtable.co.kr/ko/jobs' },
   { name: '리디', url: 'https://ridi.career.greetinghr.com/ko/recruit' },
@@ -83,4 +83,6 @@ export const GREETING_LIST: Greething[] = [
     name: '두잇',
     url: 'https://teamdoeat.career.greetinghr.com/ko/jobposting',
   },
-];
+  { name: '화이트큐브', url: 'https://recruit.whitecube.co.kr/ko/recruit' },
+  { name: '모두싸인', url: 'https://recruit.modusign.co.kr/ko/apply' },
+] satisfies Greething[];
