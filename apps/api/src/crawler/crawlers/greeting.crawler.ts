@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { EMPLOYMENT_TYPE } from '@/constats/job';
 import { removeHTMLAttributes, stripHTML } from '@/utils/parser';
 
-import { Crawler, JobPosting, JobPostingDetail } from '../crawler.interface';
+import { JobPosting, JobPostingDetail } from '../crawler.interface';
 
 const headers = {
   accept:
@@ -13,7 +13,6 @@ const headers = {
 
 interface GreetingPosting {
   openingId: number;
-  job: string;
   title: string;
   openDate: string;
   dueDate: string | null;
@@ -35,7 +34,7 @@ interface GreetingPostingsResponse {
 }
 
 @Injectable()
-export class GreetingCrawler implements Crawler {
+export class GreetingCrawler {
   static getDescriptionValue(text: string, key: string): string | undefined {
     return text
       .split(`bVgotQ">${key}</span>`)?.[1]
@@ -110,12 +109,12 @@ export class GreetingCrawler implements Crawler {
 
     return postings.map((posting) => ({
       postingId: String(posting.openingId),
-      job: posting.job,
       title: posting.title,
       openDate: posting.openDate,
       dueDate: posting.dueDate,
       link: `https://${url.split('/')[2]}/ko/o/${posting.openingId}`,
       company,
+      site: 'greeting',
     }));
   }
 

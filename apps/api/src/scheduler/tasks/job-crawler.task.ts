@@ -42,37 +42,44 @@ export class JobCrawlerTask {
       const companyId = companies[post.company].id;
 
       void (async () => {
-        const isExists = await this.jobPostingService.isExists({
-          companyId,
-          postingId: post.postingId,
-        });
+        try {
+          const isExists = await this.jobPostingService.isExists({
+            companyId,
+            postingId: post.postingId,
+          });
 
-        if (isExists) {
-          return;
+          if (isExists) {
+            return;
+          }
+
+          const jobId = getJobIdByKeyword(post.title);
+
+          // IT 직군이 아닐 경우 등록하지 않는다.
+          if (jobId === 0) {
+            return;
+          }
+
+          const detail = await this.crawlerService.getJobPostingDetail(post);
+
+          await this.jobPostingService.create({
+            jobId,
+            companyId,
+            title: post.title,
+            link: post.link,
+            postingId: post.postingId,
+            openDate: new Date(post.openDate),
+            dueDate: post.dueDate === null ? undefined : new Date(post.dueDate),
+            description: detail.html,
+            employmentType: detail.employmentType,
+            minExperience: detail.minExperience,
+            maxExperience: detail.maxExperience,
+          });
+        } catch (error) {
+          Logger.error(
+            `${post.company} 회사 공고를 추가하지 못했습니다.`,
+            error,
+          );
         }
-
-        const jobId = getJobIdByKeyword(post.title);
-
-        // IT 직군이 아닐 경우 등록하지 않는다.
-        if (jobId === 0) {
-          return;
-        }
-
-        const detail = await this.crawlerService.getJobPostingDetail(post.link);
-
-        await this.jobPostingService.create({
-          jobId,
-          companyId,
-          title: post.title,
-          link: post.link,
-          postingId: post.postingId,
-          openDate: new Date(post.openDate),
-          dueDate: post.dueDate === null ? undefined : new Date(post.dueDate),
-          description: detail.html,
-          employmentType: detail.employmentType,
-          minExperience: detail.minExperience,
-          maxExperience: detail.maxExperience,
-        });
       })();
     }
   }
