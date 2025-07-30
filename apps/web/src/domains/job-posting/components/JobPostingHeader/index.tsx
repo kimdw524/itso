@@ -15,7 +15,6 @@ export const JobPostingHeader = ({ jobPosting }: JobPostingHeaderProps) => {
       className={s.container}
       sx={{ fontSize: { mobile: 'xs', desktop: 'md' } }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={jobPosting.company.logo} alt="logo" className={s.logo} />
       <Typography
         fontSize="2xl"
