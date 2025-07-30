@@ -1,15 +1,16 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
 
 import { Request } from 'express';
 
-import { AuthSessionGuard } from '../auth-session-guard/auth-session-gaurd';
 import { UserInfoDto } from './dto';
 
 @Controller('user')
 export class UserController {
   @Get()
-  @UseGuards(AuthSessionGuard)
   getUserInfo(@Req() req: Request): UserInfoDto {
-    return { email: req.session.user! };
+    return {
+      email: req.session.user?.email ?? null,
+      picture: req.session.user?.picture ?? null,
+    };
   }
 }

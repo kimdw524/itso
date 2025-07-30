@@ -1,3 +1,4 @@
 export class UserInfoDto {
-  email: string;
+  email: string | null;
+  picture: string | null;
 }

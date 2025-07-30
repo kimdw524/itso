@@ -15,7 +15,7 @@ interface GoogleTokenResponse {
   scope: string;
 }
 
-interface GoogleUserInfoResponse {
+export interface GoogleUserInfoResponse {
   sub: string;
   picture: string;
   email: string;
@@ -85,10 +85,10 @@ export class AuthService {
     return data.access_token;
   }
 
-  async authorizeWithGoogle(code: string) {
+  async authorizeWithGoogle(code: string): Promise<GoogleUserInfoResponse> {
     const accessToken = await this.getGoogleAccessToken(code);
     const userInfo = await this.getGoogleUserInfo(accessToken);
 
-    return userInfo.email;
+    return userInfo;
   }
 }

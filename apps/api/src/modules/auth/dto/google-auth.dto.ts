@@ -7,15 +7,6 @@ export class GoogleAuthCallbackDto {
 }
 
 export class GoogleAuthResponseDto {
-  user: {
-    id: string;
-    email: string;
-    name: string;
-    picture: string;
-  };
-  accessToken: string;
-}
-
-export class GoogleLoginUrlResponseDto {
-  loginUrl: string;
+  email: string;
+  picture: string;
 }
