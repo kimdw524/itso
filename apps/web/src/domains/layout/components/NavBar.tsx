@@ -1,14 +1,14 @@
 import {
-  Button,
   NavigationAside,
   NavigationBar,
   NavigationItem,
   NavigationLogo,
 } from '@repo/ui';
 
+import { AuthButton } from '@/domains/user/components/AuthButton';
 import { STYLE_VARS } from '@/styles/vars.css';
 
-export const NavBar = () => {
+export const NavBar = async () => {
   return (
     <NavigationBar size="md" style={{ height: STYLE_VARS.NAVBAR_HEIGHT }}>
       <NavigationLogo>
@@ -18,7 +18,7 @@ export const NavBar = () => {
       </NavigationLogo>
       <NavigationAside>
         <NavigationItem>
-          <Button>로그인</Button>
+          <AuthButton />
         </NavigationItem>
       </NavigationAside>
     </NavigationBar>
