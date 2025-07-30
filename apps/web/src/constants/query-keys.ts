@@ -8,4 +8,7 @@ export const QUERY_KEYS = {
       params,
     ],
   },
+  user: {
+    info: ['user', 'info'],
+  },
 };
