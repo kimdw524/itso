@@ -107,6 +107,19 @@ export class JobPostingService {
       qb.andWhere('posting.id < :cursor', { cursor });
     }
 
+    qb.addSelect([
+      'posting.id as id',
+      'posting.title as title',
+      'posting.openDate as openDate',
+      'posting.dueDate as dueDate',
+      'posting.jobId as jobId',
+      'posting.views as views',
+      'posting.bookmarks as bookmarks',
+      'posting.minExperience as minExperience',
+      'posting.maxExperience as maxExperience',
+      'posting.employmentType as employmentType',
+    ]);
+
     const data = await qb.getMany();
     const hasNext = data.length > limit;
     const slicedData = hasNext ? data.slice(0, limit) : data;
