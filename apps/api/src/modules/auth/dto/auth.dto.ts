@@ -1,4 +1,4 @@
-export class UserInfoDto {
+export class AuthResponseDto {
   email: string;
   profile: string | null;
 }

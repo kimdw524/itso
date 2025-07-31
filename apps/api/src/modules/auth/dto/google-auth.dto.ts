@@ -5,8 +5,3 @@ export class GoogleAuthCallbackDto {
   @IsNotEmpty()
   code: string;
 }
-
-export class GoogleAuthResponseDto {
-  email: string;
-  picture: string;
-}

@@ -11,7 +11,7 @@ import {
 import { Request } from 'express';
 
 import { AuthService, GoogleUserInfo } from './auth.service';
-import { GoogleAuthResponseDto } from './dto';
+import { AuthResponseDto } from './dto/auth.dto';
 
 export interface GoogleAuthResponse {
   user: GoogleUserInfo;
@@ -26,18 +26,17 @@ export class AuthController {
   async googleAuth(
     @Query('code') code: string,
     @Req() req: Request,
-  ): Promise<GoogleAuthResponseDto> {
+  ): Promise<AuthResponseDto> {
     if (!code) {
       throw new UnauthorizedException('Authorization code is required');
     }
 
-    try {
-      const result = await this.authService.authorizeWithGoogle(code);
-      req.session.user = { email: result.email, picture: result.picture };
-      return { email: result.email, picture: result.picture };
-    } catch (_) {
-      throw new UnauthorizedException('Google authentication failed');
-    }
+    const userInfo = await this.authService.authorizeWithGoogle(code);
+    const user = await this.authService.signIn(userInfo);
+
+    req.session.user = user.id;
+
+    return { email: user.email, profile: user.profile };
   }
 
   @Delete()
