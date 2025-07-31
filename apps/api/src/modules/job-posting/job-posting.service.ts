@@ -45,6 +45,14 @@ export class JobPostingService {
     return await this.jobPostingRepo.existsBy(data);
   }
 
+  async incrementBookmark(data: Partial<JobPosting>): Promise<void> {
+    await this.jobPostingRepo.increment(data, 'bookmarks', 1);
+  }
+
+  async decrementBookmark(data: Partial<JobPosting>): Promise<void> {
+    await this.jobPostingRepo.decrement(data, 'bookmarks', 1);
+  }
+
   async getFilteredPostings(
     filter: JobPostingFilterDto,
   ): Promise<CursorPaginatedResponse<JobPostingSummaryDto>> {

@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
+import { BookmarkModule } from './modules/bookmark/bookmark.module';
 import { JobPostingModule } from './modules/job-posting/job-posting.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -19,10 +20,12 @@ import { UserModule } from './modules/user/user.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [__dirname + '/**/*.entity.{ts,js}'],
+      synchronize: true,
     }),
     JobPostingModule,
     AuthModule,
     UserModule,
+    BookmarkModule,
   ],
   controllers: [AppController],
   providers: [AppService],

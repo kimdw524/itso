@@ -36,14 +36,17 @@ export class JobPosting {
   })
   dueDate?: Date;
 
-  @Column({ name: 'link', length: 2048 })
+  @Column({ length: 2048 })
   link: string;
 
   @Column({ name: 'job_id', type: 'smallint' })
   jobId: number;
 
-  @Column({ name: 'views', default: 0 })
+  @Column({ default: 0 })
   views: number;
+
+  @Column({ default: 0 })
+  bookmarks: number;
 
   @Column({ name: 'min_experience', type: 'tinyint' })
   minExperience: number;
