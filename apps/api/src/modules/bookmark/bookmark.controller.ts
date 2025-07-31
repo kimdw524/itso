@@ -27,6 +27,23 @@ export class BookmarkController {
   }
 
   @UseGuards(AuthSessionGuard)
+  @Get('/company/:id')
+  async isCompanyBookmarked(
+    @Req() req: Request,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    const userId = req.session.user!;
+
+    return {
+      isBookmarked: await this.bookmarkService.isExists({
+        userId,
+        targetId: id,
+        targetType: 'company',
+      }),
+    };
+  }
+
+  @UseGuards(AuthSessionGuard)
   @Post('/company/:id')
   async bookmarkCompany(
     @Req() req: Request,
@@ -64,6 +81,23 @@ export class BookmarkController {
     const userId = req.session.user!;
 
     return await this.bookmarkService.findBookmarkedJobPosting({ userId });
+  }
+
+  @UseGuards(AuthSessionGuard)
+  @Get('/job-posting/:id')
+  async isJobPostingBookmarked(
+    @Req() req: Request,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    const userId = req.session.user!;
+
+    return {
+      isBookmarked: await this.bookmarkService.isExists({
+        userId,
+        targetId: id,
+        targetType: 'job-posting',
+      }),
+    };
   }
 
   @UseGuards(AuthSessionGuard)
