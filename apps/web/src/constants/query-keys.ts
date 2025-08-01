@@ -1,3 +1,4 @@
+import type { FetchIsBookmarkedParams } from '@/api/bookmark/fetchIsBookmarked.client';
 import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList.client';
 
 export const QUERY_KEYS = {
@@ -11,4 +12,9 @@ export const QUERY_KEYS = {
   user: {
     info: ['user', 'info'],
   },
+  bookmark: (params: FetchIsBookmarkedParams) => [
+    'bookmark',
+    params.type,
+    params.id,
+  ],
 };
