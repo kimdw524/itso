@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Controller,
   Delete,
   Get,
@@ -50,6 +51,16 @@ export class BookmarkController {
     @Param('id', ParseIntPipe) id: number,
   ) {
     const userId = req.session.user!;
+
+    if (
+      await this.bookmarkService.isExists({
+        userId,
+        targetId: id,
+        targetType: 'company',
+      })
+    ) {
+      throw new ConflictException();
+    }
 
     return await this.bookmarkService.create({
       userId,
@@ -107,6 +118,16 @@ export class BookmarkController {
     @Param('id', ParseIntPipe) id: number,
   ) {
     const userId = req.session.user!;
+
+    if (
+      await this.bookmarkService.isExists({
+        userId,
+        targetId: id,
+        targetType: 'job-posting',
+      })
+    ) {
+      throw new ConflictException();
+    }
 
     return await this.bookmarkService.create({
       userId,
