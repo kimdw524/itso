@@ -4,14 +4,13 @@ import { GoogleOAuthButton } from './GoogleOAuthButton';
 import { SignOutButton } from './SignOutButton';
 
 export const AuthButton = async () => {
-  const { email, picture } = await fetchUserInfo();
-
+  const userInfo = await fetchUserInfo();
   return (
     <>
-      {email === null ? (
+      {userInfo === null ? (
         <GoogleOAuthButton />
       ) : (
-        <SignOutButton picture={picture} />
+        <SignOutButton profile={userInfo.profile} />
       )}
     </>
   );
