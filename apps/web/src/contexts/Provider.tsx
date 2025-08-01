@@ -7,18 +7,11 @@ import { Provider as JotaiProvider } from 'jotai';
 
 import { UIProvider } from '@repo/ui';
 
+import { QUERY_CLIENT_CONFIG } from '@/constants/queryClient';
+
 import { ThemeProvider } from './ThemeProvider';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: Infinity,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    },
-  },
-});
+const queryClient = new QueryClient(QUERY_CLIENT_CONFIG);
 
 export const Provider = ({ children }: { children: ReactNode }) => {
   return (
