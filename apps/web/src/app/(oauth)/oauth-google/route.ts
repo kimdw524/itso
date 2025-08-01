@@ -22,15 +22,16 @@ export async function GET(request: NextRequest) {
   url.pathname = '/';
   const response = NextResponse.redirect(url);
 
-  const sessionId = result.headers
-    .getSetCookie()?.[0]
-    ?.split(`${USER.COOKIE_NAME}=`)?.[1]
-    ?.split(';')[0];
+  const sessionId = decodeURIComponent(
+    result.headers
+      .getSetCookie()?.[0]
+      ?.split(`${USER.COOKIE_NAME}=`)?.[1]
+      ?.split(';')[0] || '',
+  );
 
   if (sessionId) {
-    response.cookies.set({
-      name: USER.COOKIE_NAME,
-      value: sessionId,
+    response.cookies.set(USER.COOKIE_NAME, sessionId, {
+      domain: '.itso.kr',
       maxAge: 60 * 60 * 24 * 14,
     });
   }

@@ -24,10 +24,13 @@ async function bootstrap() {
       secret: 'your-secret-key',
       resave: false,
       saveUninitialized: false,
-      cookie: { maxAge: 3600000 },
+      cookie: {
+        domain: '.itso.kr',
+        maxAge: 3600000,
+      },
     }),
   );
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(3001);
 }
 bootstrap();

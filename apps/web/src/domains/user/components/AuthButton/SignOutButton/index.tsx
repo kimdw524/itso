@@ -5,10 +5,10 @@ import { useDialog } from '@repo/ui';
 import * as s from './style.css';
 
 interface SignOutButtonProps {
-  picture: string;
+  profile: string;
 }
 
-export const SignOutButton = ({ picture }: SignOutButtonProps) => {
+export const SignOutButton = ({ profile }: SignOutButtonProps) => {
   const { confirm } = useDialog();
 
   const handleClick = async () => {
@@ -19,9 +19,9 @@ export const SignOutButton = ({ picture }: SignOutButtonProps) => {
 
   return (
     <img
-      src={picture}
+      src={profile}
       alt="profile"
-      className={s.picture}
+      className={s.profile}
       draggable={false}
       onClick={handleClick}
     />

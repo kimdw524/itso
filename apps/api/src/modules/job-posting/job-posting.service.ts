@@ -45,6 +45,14 @@ export class JobPostingService {
     return await this.jobPostingRepo.existsBy(data);
   }
 
+  async incrementBookmark(data: Partial<JobPosting>): Promise<void> {
+    await this.jobPostingRepo.increment(data, 'bookmarks', 1);
+  }
+
+  async decrementBookmark(data: Partial<JobPosting>): Promise<void> {
+    await this.jobPostingRepo.decrement(data, 'bookmarks', 1);
+  }
+
   async getFilteredPostings(
     filter: JobPostingFilterDto,
   ): Promise<CursorPaginatedResponse<JobPostingSummaryDto>> {
@@ -98,6 +106,19 @@ export class JobPostingService {
     if (cursor !== undefined) {
       qb.andWhere('posting.id < :cursor', { cursor });
     }
+
+    qb.addSelect([
+      'posting.id as id',
+      'posting.title as title',
+      'posting.openDate as openDate',
+      'posting.dueDate as dueDate',
+      'posting.jobId as jobId',
+      'posting.views as views',
+      'posting.bookmarks as bookmarks',
+      'posting.minExperience as minExperience',
+      'posting.maxExperience as maxExperience',
+      'posting.employmentType as employmentType',
+    ]);
 
     const data = await qb.getMany();
     const hasNext = data.length > limit;

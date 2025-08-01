@@ -13,4 +13,7 @@ export class Company {
 
   @Column({ length: 512, nullable: true })
   logo: string;
+
+  @Column({ default: 0 })
+  bookmarks: number;
 }

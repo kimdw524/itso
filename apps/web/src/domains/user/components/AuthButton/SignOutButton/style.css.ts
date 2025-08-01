@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 
-export const picture = style({
+export const profile = style({
   width: '2em',
   height: '2em',
   borderRadius: '50%',

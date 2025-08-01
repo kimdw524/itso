@@ -1,4 +1,12 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common';
+
+import { User } from '../user/user.entity';
+import { UserService } from '../user/user.service';
+import { UserType } from '../user/user.types';
 
 export interface GoogleUserInfo {
   id: string;
@@ -28,7 +36,7 @@ export class AuthService {
   private readonly GOOGLE_CLIENT_SECRET: string;
   private readonly GOOGLE_REDIRECT_URI: string;
 
-  constructor() {
+  constructor(private readonly userService: UserService) {
     const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
     const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
     const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
@@ -85,10 +93,35 @@ export class AuthService {
     return data.access_token;
   }
 
-  async authorizeWithGoogle(code: string): Promise<GoogleUserInfoResponse> {
-    const accessToken = await this.getGoogleAccessToken(code);
-    const userInfo = await this.getGoogleUserInfo(accessToken);
+  async signIn(userInfo: GoogleUserInfoResponse): Promise<User> {
+    const user = await this.userService.find({
+      email: userInfo.email,
+      type: 'google',
+    });
+    if (user !== null) {
+      return user;
+    }
+    const newUser = await this.userService.create({
+      email: userInfo.email,
+      profile: userInfo.picture,
+      type: 'google',
+    });
 
-    return userInfo;
+    if (newUser === null) {
+      throw new InternalServerErrorException('sign up failed');
+    }
+
+    return newUser;
+  }
+
+  async authorizeWithGoogle(code: string): Promise<GoogleUserInfoResponse> {
+    try {
+      const accessToken = await this.getGoogleAccessToken(code);
+      const userInfo = await this.getGoogleUserInfo(accessToken);
+
+      return userInfo;
+    } catch {
+      throw new UnauthorizedException('Google authentication failed');
+    }
   }
 }
