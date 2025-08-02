@@ -17,11 +17,6 @@ export const useRemoveBookmark = ({ type, id }: UseRemoveBookmarkProps) => {
 
   return useMutation({
     mutationFn: () => removeBookmark({ type, id }),
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey,
-      });
-    },
     onMutate: () => {
       queryClient.setQueryData(queryKey, {
         isBookmarked: false,

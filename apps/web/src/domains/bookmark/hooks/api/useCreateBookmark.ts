@@ -22,12 +22,11 @@ export const useCreateBookmark = ({ type, id }: UseAddBookmarkProps) => {
 
   return useMutation({
     mutationFn: () => createBookmark({ type, id }),
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey,
-      });
-    },
     onError: (error: Response) => {
+      queryClient.setQueryData(queryKey, {
+        isBookmarked: false,
+      } satisfies FetchIsBookmarkedResponse);
+
       if (error.status === 401) {
         alert(MESSAGE.BOOKMARK.SIGN_IN_REQUIRED);
       }

@@ -5,9 +5,7 @@ import { StarIcon } from 'lucide-react';
 import { Button } from '@repo/ui';
 import { color } from '@repo/ui/tokens';
 
-import { useCreateBookmark } from '@/domains/bookmark/hooks/api/useCreateBookmark';
-import { useFetchIsBookmarked } from '@/domains/bookmark/hooks/api/useFetchIsBookmarked';
-import { useRemoveBookmark } from '@/domains/bookmark/hooks/api/useRemoveBookmark';
+import { useToggleBookmark } from '@/domains/bookmark/hooks/api/useToggleBookmark';
 
 interface JobPostingBookmarkButtonProps {
   id: number;
@@ -16,29 +14,14 @@ interface JobPostingBookmarkButtonProps {
 export const JobPostingBookmarkButton = ({
   id,
 }: JobPostingBookmarkButtonProps) => {
-  const addBookmark = useCreateBookmark({ type: 'job-posting', id });
-  const removeBookmark = useRemoveBookmark({ type: 'job-posting', id });
-
-  const { data } = useFetchIsBookmarked({ type: 'job-posting', id });
-
-  const handleClick = () => {
-    const isPending = addBookmark.isPending || removeBookmark.isPending;
-
-    if (isPending) {
-      return;
-    }
-
-    if (data?.isBookmarked) {
-      removeBookmark.mutate();
-      return;
-    }
-
-    addBookmark.mutate();
-  };
+  const { isBookmarked, toggle } = useToggleBookmark({
+    type: 'job-posting',
+    id,
+  });
 
   return (
-    <Button size="icon-lg" color="secondary" onClick={handleClick}>
-      {data?.isBookmarked ? (
+    <Button size="icon-lg" color="secondary" onClick={toggle}>
+      {isBookmarked ? (
         <StarIcon fill={`rgb(${color.yellow[300]})`} stroke="0" />
       ) : (
         <StarIcon />
