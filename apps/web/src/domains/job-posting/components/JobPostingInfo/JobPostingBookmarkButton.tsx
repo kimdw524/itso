@@ -5,7 +5,7 @@ import { StarIcon } from 'lucide-react';
 import { Button } from '@repo/ui';
 import { color } from '@repo/ui/tokens';
 
-import { useAddBookmark } from '@/domains/bookmark/hooks/api/useAddBookmark';
+import { useCreateBookmark } from '@/domains/bookmark/hooks/api/useCreateBookmark';
 import { useFetchIsBookmarked } from '@/domains/bookmark/hooks/api/useFetchIsBookmarked';
 import { useRemoveBookmark } from '@/domains/bookmark/hooks/api/useRemoveBookmark';
 
@@ -16,7 +16,7 @@ interface JobPostingBookmarkButtonProps {
 export const JobPostingBookmarkButton = ({
   id,
 }: JobPostingBookmarkButtonProps) => {
-  const addBookmark = useAddBookmark({ type: 'job-posting', id });
+  const addBookmark = useCreateBookmark({ type: 'job-posting', id });
   const removeBookmark = useRemoveBookmark({ type: 'job-posting', id });
 
   const { data } = useFetchIsBookmarked({ type: 'job-posting', id });

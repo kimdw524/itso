@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import {
   fetchUserInfo,
   type FetchUserInfoResponse,
-} from '@/api/user/fetchUserInfo.server';
-import { QUERY_KEYS } from '@/constants/query-keys';
+} from '@/api/user/fetchUserInfo';
+import { QUERY_KEYS } from '@/constants/queryKeys';
 
 export const useUserInfo = () => {
   const { data } = useQuery<FetchUserInfoResponse>({

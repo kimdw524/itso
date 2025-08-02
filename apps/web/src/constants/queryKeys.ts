@@ -1,5 +1,5 @@
-import type { FetchIsBookmarkedParams } from '@/api/bookmark/fetchIsBookmarked.client';
-import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList.client';
+import type { FetchIsBookmarkedParams } from '@/api/bookmark/fetchIsBookmarked';
+import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList';
 
 export const QUERY_KEYS = {
   'job-posting': {

@@ -1,12 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { AxiosError } from 'axios';
 
 import { useDialog } from '@repo/ui';
 
-import { addBookmark } from '@/api/bookmark/addBookmark.client';
-import type { FetchIsBookmarkedResponse } from '@/api/bookmark/fetchIsBookmarked.client';
+import { createBookmark } from '@/api/bookmark/createBookmark';
+import type { FetchIsBookmarkedResponse } from '@/api/bookmark/fetchIsBookmarked';
 import { MESSAGE } from '@/constants/message';
-import { QUERY_KEYS } from '@/constants/query-keys';
+import { QUERY_KEYS } from '@/constants/queryKeys';
 
 import type { BookmarkType } from '../../types/bookmark';
 
@@ -15,20 +14,20 @@ interface UseAddBookmarkProps {
   id: number;
 }
 
-export const useAddBookmark = ({ type, id }: UseAddBookmarkProps) => {
+export const useCreateBookmark = ({ type, id }: UseAddBookmarkProps) => {
   const queryClient = useQueryClient();
   const { alert } = useDialog();
 
   const queryKey = QUERY_KEYS.bookmark({ type, id });
 
   return useMutation({
-    mutationFn: () => addBookmark({ type, id }),
+    mutationFn: () => createBookmark({ type, id }),
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey,
       });
     },
-    onError: (error: AxiosError) => {
+    onError: (error: Response) => {
       if (error.status === 401) {
         alert(MESSAGE.BOOKMARK.SIGN_IN_REQUIRED);
       }

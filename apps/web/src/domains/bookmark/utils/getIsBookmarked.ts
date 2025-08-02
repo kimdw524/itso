@@ -1,7 +1,7 @@
 import 'server-only';
 
-import { fetchIsBookmarked } from '@/api/bookmark/fetchIsBookmarked.server';
-import { fetchUserInfo } from '@/api/user/fetchUserInfo.server';
+import { fetchIsBookmarked } from '@/api/bookmark/fetchIsBookmarked';
+import { fetchUserInfo } from '@/api/user/fetchUserInfo';
 
 export const getIsBookmarked = async ({
   type,

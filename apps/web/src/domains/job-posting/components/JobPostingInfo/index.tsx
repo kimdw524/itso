@@ -33,8 +33,6 @@ export const JobPostingInfo = async ({
 
   const state = dehydrate(queryClient);
 
-  console.log(state);
-
   return (
     <Card
       sx={{

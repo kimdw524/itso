@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList.client';
+import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList';
 import { useQueryParams } from '@/hooks/useQueryParams';
 
 import { JOB_POSTING } from '../../constants/job-posting';

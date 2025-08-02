@@ -1,6 +1,6 @@
 import type { BookmarkType } from '@/domains/bookmark/types/bookmark';
 
-import { axiosInstance } from '../axiosInstance';
+import { fetcher } from '../fetcher';
 
 export interface RemoveBookmarkParams {
   type: BookmarkType;
@@ -14,9 +14,10 @@ export interface RemoveBookmarkResponse {
 export const removeBookmark = async (
   params: RemoveBookmarkParams,
 ): Promise<RemoveBookmarkResponse> => {
-  const res = await axiosInstance.delete<RemoveBookmarkResponse>(
+  const res = await fetcher<RemoveBookmarkResponse>(
     `/bookmark/${params.type}/${params.id}`,
+    { method: 'DELETE' },
   );
 
-  return res.data;
+  return await res.json();
 };

@@ -4,7 +4,7 @@ import type {
   JobPostingSummary,
 } from '@/domains/job-posting/types/job-posting';
 
-import { axiosInstance } from '../axiosInstance';
+import { fetcher } from '../fetcher';
 import type { CursorPaginatedResponse } from '../types';
 
 export type FetchJobPostingListResponse =
@@ -24,12 +24,10 @@ export interface FetchJobPostingListParams {
 export const fetchJobPostingList = async (
   params: FetchJobPostingListParams,
 ) => {
-  const res = await axiosInstance.get<FetchJobPostingListResponse>(
-    '/job-posting',
-    {
-      params,
-    },
-  );
+  const res = await fetcher<FetchJobPostingListResponse>('/job-posting', {
+    method: 'GET',
+    params,
+  });
 
-  return res.data;
+  return await res.json();
 };
