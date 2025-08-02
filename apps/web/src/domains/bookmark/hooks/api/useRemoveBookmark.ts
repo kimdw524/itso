@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import type { FetchIsBookmarkedResponse } from '@/api/bookmark/fetchIsBookmarked.client';
-import { removeBookmark } from '@/api/bookmark/removeBookmark.client';
-import { QUERY_KEYS } from '@/constants/query-keys';
+import type { FetchIsBookmarkedResponse } from '@/api/bookmark/fetchIsBookmarked';
+import { removeBookmark } from '@/api/bookmark/removeBookmark';
+import { QUERY_KEYS } from '@/constants/queryKeys';
 
 import type { BookmarkType } from '../../types/bookmark';
 
@@ -17,11 +17,6 @@ export const useRemoveBookmark = ({ type, id }: UseRemoveBookmarkProps) => {
 
   return useMutation({
     mutationFn: () => removeBookmark({ type, id }),
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey,
-      });
-    },
     onMutate: () => {
       queryClient.setQueryData(queryKey, {
         isBookmarked: false,

@@ -1,6 +1,6 @@
 import { Box } from '@repo/ui';
 
-import { fetchJobPosting } from '@/api/job-posting/fetchJobPosting.server';
+import { fetchJobPosting } from '@/api/job-posting/fetchJobPosting';
 import { JobPostingDescription } from '@/domains/job-posting/components/JobPostingDescription';
 import { JobPostingHeader } from '@/domains/job-posting/components/JobPostingHeader';
 import { JobPostingInfo } from '@/domains/job-posting/components/JobPostingInfo';

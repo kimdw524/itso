@@ -4,8 +4,8 @@ import {
   fetchIsBookmarked,
   type FetchIsBookmarkedParams,
   type FetchIsBookmarkedResponse,
-} from '@/api/bookmark/fetchIsBookmarked.client';
-import { QUERY_KEYS } from '@/constants/query-keys';
+} from '@/api/bookmark/fetchIsBookmarked';
+import { QUERY_KEYS } from '@/constants/queryKeys';
 
 export const fetchIsBookmarkQueryOptions = (
   params: FetchIsBookmarkedParams,

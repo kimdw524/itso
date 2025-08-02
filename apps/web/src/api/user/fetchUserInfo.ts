@@ -8,13 +8,10 @@ export type FetchUserInfoResponse = {
 } | null;
 
 export const fetchUserInfo = async (): Promise<FetchUserInfoResponse> => {
-  const response = await fetcher(
-    `${process.env.API_BASE_URL}/user`,
-    {
-      method: 'GET',
-    },
-    false,
-  );
+  const response = await fetcher(`/user`, {
+    method: 'GET',
+    throwOnError: false,
+  });
 
   if (response.ok === false) {
     return null;

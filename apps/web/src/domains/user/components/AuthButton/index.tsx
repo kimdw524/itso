@@ -1,4 +1,4 @@
-import { fetchUserInfo } from '@/api/user/fetchUserInfo.server';
+import { fetchUserInfo } from '@/api/user/fetchUserInfo';
 
 import { GoogleOAuthButton } from './GoogleOAuthButton';
 import { SignOutButton } from './SignOutButton';

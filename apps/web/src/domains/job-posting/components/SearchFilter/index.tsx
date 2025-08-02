@@ -5,7 +5,7 @@ import { useRef, type ReactNode } from 'react';
 import { Box, ScrollArea } from '@repo/ui';
 import { useOverlay } from '@repo/utils';
 
-import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList.client';
+import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList';
 import { CheckboxModal } from '@/components/CheckboxModal';
 import { DisableWrapper } from '@/components/DisableWrapper';
 import { FilterButton } from '@/components/FilterButton';

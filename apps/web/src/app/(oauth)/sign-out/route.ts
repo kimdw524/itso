@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
-import { signOut } from '@/api/user/signOut.server';
+import { signOut } from '@/api/user/signOut';
 import { USER } from '@/domains/user/constants/user';
 
 export const dynamic = 'force-dynamic';

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { type FetchIsBookmarkedParams } from '@/api/bookmark/fetchIsBookmarked.client';
+import type { FetchIsBookmarkedParams } from '@/api/bookmark/fetchIsBookmarked';
 
 import { fetchIsBookmarkQueryOptions } from '../../queries';
 
