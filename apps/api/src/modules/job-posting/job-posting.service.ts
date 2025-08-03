@@ -6,7 +6,9 @@ import { Repository } from 'typeorm';
 
 import { CursorPaginatedResponse } from '@/types/pagination';
 
+import { Bookmark } from '../bookmark/bookmark.entity';
 import { JobPostingFilterDto, JobPostingSummaryDto } from './dto';
+import { BookmarkedJobPostingFilterDto } from './dto/bookmarked-job-posting-filter.dto';
 import { JobPostingDto } from './dto/job-posting.dto';
 import { JobPosting } from './job-posting.entity';
 
@@ -53,7 +55,103 @@ export class JobPostingService {
     await this.jobPostingRepo.decrement(data, 'bookmarks', 1);
   }
 
+  async getBookmarkedPostings(
+    userId: number | undefined,
+    filter: BookmarkedJobPostingFilterDto,
+  ): Promise<CursorPaginatedResponse<JobPostingSummaryDto>> {
+    const { cursor, limit = 20 } = filter;
+
+    const qb = this.jobPostingRepo
+      .createQueryBuilder('posting')
+      .innerJoin(
+        Bookmark,
+        'bookmark',
+        `bookmark.userId = :userId AND bookmark.targetType = 'job-posting' AND bookmark.targetId = posting.id`,
+        { userId },
+      )
+      .leftJoin('posting.company', 'company')
+      .select([
+        'company.id',
+        'company.name',
+        'company.logo',
+        'posting.id',
+        'posting.title',
+        'posting.openDate',
+        'posting.dueDate',
+        'posting.jobId',
+        'posting.views',
+        'posting.bookmarks',
+        'posting.minExperience',
+        'posting.maxExperience',
+        'posting.employmentType',
+        'bookmark.createdAt',
+      ])
+      .orderBy('bookmark.createdAt', 'DESC')
+      .limit(limit + 1)
+      .addSelect('true as isBookmarked')
+      .distinct(true);
+
+    if (cursor !== undefined) {
+      qb.andWhere('bookmark.createdAt < :cursor', { cursor });
+    }
+
+    const data: {
+      posting_id: number;
+      posting_title: string;
+      posting_open_date: string;
+      posting_due_date: string | null;
+      posting_job_id: number;
+      posting_views: number;
+      posting_bookmarks: number;
+      posting_min_experience: number;
+      posting_max_experience: number;
+      posting_employment_type: number;
+      company_id: number;
+      company_name: string;
+      company_logo: string;
+      bookmark_created_at: string;
+      isBookmarked: 0 | 1;
+    }[] = await qb.getRawMany();
+
+    const transformedData = data.map((i) => ({
+      id: i.posting_id,
+      title: i.posting_title,
+      openDate: i.posting_open_date,
+      dueDate: i.posting_due_date,
+      jobId: i.posting_job_id,
+      views: i.posting_views,
+      bookmarks: i.posting_bookmarks,
+      minExperience: i.posting_min_experience,
+      maxExperience: i.posting_max_experience,
+      employmentType: i.posting_employment_type,
+      company: {
+        id: i.company_id,
+        name: i.company_name,
+        logo: i.company_logo,
+      },
+      bookmark: {
+        createdAt: i.bookmark_created_at,
+      },
+      isBookmarked: i.isBookmarked == 1,
+    }));
+
+    const hasNext = transformedData.length > limit;
+    const slicedData = hasNext
+      ? transformedData.slice(0, limit)
+      : transformedData;
+    const nextCursor = hasNext
+      ? slicedData[slicedData.length - 1].bookmark.createdAt
+      : null;
+
+    return {
+      data: plainToInstance(JobPostingSummaryDto, slicedData),
+      nextCursor,
+      hasNext,
+    };
+  }
+
   async getFilteredPostings(
+    userId: number | undefined,
     filter: JobPostingFilterDto,
   ): Promise<CursorPaginatedResponse<JobPostingSummaryDto>> {
     const {
@@ -70,9 +168,24 @@ export class JobPostingService {
     const qb = this.jobPostingRepo
       .createQueryBuilder('posting')
       .leftJoin('posting.company', 'company')
-      .addSelect(['company.id', 'company.name', 'company.logo'])
+      .select([
+        'company.id',
+        'company.name',
+        'company.logo',
+        'posting.id',
+        'posting.title',
+        'posting.openDate',
+        'posting.dueDate',
+        'posting.jobId',
+        'posting.views',
+        'posting.bookmarks',
+        'posting.minExperience',
+        'posting.maxExperience',
+        'posting.employmentType',
+      ])
       .orderBy('posting.id', 'DESC')
-      .take(limit + 1);
+      .limit(limit + 1)
+      .distinct(true);
 
     if (companyId !== undefined) {
       qb.andWhere('company.id = :companyId', { companyId });
@@ -107,22 +220,60 @@ export class JobPostingService {
       qb.andWhere('posting.id < :cursor', { cursor });
     }
 
-    qb.addSelect([
-      'posting.id as id',
-      'posting.title as title',
-      'posting.openDate as openDate',
-      'posting.dueDate as dueDate',
-      'posting.jobId as jobId',
-      'posting.views as views',
-      'posting.bookmarks as bookmarks',
-      'posting.minExperience as minExperience',
-      'posting.maxExperience as maxExperience',
-      'posting.employmentType as employmentType',
-    ]);
+    if (userId == undefined) {
+      qb.addSelect('false AS `isBookmarked`');
+    } else {
+      qb.leftJoin(
+        Bookmark,
+        'bookmark',
+        `bookmark.userId = :userId AND bookmark.targetType = 'job-posting' AND bookmark.targetId = posting.id`,
+        { userId },
+      );
+      qb.addSelect(
+        'CASE WHEN bookmark.targetId IS NOT NULL THEN true ELSE false END as isBookmarked',
+      );
+    }
 
-    const data = await qb.getMany();
-    const hasNext = data.length > limit;
-    const slicedData = hasNext ? data.slice(0, limit) : data;
+    const data: {
+      posting_id: number;
+      posting_title: string;
+      posting_open_date: string;
+      posting_due_date: string | null;
+      posting_job_id: number;
+      posting_views: number;
+      posting_bookmarks: number;
+      posting_min_experience: number;
+      posting_max_experience: number;
+      posting_employment_type: number;
+      company_id: number;
+      company_name: string;
+      company_logo: string;
+      isBookmarked: 0 | 1;
+    }[] = await qb.getRawMany();
+
+    const transformedData = data.map((i) => ({
+      id: i.posting_id,
+      title: i.posting_title,
+      openDate: i.posting_open_date,
+      dueDate: i.posting_due_date,
+      jobId: i.posting_job_id,
+      views: i.posting_views,
+      bookmarks: i.posting_bookmarks,
+      minExperience: i.posting_min_experience,
+      maxExperience: i.posting_max_experience,
+      employmentType: i.posting_employment_type,
+      company: {
+        id: i.company_id,
+        name: i.company_name,
+        logo: i.company_logo,
+      },
+      isBookmarked: i.isBookmarked == 1,
+    }));
+
+    const hasNext = transformedData.length > limit;
+    const slicedData = hasNext
+      ? transformedData.slice(0, limit)
+      : transformedData;
     const nextCursor = hasNext ? slicedData[slicedData.length - 1].id : null;
 
     return {

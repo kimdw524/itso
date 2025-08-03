@@ -10,11 +10,11 @@ import { Share2Icon } from 'lucide-react';
 import { Box, Button, Card, CardContent } from '@repo/ui';
 
 import { QUERY_CLIENT_CONFIG } from '@/constants/queryClient';
+import { BookmarkButton } from '@/domains/bookmark/components/BookmarkButton';
 import { fetchIsBookmarkQueryOptions } from '@/domains/bookmark/queries';
 
 import type { JobPosting } from '../../types/job-posting';
 import { JobDetail } from './JobDetail';
-import { JobPostingBookmarkButton } from './JobPostingBookmarkButton';
 
 interface JobPostingInfoProps extends React.ComponentProps<typeof Card> {
   jobPosting: JobPosting;
@@ -49,7 +49,12 @@ export const JobPostingInfo = async ({
           <Box flex alignItems="center" gap="lg" flexShrink="0" marginTop="lg">
             {/* 북마크 버튼 */}
             <HydrationBoundary state={state}>
-              <JobPostingBookmarkButton id={jobPosting.id} />
+              <BookmarkButton
+                size="icon-lg"
+                color="secondary"
+                bookmarkType="job-posting"
+                targetId={jobPosting.id}
+              />
             </HydrationBoundary>
             <Button size="icon-lg" color="secondary">
               <Share2Icon />

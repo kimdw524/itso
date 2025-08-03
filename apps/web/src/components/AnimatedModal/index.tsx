@@ -15,7 +15,9 @@ export const AnimatedModal = ({ children }: AnimatedModal) => {
 
   return (
     <AnimatePresence mode="sync" initial={false}>
-      <FrozenRouter key={pathname}>{children}</FrozenRouter>
+      <FrozenRouter key={pathname}>
+        {pathname.startsWith('/post') ? children : null}
+      </FrozenRouter>
     </AnimatePresence>
   );
 };

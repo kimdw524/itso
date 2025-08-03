@@ -6,7 +6,7 @@ import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostin
 import { useQueryParams } from '@/hooks/useQueryParams';
 
 import { JOB_POSTING } from '../../constants/job-posting';
-import { useFetchJobPostingListSuspense } from '../../hooks/api/useJobPostingList';
+import { useFetchJobPostingListSuspense } from '../../hooks/api/useFetchJobPostingList';
 import { JobPostingItem } from '../JobPostingItem';
 import { JobPostingListLoading } from './loading';
 

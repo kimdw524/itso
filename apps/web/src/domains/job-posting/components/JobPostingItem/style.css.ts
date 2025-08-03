@@ -10,6 +10,12 @@ export const container = style({
   },
 });
 
+export const bookmarkButton = style({
+  position: 'absolute',
+  top: '0.75em',
+  right: '0.75em',
+});
+
 globalStyle(`${container} > *`, {
   animation: `${fadeIn} 0.3s linear`,
 });

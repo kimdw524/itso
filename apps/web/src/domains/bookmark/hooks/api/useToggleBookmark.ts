@@ -1,23 +1,24 @@
 import type { BookmarkType } from '../../types/bookmark';
 import { useCreateBookmark } from './useCreateBookmark';
-import { useFetchIsBookmarked } from './useFetchIsBookmarked';
 import { useRemoveBookmark } from './useRemoveBookmark';
 
 interface UseToggleBookmarkProps {
   type: BookmarkType;
   id: number;
+  isBookmarked: boolean;
 }
 
-export const useToggleBookmark = ({ type, id }: UseToggleBookmarkProps) => {
+export const useToggleBookmark = ({
+  type,
+  id,
+  isBookmarked,
+}: UseToggleBookmarkProps) => {
   const { mutate: addBookmark, isPending: isAddPending } = useCreateBookmark({
     type,
     id,
   });
   const { mutate: removeBookmark, isPending: isRemovePending } =
     useRemoveBookmark({ type, id });
-  const { data } = useFetchIsBookmarked({ type, id });
-
-  const isBookmarked = !!data?.isBookmarked;
 
   const toggle = () => {
     const isPending = isAddPending || isRemovePending;
@@ -34,5 +35,5 @@ export const useToggleBookmark = ({ type, id }: UseToggleBookmarkProps) => {
     addBookmark();
   };
 
-  return { isBookmarked, toggle };
+  return { toggle };
 };

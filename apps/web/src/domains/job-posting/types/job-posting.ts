@@ -19,6 +19,7 @@ export interface JobPostingSummary {
   maxExperience: number;
   employmentType: EmploymentType;
   company: CompanySummary;
+  isBookmarked: boolean;
 }
 
 export interface JobPosting {

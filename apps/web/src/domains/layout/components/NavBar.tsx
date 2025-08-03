@@ -1,8 +1,12 @@
+import Link from 'next/link';
+
 import {
   NavigationAside,
   NavigationBar,
+  NavigationDrawer,
   NavigationItem,
   NavigationLogo,
+  NavigationMenu,
 } from '@repo/ui';
 
 import { AuthButton } from '@/domains/user/components/AuthButton';
@@ -12,15 +16,23 @@ export const NavBar = async () => {
   return (
     <NavigationBar size="md" style={{ height: STYLE_VARS.NAVBAR_HEIGHT }}>
       <NavigationLogo>
-        {/* soft navigation을 비활성화 하기 위해 의도적으로 a태그 사용함 */}
-        {/* eslint-disable-next-line */}
-        <a href="/">Itso</a>
+        <Link href="/">Itso</Link>
       </NavigationLogo>
-      <NavigationAside>
-        <NavigationItem>
-          <AuthButton />
-        </NavigationItem>
-      </NavigationAside>
+      <NavigationDrawer>
+        <NavigationMenu>
+          <NavigationItem>
+            <Link href="/">채용공고</Link>
+          </NavigationItem>
+          <NavigationItem>
+            <Link href="/bookmark">북마크</Link>
+          </NavigationItem>
+        </NavigationMenu>
+        <NavigationAside>
+          <div>
+            <AuthButton />
+          </div>
+        </NavigationAside>
+      </NavigationDrawer>
     </NavigationBar>
   );
 };

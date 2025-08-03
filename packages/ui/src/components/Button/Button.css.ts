@@ -118,7 +118,7 @@ export const button = recipeWithLayer({
       },
 
       'icon-sm': {
-        width: '2.25em',
+        width: '2em',
         height: '2em',
       },
 

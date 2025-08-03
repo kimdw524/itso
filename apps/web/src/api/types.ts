@@ -6,8 +6,8 @@ export interface PaginatedResponse<T> {
   totalPages: number;
 }
 
-export interface CursorPaginatedResponse<T> {
+export interface CursorPaginatedResponse<T, C extends string | number> {
   data: T[];
-  nextCursor: number | null;
+  nextCursor: C | null;
   hasNext: boolean;
 }

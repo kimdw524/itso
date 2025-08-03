@@ -14,6 +14,8 @@ globalStyle('*', {
 });
 
 globalStyle('body', {
+  overflowY: 'scroll',
+
   vars: {
     [STYLE_VARS.CONTAINER_WIDTH]: '1440px',
     [STYLE_VARS.NAVBAR_HEIGHT]: '4em',

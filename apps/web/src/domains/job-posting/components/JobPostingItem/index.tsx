@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@repo/ui';
 
+import { OptimisticBookmarkButton } from '@/domains/bookmark/components/OptimisticBookmarkButton';
 import type { CompanySummary } from '@/domains/company/types/company';
 
 import type { JobPostingSummary } from '../../types/job-posting';
@@ -45,6 +46,17 @@ export const JobPostingItem = ({
               src={company.logo || ''}
               alt="logo"
               style={{ maxWidth: '75%', maxHeight: '100%' }}
+            />
+            {/* 북마크 버튼 */}
+            <OptimisticBookmarkButton
+              size="icon-md"
+              variant="ghost"
+              color="secondary"
+              className={s.bookmarkButton}
+              bookmarkType="job-posting"
+              targetId={jobPosting.id}
+              defaultValue={jobPosting.isBookmarked}
+              onClick={(e) => e.preventDefault()}
             />
           </Box>
           <CardContent sx={{ paddingX: '2xl', paddingY: '3xl' }}>
