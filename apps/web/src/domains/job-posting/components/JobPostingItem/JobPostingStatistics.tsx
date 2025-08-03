@@ -1,6 +1,8 @@
+'use client';
+
 import type { ReactNode } from 'react';
 
-import { EyeIcon, StarIcon } from 'lucide-react';
+import { EyeIcon } from 'lucide-react';
 
 import { Box, Typography } from '@repo/ui';
 
@@ -38,16 +40,11 @@ export const JobPostingStatistics = ({
           ? '상시채용'
           : `${formatTime(jobPosting.dueDate)} 마감 (${getDday(jobPosting.dueDate)})`}
       </Typography>
-      <Box flex gap="lg">
-        <Item
-          icon={<EyeIcon strokeWidth="1" />}
-          value={<>{jobPosting.views}</>}
-        />
-        <Item
-          icon={<StarIcon strokeWidth="1" />}
-          value={<>{jobPosting.views}</>}
-        />
-      </Box>
+      {/* 조회수 */}
+      <Item
+        icon={<EyeIcon strokeWidth="1" />}
+        value={<>{jobPosting.views}</>}
+      />
     </Box>
   );
 };

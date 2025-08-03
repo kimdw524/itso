@@ -1,4 +1,13 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Query,
+  Req,
+} from '@nestjs/common';
+
+import { Request } from 'express';
 
 import { JobPostingFilterDto } from './dto';
 import { JobPostingService } from './job-posting.service';
@@ -8,8 +17,12 @@ export class JobPostingController {
   constructor(private readonly jobPostingService: JobPostingService) {}
 
   @Get()
-  getFilteredPostings(@Query() filter: JobPostingFilterDto) {
-    return this.jobPostingService.getFilteredPostings(filter);
+  getFilteredPostings(
+    @Req() req: Request,
+    @Query() filter: JobPostingFilterDto,
+  ) {
+    const userId = req.session.user;
+    return this.jobPostingService.getFilteredPostings(userId, filter);
   }
 
   @Get(':id')

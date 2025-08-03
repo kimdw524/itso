@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 
 import { CursorPaginatedResponse } from '@/types/pagination';
 
+import { Bookmark } from '../bookmark/bookmark.entity';
 import { JobPostingFilterDto, JobPostingSummaryDto } from './dto';
 import { JobPostingDto } from './dto/job-posting.dto';
 import { JobPosting } from './job-posting.entity';
@@ -54,6 +55,7 @@ export class JobPostingService {
   }
 
   async getFilteredPostings(
+    userId: number | undefined,
     filter: JobPostingFilterDto,
   ): Promise<CursorPaginatedResponse<JobPostingSummaryDto>> {
     const {
@@ -70,9 +72,24 @@ export class JobPostingService {
     const qb = this.jobPostingRepo
       .createQueryBuilder('posting')
       .leftJoin('posting.company', 'company')
-      .addSelect(['company.id', 'company.name', 'company.logo'])
+      .select([
+        'company.id',
+        'company.name',
+        'company.logo',
+        'posting.id',
+        'posting.title',
+        'posting.openDate',
+        'posting.dueDate',
+        'posting.jobId',
+        'posting.views',
+        'posting.bookmarks',
+        'posting.minExperience',
+        'posting.maxExperience',
+        'posting.employmentType',
+      ])
       .orderBy('posting.id', 'DESC')
-      .take(limit + 1);
+      .limit(limit + 1)
+      .distinct(true);
 
     if (companyId !== undefined) {
       qb.andWhere('company.id = :companyId', { companyId });
@@ -106,23 +123,61 @@ export class JobPostingService {
     if (cursor !== undefined) {
       qb.andWhere('posting.id < :cursor', { cursor });
     }
+    console.log(userId);
+    if (userId == undefined) {
+      qb.addSelect('false AS `isBookmarked`');
+    } else {
+      qb.leftJoin(
+        Bookmark,
+        'bookmark',
+        `bookmark.userId = :userId AND bookmark.targetType = 'job-posting' AND bookmark.targetId = posting.id`,
+        { userId },
+      );
+      qb.addSelect(
+        'CASE WHEN bookmark.targetId IS NOT NULL THEN true ELSE false END as isBookmarked',
+      );
+    }
 
-    qb.addSelect([
-      'posting.id as id',
-      'posting.title as title',
-      'posting.openDate as openDate',
-      'posting.dueDate as dueDate',
-      'posting.jobId as jobId',
-      'posting.views as views',
-      'posting.bookmarks as bookmarks',
-      'posting.minExperience as minExperience',
-      'posting.maxExperience as maxExperience',
-      'posting.employmentType as employmentType',
-    ]);
+    const data: {
+      posting_id: number;
+      posting_title: string;
+      posting_open_date: string;
+      posting_due_date: string | null;
+      posting_job_id: number;
+      posting_views: number;
+      posting_bookmarks: number;
+      posting_min_experience: number;
+      posting_max_experience: number;
+      posting_employment_type: number;
+      company_id: number;
+      company_name: string;
+      company_logo: string;
+      isBookmarked: 0 | 1;
+    }[] = await qb.getRawMany();
 
-    const data = await qb.getMany();
-    const hasNext = data.length > limit;
-    const slicedData = hasNext ? data.slice(0, limit) : data;
+    const transformedData = data.map((i) => ({
+      id: i.posting_id,
+      title: i.posting_title,
+      openDate: i.posting_open_date,
+      dueDate: i.posting_due_date,
+      jobId: i.posting_job_id,
+      views: i.posting_views,
+      bookmarks: i.posting_bookmarks,
+      minExperience: i.posting_min_experience,
+      maxExperience: i.posting_max_experience,
+      employmentType: i.posting_employment_type,
+      company: {
+        id: i.company_id,
+        name: i.company_name,
+        logo: i.company_logo,
+      },
+      isBookmarked: i.isBookmarked === 1,
+    }));
+
+    const hasNext = transformedData.length > limit;
+    const slicedData = hasNext
+      ? transformedData.slice(0, limit)
+      : transformedData;
     const nextCursor = hasNext ? slicedData[slicedData.length - 1].id : null;
 
     return {

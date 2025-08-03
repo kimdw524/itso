@@ -1,5 +1,3 @@
-import 'server-only';
-
 import { fetcher } from '../fetcher';
 
 export type FetchUserInfoResponse = {
