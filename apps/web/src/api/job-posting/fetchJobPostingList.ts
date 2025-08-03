@@ -7,8 +7,10 @@ import type {
 import { fetcher } from '../fetcher';
 import type { CursorPaginatedResponse } from '../types';
 
-export type FetchJobPostingListResponse =
-  CursorPaginatedResponse<JobPostingSummary>;
+export type FetchJobPostingListResponse = CursorPaginatedResponse<
+  JobPostingSummary,
+  number
+>;
 
 export interface FetchJobPostingListParams {
   companyId?: number;
