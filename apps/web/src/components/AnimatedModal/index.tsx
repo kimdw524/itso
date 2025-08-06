@@ -11,7 +11,7 @@ interface AnimatedModal {
   children: ReactNode;
 }
 export const AnimatedModal = ({ children }: AnimatedModal) => {
-  const pathname = usePathname();
+  const pathname = usePathname() || '';
 
   return (
     <AnimatePresence mode="sync" initial={false}>

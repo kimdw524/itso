@@ -7,6 +7,7 @@ export const QUERY_CLIENT_CONFIG = {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
+      retry: false,
     },
   },
 } satisfies QueryClientConfig;

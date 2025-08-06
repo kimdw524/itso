@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 
   if (sessionId) {
     response.cookies.set(USER.COOKIE_NAME, sessionId, {
-      domain: '.itso.kr',
+      domain: `.${process.env.DOMAIN}`,
       maxAge: 60 * 60 * 24 * 14,
     });
   }
