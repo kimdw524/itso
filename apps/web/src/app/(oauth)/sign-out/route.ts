@@ -13,7 +13,10 @@ export async function GET(request: NextRequest) {
   try {
     await signOut();
   } finally {
-    response.cookies.delete(USER.COOKIE_NAME);
+    response.headers.set(
+      'Set-Cookie',
+      `${USER.COOKIE_NAME}=; Path=/; Domain=.${process.env.DOMAIN}; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
+    );
   }
 
   return response;
