@@ -1,0 +1,85 @@
+name: Deploy API
+
+on:
+  push:
+    # 정식 배포 전까지 main 대신 develop 브랜치 사용
+    branches: [develop]
+
+env:
+  APP_NAME: itso-api
+  APP_DIR: apps/api
+  NODE_VERSION: 20
+  PNPM_VERSION: 9.0.0
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install & Build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm -C ${{ env.APP_DIR }} run build
+
+      - name: Pack runtime
+        run: |
+          set -e
+          mkdir -p .release
+          cp -r $APP_DIR/dist .release/dist
+          cp $APP_DIR/package.json .release/
+          tar -C .release -czf app.tgz .
+
+      - name: Upload
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          source: 'app.tgz'
+          target: '/srv/${{ env.APP_NAME }}'
+
+      - name: Deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          script: |
+            set -e
+            APP_NAME="${{ env.APP_NAME }}"
+            BASE="/srv/$APP_NAME"
+
+            sudo mkdir -p "$BASE/current"
+            sudo tar xzf "$BASE/app.tgz" -C "$BASE/current"
+            cd "$BASE/current"
+
+            if ! command -v pnpm >/dev/null 2>&1; then
+              sudo corepack enable
+              sudo corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
+            fi
+
+            PNPM_HOME="$HOME/.local/share/pnpm" \
+            NODE_ENV=production pnpm install --prod --no-optional --ignore-scripts=false --prefer-offline=false --no-frozen-lockfile
+
+            if forever list | grep -q "$APP_NAME"; then
+              sudo forever restart "$APP_NAME"
+            else
+              sudo forever start --uid "$APP_NAME" -a -l "/var/log/$APP_NAME.log" -n "$APP_NAME" dist/main.js
+            fi
+
+            sudo rm -f "$BASE/app.tgz"
