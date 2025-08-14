@@ -76,7 +76,7 @@ jobs:
             PNPM_HOME="$HOME/.local/share/pnpm" \
             NODE_ENV=production pnpm install --prod --no-optional --ignore-scripts=false --prefer-offline=false --no-frozen-lockfile
 
-            if forever list | grep -q "$APP_NAME"; then
+            if sudo forever list | grep -q "$APP_NAME"; then
               sudo forever restart "$APP_NAME"
             else
               sudo forever start --uid "$APP_NAME" -a -l "/var/log/$APP_NAME.log" -n "$APP_NAME" dist/main.js
