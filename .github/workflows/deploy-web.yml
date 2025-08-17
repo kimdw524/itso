@@ -1,4 +1,4 @@
-name: Deploy API
+name: Deploy Web
 
 on:
   workflow_dispatch:
@@ -6,11 +6,11 @@ on:
     # 정식 배포 전까지 main 대신 develop 브랜치 사용
     branches: [develop]
     paths:
-      - 'apps/api/**'
+      - 'apps/web/**'
 
 env:
-  APP_NAME: itso-api
-  APP_DIR: apps/api
+  APP_NAME: itso-web
+  APP_DIR: apps/web
   NODE_VERSION: 20
   PNPM_VERSION: 9.0.0
 
