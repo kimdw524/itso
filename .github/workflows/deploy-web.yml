@@ -1,6 +1,7 @@
 name: Deploy Web
 
 on:
+  workflow_dispatch:
   push:
     # 정식 배포 전까지 main 대신 develop 브랜치 사용
     branches: [develop]
