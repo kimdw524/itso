@@ -4,6 +4,8 @@ on:
   push:
     # 정식 배포 전까지 main 대신 develop 브랜치 사용
     branches: [develop]
+    paths:
+      - 'apps/api/**'
 
 env:
   APP_NAME: itso-api
