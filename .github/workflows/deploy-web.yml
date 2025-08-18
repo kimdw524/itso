@@ -32,6 +32,10 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
+      - name: Create .env file from secret
+        run: |
+          echo "${{ secrets.WEB_ENV }}" > ${{ env.APP_DIR }}/.env
+
       - name: Install & Build
         run: |
           pnpm install --frozen-lockfile
@@ -40,8 +44,9 @@ jobs:
       - name: Pack runtime
         run: |
           set -e
-          mkdir -p .release
-          cp -r $APP_DIR/dist .release/dist
+          mkdir -p .release/dist
+          cp -r $APP_DIR/.next .release/dist
+          cp -r $APP_DIR/node_modules .release/dist/node_modules
           cp $APP_DIR/package.json .release/
           tar -C .release -czf app.tgz .
 
@@ -67,22 +72,23 @@ jobs:
             APP_NAME="${{ env.APP_NAME }}"
             BASE="/srv/$APP_NAME"
 
+            sudo rm -rf "$BASE/current"
             sudo mkdir -p "$BASE/current"
             sudo tar xzf "$BASE/app.tgz" -C "$BASE/current"
-            cd "$BASE/current"
+            cd "$BASE/current/dist/.next"
 
-            if ! command -v pnpm >/dev/null 2>&1; then
-              sudo corepack enable
-              sudo corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
-            fi
+            # 정적 파일 옮기기
+            sudo mkdir -p standalone/apps/web/public/_next
+            sudo mv static standalone/apps/web/public/_next/
 
-            PNPM_HOME="$HOME/.local/share/pnpm" \
-            NODE_ENV=production pnpm install --prod --no-optional --ignore-scripts=false --prefer-offline=false --no-frozen-lockfile
+            cd "standalone/apps/web"
+
+            echo "${{ secrets.WEB_ENV }}" > .env
 
             if sudo forever list | grep -q "$APP_NAME"; then
               sudo forever restart "$APP_NAME"
             else
-              sudo forever start --uid "$APP_NAME" -a -l "/var/log/$APP_NAME.log" -n "$APP_NAME" dist/main.js
+              sudo forever start --uid "$APP_NAME" -a -l "/var/log/$APP_NAME.log" -n "$APP_NAME" server.js
             fi
 
             sudo rm -f "$BASE/app.tgz"
