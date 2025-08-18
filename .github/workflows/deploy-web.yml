@@ -36,12 +36,14 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
           pnpm -C ${{ env.APP_DIR }} run build
+          pnpm deploy --filter ${{ env.APP_DIR }} --prod --no-optional
 
       - name: Pack runtime
         run: |
           set -e
-          mkdir -p .release
+          mkdir -p .release/dist
           cp -r $APP_DIR/.next .release/dist
+          cp -r $APP_DIR/node_modules .release/dist/node_modules
           cp $APP_DIR/package.json .release/
           tar -C .release -czf app.tgz .
 
@@ -71,18 +73,11 @@ jobs:
             sudo tar xzf "$BASE/app.tgz" -C "$BASE/current"
             cd "$BASE/current/dist"
 
+            # 정적 파일 옮기기
             sudo mkdir -p standalone/apps/web/public
             sudo mv static standalone/apps/web/public/
 
             cd "standalone/apps/web"
-
-            if ! command -v pnpm >/dev/null 2>&1; then
-              sudo corepack enable
-              sudo corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
-            fi
-
-            PNPM_HOME="$HOME/.local/share/pnpm" \
-            NODE_ENV=production pnpm install --prod --no-optional --ignore-scripts=false --prefer-offline=false --no-frozen-lockfile
 
             if sudo forever list | grep -q "$APP_NAME"; then
               sudo forever restart "$APP_NAME"
