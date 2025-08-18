@@ -32,11 +32,14 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
+      - name: Create .env file from secret
+        run: |
+          echo "${{ secrets.WEB_ENV }}" > ${{ env.APP_DIR }}/.env
+
       - name: Install & Build
         run: |
           pnpm install --frozen-lockfile
           pnpm -C ${{ env.APP_DIR }} run build
-          pnpm deploy --filter ${{ env.APP_DIR }} --prod --no-optional
 
       - name: Pack runtime
         run: |
@@ -69,15 +72,18 @@ jobs:
             APP_NAME="${{ env.APP_NAME }}"
             BASE="/srv/$APP_NAME"
 
+            sudo rm -rf "$BASE/current"
             sudo mkdir -p "$BASE/current"
             sudo tar xzf "$BASE/app.tgz" -C "$BASE/current"
-            cd "$BASE/current/dist"
+            cd "$BASE/current/dist/.next"
 
             # 정적 파일 옮기기
-            sudo mkdir -p standalone/apps/web/public
-            sudo mv static standalone/apps/web/public/
+            sudo mkdir -p standalone/apps/web/public/_next
+            sudo mv static standalone/apps/web/public/_next/
 
             cd "standalone/apps/web"
+
+            echo "${{ secrets.WEB_ENV }}" > .env
 
             if sudo forever list | grep -q "$APP_NAME"; then
               sudo forever restart "$APP_NAME"
