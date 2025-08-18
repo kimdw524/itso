@@ -41,7 +41,7 @@ jobs:
         run: |
           set -e
           mkdir -p .release
-          cp -r $APP_DIR/dist .release/dist
+          cp -r $APP_DIR/.next .release/dist
           cp $APP_DIR/package.json .release/
           tar -C .release -czf app.tgz .
 
@@ -78,6 +78,9 @@ jobs:
 
             PNPM_HOME="$HOME/.local/share/pnpm" \
             NODE_ENV=production pnpm install --prod --no-optional --ignore-scripts=false --prefer-offline=false --no-frozen-lockfile
+
+            sudo mkdir -p dist/standalone/apps/web/public
+            sudo mv dist/static dist/standalone/apps/web/public/
 
             if sudo forever list | grep -q "$APP_NAME"; then
               sudo forever restart "$APP_NAME"
