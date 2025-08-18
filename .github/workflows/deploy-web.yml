@@ -69,7 +69,12 @@ jobs:
 
             sudo mkdir -p "$BASE/current"
             sudo tar xzf "$BASE/app.tgz" -C "$BASE/current"
-            cd "$BASE/current"
+            cd "$BASE/current/dist"
+
+            sudo mkdir -p standalone/apps/web/public
+            sudo mv static standalone/apps/web/public/
+
+            cd "standalone/apps/web"
 
             if ! command -v pnpm >/dev/null 2>&1; then
               sudo corepack enable
@@ -79,13 +84,10 @@ jobs:
             PNPM_HOME="$HOME/.local/share/pnpm" \
             NODE_ENV=production pnpm install --prod --no-optional --ignore-scripts=false --prefer-offline=false --no-frozen-lockfile
 
-            sudo mkdir -p dist/standalone/apps/web/public
-            sudo mv dist/static dist/standalone/apps/web/public/
-
             if sudo forever list | grep -q "$APP_NAME"; then
               sudo forever restart "$APP_NAME"
             else
-              sudo forever start --uid "$APP_NAME" -a -l "/var/log/$APP_NAME.log" -n "$APP_NAME" dist/main.js
+              sudo forever start --uid "$APP_NAME" -a -l "/var/log/$APP_NAME.log" -n "$APP_NAME" server.js
             fi
 
             sudo rm -f "$BASE/app.tgz"
