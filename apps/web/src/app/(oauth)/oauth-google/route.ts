@@ -1,11 +1,11 @@
-import { NextResponse, type NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import { USER } from '@/domains/user/constants/user';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: NextRequest) {
-  const url = new URL(request.url);
+export async function GET() {
+  const url = new URL(process.env.BASE_URL);
   const code = url.searchParams.get('code');
 
   const result = await fetch(
