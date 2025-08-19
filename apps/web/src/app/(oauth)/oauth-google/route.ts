@@ -1,32 +1,30 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 
 import { USER } from '@/domains/user/constants/user';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
-  const url = new URL(process.env.BASE_URL);
+export async function GET(request: NextRequest) {
+  const url = new URL(request.url);
+  const baseUrl = process.env.BASE_URL;
   const code = url.searchParams.get('code');
 
   const result = await fetch(
     `${process.env.API_BASE_URL}/auth/google?code=${code}`,
+    { method: 'GET' },
   );
 
-  url.search = '';
-
   if (result.ok === false) {
-    url.pathname = '/error';
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(`${baseUrl}/error`);
   }
 
-  url.pathname = '/';
-  const response = NextResponse.redirect(url);
+  const response = NextResponse.redirect(baseUrl);
 
   const sessionId = decodeURIComponent(
     result.headers
       .getSetCookie()?.[0]
       ?.split(`${USER.COOKIE_NAME}=`)?.[1]
-      ?.split(';')[0] || '',
+      ?.split(';')?.[0] || '',
   );
 
   if (sessionId) {
