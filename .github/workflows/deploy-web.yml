@@ -47,6 +47,8 @@ jobs:
           mkdir -p .release/dist
           cp -r $APP_DIR/.next .release/dist
           cp -r $APP_DIR/node_modules .release/dist/node_modules
+          mkdir -p .release/dist/.next/standalone/apps/web/public
+          cp -r $APP_DIR/public/. .release/dist/.next/standalone/apps/web/public/
           cp $APP_DIR/package.json .release/
           tar -C .release -czf app.tgz .
 
