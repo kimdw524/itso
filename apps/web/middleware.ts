@@ -13,6 +13,6 @@ export function middleware(request: NextRequest) {
     !hasUserCookie &&
     protectedRoutes.some((route) => currentPath.startsWith(route))
   ) {
-    return NextResponse.redirect(new URL('/sign-in', request.url));
+    return NextResponse.redirect(new URL('/sign-in', process.env.BASE_URL));
   }
 }

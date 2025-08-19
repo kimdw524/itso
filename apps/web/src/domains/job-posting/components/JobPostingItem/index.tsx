@@ -42,11 +42,13 @@ export const JobPostingItem = ({
             paddingY="3xl"
             style={{ height: '9rem' }}
           >
-            <CardThumbnail
-              src={company.logo || ''}
-              alt="logo"
-              style={{ maxWidth: '75%', maxHeight: '100%' }}
-            />
+            {company.logo !== '' && (
+              <CardThumbnail
+                src={company.logo}
+                alt="logo"
+                style={{ maxWidth: '75%', maxHeight: '100%' }}
+              />
+            )}
             {/* 북마크 버튼 */}
             <OptimisticBookmarkButton
               size="icon-md"
