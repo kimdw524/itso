@@ -6,7 +6,6 @@ import {
 
 import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
-import { UserType } from '../user/user.types';
 
 export interface GoogleUserInfo {
   id: string;

@@ -187,6 +187,8 @@ export class JobPostingService {
       .limit(limit + 1)
       .distinct(true);
 
+    qb.andWhere('posting.closeDate IS NULL');
+
     if (companyId !== undefined) {
       qb.andWhere('company.id = :companyId', { companyId });
     }

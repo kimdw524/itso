@@ -74,6 +74,30 @@ export class NinehireCrawler {
     }));
   }
 
+  private getEmploymentType(
+    type?: [string],
+  ): (typeof EMPLOYMENT_TYPE)[keyof typeof EMPLOYMENT_TYPE] {
+    const employmentType = {
+      full_time: 1,
+      contractor: 2,
+      freelancer: 2,
+      intern: 3,
+    } satisfies Record<
+      string,
+      (typeof EMPLOYMENT_TYPE)[keyof typeof EMPLOYMENT_TYPE]
+    >;
+
+    if (type === undefined) {
+      return 1;
+    }
+
+    if (Object.hasOwn(employmentType, type[0])) {
+      return employmentType[type[0] as keyof typeof employmentType];
+    }
+
+    return 2;
+  }
+
   async getJobPostingDetail(url: string): Promise<JobPostingDetail> {
     const result = await fetch(url, {
       headers,
@@ -89,16 +113,6 @@ export class NinehireCrawler {
     const recruitment = json.props.pageProps.recruitment;
 
     const body = json.props.pageProps.jobPosting.content;
-
-    const employmentType = {
-      full_time: 1,
-      contractor: 2,
-      freelancer: 2,
-      intern: 3,
-    } satisfies Record<
-      (typeof recruitment.employmentType)[0],
-      (typeof EMPLOYMENT_TYPE)[keyof typeof EMPLOYMENT_TYPE]
-    >;
 
     return {
       html: removeHTMLAttributes(body),
@@ -116,11 +130,8 @@ export class NinehireCrawler {
             ? 99
             : recruitment.career.type === 'newcomer'
               ? 0
-              : recruitment.career.range!.below,
-      employmentType:
-        recruitment.employmentType[0] === undefined
-          ? 1
-          : employmentType[recruitment.employmentType[0]],
+              : recruitment.career.range!.below || 99,
+      employmentType: this.getEmploymentType(recruitment.employmentType),
     };
   }
 

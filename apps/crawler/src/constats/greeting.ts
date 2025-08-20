@@ -78,7 +78,6 @@ export const GREETING_LIST = [
   { name: '스푼랩스', url: 'https://career.spoonlabs.com/ko/recruiting' },
   { name: '두핸즈', url: 'https://career.dohands.com/ko/home' },
   { name: '메이크스타', url: 'https://career.makestarcorp.com/ko/process' },
-  { name: '카카오스타일', url: 'https://career.kakaostyle.com/ko/jobs' },
   {
     name: '두잇',
     url: 'https://teamdoeat.career.greetinghr.com/ko/jobposting',
