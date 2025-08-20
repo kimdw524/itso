@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository } from 'typeorm';
+import { IsNull, Repository, UpdateResult } from 'typeorm';
 
 import { JobPostingDto } from './dto/job-posting.dto';
 import { JobPosting } from './job-posting.entity';
@@ -39,5 +39,25 @@ export class JobPostingService {
 
   async isExists(data: Partial<JobPosting>): Promise<boolean> {
     return await this.jobPostingRepo.existsBy(data);
+  }
+
+  async getAllOpenPostings(): Promise<JobPostingDto[]> {
+    const jobPostings = await this.jobPostingRepo.find({
+      where: { closeDate: IsNull() },
+    });
+    return jobPostings;
+  }
+
+  async closePostings(
+    companyId: number,
+    postingId: string,
+  ): Promise<UpdateResult> {
+    const result = await this.jobPostingRepo.update(
+      { companyId, postingId },
+      {
+        closeDate: () => 'NOW()',
+      },
+    );
+    return result;
   }
 }
