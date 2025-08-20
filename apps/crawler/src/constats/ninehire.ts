@@ -81,4 +81,9 @@ export const NINEHIRE_LIST = [
     url: 'https://recruit.wemade.com',
     companyId: '83cdd300-13fa-11ee-a096-95051faa2e73',
   },
+  {
+    name: '카카오스타일',
+    url: 'https://career.kakaostyle.com',
+    companyId: '1573cfe0-2c72-11ef-950a-65a32c77a0c3',
+  },
 ] satisfies Ninehire[];
