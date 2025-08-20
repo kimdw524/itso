@@ -59,4 +59,11 @@ export class JobPosting {
 
   @Column({ type: 'text' })
   description: string;
+
+  @Column({
+    name: 'close_date',
+    type: 'datetime',
+    nullable: true,
+  })
+  closeDate?: Date;
 }
