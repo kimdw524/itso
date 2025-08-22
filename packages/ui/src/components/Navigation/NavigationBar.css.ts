@@ -16,12 +16,12 @@ export const navigationBar = recipeWithLayer({
     top: '0',
 
     width: '100%',
-    borderBottom: '1px solid #000',
+    borderBottom: `1px solid rgb(${theme.color['border.weak']})`,
 
     backgroundColor: `rgba(${(theme.color.background, 0.5)})`,
-    backdropFilter: 'blur(2rem) brightness(50%) saturate(50%)',
+    backdropFilter: 'blur(2rem) saturate(50%)',
 
-    color: `rgb(${theme.color.foreground})`,
+    color: `rgb(${theme.color.border})`,
 
     transition: 'border-bottom-color 0.2s ease',
 

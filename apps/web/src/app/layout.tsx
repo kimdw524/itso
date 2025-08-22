@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className="dark">
+      <body>
         <Provider>
           <NavBar />
           <main>

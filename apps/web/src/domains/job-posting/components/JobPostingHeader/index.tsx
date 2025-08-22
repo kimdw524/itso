@@ -23,9 +23,7 @@ export const JobPostingHeader = ({ jobPosting }: JobPostingHeaderProps) => {
       >
         {jobPosting.title}
       </Typography>
-      <Typography fontSize="lg" color="gray-400">
-        {jobPosting.company.name}
-      </Typography>
+      <Typography fontSize="md">{jobPosting.company.name}</Typography>
     </Box>
   );
 };

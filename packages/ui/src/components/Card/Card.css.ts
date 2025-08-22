@@ -57,11 +57,10 @@ export const card = recipeWithLayer({
       },
 
       glass: {
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        border: `1px solid rgb(${theme.color['border.weak']})`,
         borderRadius: '0.75rem',
 
-        background:
-          'linear-gradient(rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)',
+        background: `linear-gradient(rgba(${theme.color['card.gradient']}, 0.06) 0%, rgba(${theme.color['card.gradient']}, 0.02) 100%)`,
         backdropFilter: 'blur(1rem)',
 
         transition: 'all 0.4s ease',

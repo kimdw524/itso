@@ -9,7 +9,11 @@ const semanticColors = semanticColor.reduce(
     [`${current}-foreground`]: null,
   }),
   {},
-) as Record<(typeof semanticColor)[number] | `${(typeof semanticColor)[number]}-foreground`, null>;
+) as Record<
+  | (typeof semanticColor)[number]
+  | `${(typeof semanticColor)[number]}-foreground`,
+  null
+>;
 
 export const theme = createThemeContract({
   borderRadius: null,
@@ -17,6 +21,8 @@ export const theme = createThemeContract({
     background: null,
     foreground: null,
     border: null,
+    'border.weak': null,
+    'card.gradient': null,
     ...semanticColors,
   },
 });

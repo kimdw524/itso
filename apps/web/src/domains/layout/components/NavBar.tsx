@@ -12,6 +12,8 @@ import {
 import { AuthButton } from '@/domains/user/components/AuthButton';
 import { STYLE_VARS } from '@/styles/vars.css';
 
+import { ThemeToggleButton } from './ThemeToggleButton';
+
 export const NavBar = async () => {
   return (
     <NavigationBar size="md" style={{ height: STYLE_VARS.NAVBAR_HEIGHT }}>
@@ -28,6 +30,9 @@ export const NavBar = async () => {
           </NavigationItem>
         </NavigationMenu>
         <NavigationAside>
+          <div>
+            <ThemeToggleButton />
+          </div>
           <div>
             <AuthButton />
           </div>
