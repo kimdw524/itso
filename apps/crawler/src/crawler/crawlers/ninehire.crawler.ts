@@ -98,6 +98,39 @@ export class NinehireCrawler {
     return 2;
   }
 
+  private getExperience(
+    over: number,
+    below: number,
+    careerType?: NinehirePosting['career']['type'],
+  ): { minExperience: number; maxExperience: number } {
+    let minExperience = 0,
+      maxExperience = 0;
+
+    if (careerType === null) {
+      minExperience = 0;
+    } else if (careerType === 'experienced') {
+      minExperience = over;
+    } else {
+      minExperience = 0;
+    }
+
+    if (careerType === null) {
+      maxExperience = 99;
+    } else if (careerType === 'irrelevant') {
+      maxExperience = 99;
+    } else if (careerType === 'newcomer') {
+      maxExperience = 0;
+    } else {
+      maxExperience = below || 99;
+    }
+
+    if (minExperience > 0 && minExperience === maxExperience) {
+      maxExperience = 99;
+    }
+
+    return { minExperience, maxExperience };
+  }
+
   async getJobPostingDetail(url: string): Promise<JobPostingDetail> {
     const result = await fetch(url, {
       headers,
@@ -117,20 +150,12 @@ export class NinehireCrawler {
     return {
       html: removeHTMLAttributes(body),
       textForLLM: stripHTML(body),
-      minExperience:
-        recruitment.career === null
-          ? 0
-          : recruitment.career.type === 'experienced'
-            ? recruitment.career.range!.over
-            : 0,
-      maxExperience:
-        recruitment.career === null
-          ? 99
-          : recruitment.career.type === 'irrelevant'
-            ? 99
-            : recruitment.career.type === 'newcomer'
-              ? 0
-              : recruitment.career.range!.below || 99,
+      ...this.getExperience(
+        recruitment.career?.range?.over ?? 0,
+        recruitment.career?.range?.below ?? 99,
+        recruitment.career?.type,
+      ),
+
       employmentType: this.getEmploymentType(recruitment.employmentType),
     };
   }
