@@ -2,6 +2,8 @@ import { createThemeContract } from '@vanilla-extract/css';
 
 import { semanticColor } from '#tokens';
 
+import { lightColor } from '../tokens/scale/color';
+
 const semanticColors = semanticColor.reduce(
   (prev, current) => ({
     ...prev,
@@ -25,5 +27,6 @@ export const theme = createThemeContract({
     'card.gradient': null,
     shadow: null,
     ...semanticColors,
+    ...lightColor,
   },
 });

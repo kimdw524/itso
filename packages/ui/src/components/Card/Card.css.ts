@@ -1,7 +1,8 @@
 import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
-import { color, semanticColor } from '#tokens';
+import { semanticColor } from '#tokens';
 
+import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
 import { cardInteraction } from './CardInteraction.css';
 
 const semanticColors = semanticColor.reduce(
@@ -14,14 +15,14 @@ const semanticColors = semanticColor.reduce(
   {} as Record<(typeof semanticColor)[number], string>,
 );
 
-const scaleColors = Object.entries(color).reduce(
-  (prev, [key, value]) => ({
+const scaleColors = SCALE_COLOR.reduce(
+  (prev, value) => ({
     ...prev,
-    [key]: styleWithLayer({
-      backgroundColor: `color-mix(in srgb, rgb(${value[500]}) 20%, rgb(${theme.color.background}) 80%)`,
+    [value]: styleWithLayer({
+      backgroundColor: `color-mix(in srgb, rgb(${theme.color[value][500]}) 20%, rgb(${theme.color.background}) 80%)`,
     }),
   }),
-  {} as Record<keyof typeof color, string>,
+  {} as Record<ScaleColor, string>,
 );
 
 export const card = recipeWithLayer({

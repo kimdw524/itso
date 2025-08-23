@@ -1,3 +1,5 @@
+import { darkColor } from '../tokens/scale/color';
+
 export const darkThemeVars = {
   borderRadius: '6px',
   color: {
@@ -23,5 +25,6 @@ export const darkThemeVars = {
     warning: '202, 138, 4',
     'warning-foreground': '30, 23, 0',
     shadow: '0, 0, 0',
+    ...darkColor,
   },
 };

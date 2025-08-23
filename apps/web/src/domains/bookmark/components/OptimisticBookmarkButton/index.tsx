@@ -5,7 +5,7 @@ import { useState, type MouseEvent } from 'react';
 import { StarIcon } from 'lucide-react';
 
 import { Button } from '@repo/ui';
-import { color } from '@repo/ui/tokens';
+import { theme } from '@repo/ui/themes';
 
 import type { BookmarkType } from '@/domains/bookmark/types/bookmark';
 import { useUserInfo } from '@/domains/user/hooks/api/useUserInfo';
@@ -46,7 +46,7 @@ export const OptimisticBookmarkButton = ({
   return (
     <Button {...rest} onClick={handleClick}>
       {isBookmarked ? (
-        <StarIcon strokeWidth="0" fill={`rgb(${color.yellow[300]})`} />
+        <StarIcon strokeWidth="0" fill={`rgb(${theme.color.yellow[300]})`} />
       ) : (
         <StarIcon strokeWidth={1} />
       )}

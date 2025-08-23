@@ -1,3 +1,5 @@
+import { lightColor } from '../tokens/scale/color';
+
 export const lightThemeVars = {
   borderRadius: '6px',
   color: {
@@ -23,5 +25,6 @@ export const lightThemeVars = {
     warning: '251, 191, 36',
     'warning-foreground': '49, 36, 0',
     shadow: '188, 188, 188',
+    ...lightColor,
   },
 };
