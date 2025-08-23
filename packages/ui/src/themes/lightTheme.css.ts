@@ -22,5 +22,6 @@ export const lightThemeVars = {
     'danger-foreground': '255, 255, 255',
     warning: '251, 191, 36',
     'warning-foreground': '49, 36, 0',
+    shadow: '188, 188, 188',
   },
 };

@@ -23,6 +23,7 @@ export const theme = createThemeContract({
     border: null,
     'border.weak': null,
     'card.gradient': null,
+    shadow: null,
     ...semanticColors,
   },
 });

@@ -22,5 +22,6 @@ export const darkThemeVars = {
     'danger-foreground': '255, 255, 255',
     warning: '202, 138, 4',
     'warning-foreground': '30, 23, 0',
+    shadow: '0, 0, 0',
   },
 };
