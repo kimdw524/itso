@@ -25,7 +25,7 @@ export const NavBar = () => {
       >
         <NavigationLogo>
           <Link href="/">
-            <Logo width="auto" height="1.25em" />
+            <Logo height="1.25em" />
           </Link>
         </NavigationLogo>
         <NavigationDrawer>
