@@ -6,7 +6,7 @@ export const darkThemeVars = {
     primary: '36, 81, 173',
     'primary-foreground': '238, 238, 238',
     secondary: '32, 38, 45',
-    'secondary-foreground': '186, 212, 255',
+    'secondary-foreground': '212, 212, 213',
     muted: '30, 36, 44',
     'muted-foreground': '102, 112, 133',
     accent: '41, 52, 67',

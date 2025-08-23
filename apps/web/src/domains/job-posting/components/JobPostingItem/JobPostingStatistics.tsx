@@ -42,7 +42,7 @@ export const JobPostingStatistics = ({
       </Typography>
       {/* 조회수 */}
       <Item
-        icon={<EyeIcon strokeWidth="1" />}
+        icon={<EyeIcon strokeWidth="1" width="1em" height="1em" />}
         value={<>{jobPosting.views}</>}
       />
     </Box>

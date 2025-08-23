@@ -6,7 +6,7 @@ export const lightThemeVars = {
     primary: '42, 122, 255',
     'primary-foreground': '240, 248, 255',
     secondary: '240, 242, 245',
-    'secondary-foreground': '32, 32, 33',
+    'secondary-foreground': '48, 48, 49',
     muted: '234, 239, 245',
     'muted-foreground': '120, 120, 120',
     accent: '216, 226, 239',
