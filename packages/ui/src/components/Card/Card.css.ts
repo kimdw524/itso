@@ -1,7 +1,8 @@
 import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
-import { color, semanticColor } from '#tokens';
+import { semanticColor } from '#tokens';
 
+import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
 import { cardInteraction } from './CardInteraction.css';
 
 const semanticColors = semanticColor.reduce(
@@ -14,14 +15,14 @@ const semanticColors = semanticColor.reduce(
   {} as Record<(typeof semanticColor)[number], string>,
 );
 
-const scaleColors = Object.entries(color).reduce(
-  (prev, [key, value]) => ({
+const scaleColors = SCALE_COLOR.reduce(
+  (prev, value) => ({
     ...prev,
-    [key]: styleWithLayer({
-      backgroundColor: `color-mix(in srgb, rgb(${value[500]}) 20%, rgb(${theme.color.background}) 80%)`,
+    [value]: styleWithLayer({
+      backgroundColor: `color-mix(in srgb, rgb(${theme.color[value][500]}) 20%, rgb(${theme.color.background}) 80%)`,
     }),
   }),
-  {} as Record<keyof typeof color, string>,
+  {} as Record<ScaleColor, string>,
 );
 
 export const card = recipeWithLayer({
@@ -57,11 +58,10 @@ export const card = recipeWithLayer({
       },
 
       glass: {
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        border: `1px solid rgb(${theme.color['border.weak']})`,
         borderRadius: '0.75rem',
 
-        background:
-          'linear-gradient(rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)',
+        background: `linear-gradient(rgba(${theme.color['card.gradient']}, 0.06) 0%, rgba(${theme.color['card.gradient']}, 0.02) 100%)`,
         backdropFilter: 'blur(1rem)',
 
         transition: 'all 0.4s ease',

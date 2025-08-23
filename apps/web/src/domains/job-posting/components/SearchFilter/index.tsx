@@ -11,6 +11,7 @@ import { DisableWrapper } from '@/components/DisableWrapper';
 import { FilterButton } from '@/components/FilterButton';
 import { RangeModal } from '@/components/RangeModal';
 import { useQueryParams } from '@/hooks/useQueryParams';
+import { useSticky } from '@/hooks/useSticky';
 
 import {
   EMPLOYMENT_TYPE_KEY,
@@ -36,11 +37,12 @@ export const SearchFilter = ({
   const { getParam, setParam } = queryParams;
 
   const ref = useRef<HTMLDivElement>(null);
+  const { isStuck } = useSticky(ref);
 
   return (
     <Box
       ref={ref}
-      className={s.container}
+      className={s.container({ isStuck })}
       sx={{ fontSize: { mobile: 'sm', desktop: 'md' } }}
     >
       <ScrollArea>

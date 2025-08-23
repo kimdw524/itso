@@ -16,7 +16,9 @@ export const narrow = styleWithLayer({
 export const wide = styleWithLayer({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
   gap: '0.5em',
+  flexGrow: '1',
 
   '@container': {
     [`${navigationBarContainer} (max-width: 800px)`]: {

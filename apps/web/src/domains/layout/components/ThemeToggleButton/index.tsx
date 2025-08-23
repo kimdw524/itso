@@ -16,7 +16,12 @@ export const ThemeToggleButton = () => {
   };
 
   return (
-    <Button variant="contained" color="secondary" size="icon-md" onClick={toggleTheme}>
+    <Button
+      variant="ghost"
+      color="secondary"
+      size="icon-md"
+      onClick={toggleTheme}
+    >
       <div className={s.themeWrapper({ mode: 'light' })}>
         <SunIcon />
       </div>

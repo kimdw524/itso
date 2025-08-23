@@ -32,8 +32,5 @@ globalStyle('a', {
 });
 
 globalStyle('svg', {
-  width: '1em',
-  height: '1em',
-
   lineHeight: '0',
 });

@@ -2,7 +2,9 @@ import { createVar } from '@vanilla-extract/css';
 
 import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
-import { color, semanticColor } from '#tokens';
+import { semanticColor } from '#tokens';
+
+import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
 
 const backgroundVar = createVar();
 
@@ -18,16 +20,16 @@ const semanticColors = semanticColor.reduce(
   {} as Record<(typeof semanticColor)[number], string>,
 );
 
-const scaleColors = Object.entries(color).reduce(
-  (prev, [key, value]) => ({
+const scaleColors = SCALE_COLOR.reduce(
+  (prev, value) => ({
     ...prev,
-    [key]: styleWithLayer({
+    [value]: styleWithLayer({
       vars: {
-        [backgroundVar]: value[500],
+        [backgroundVar]: theme.color[value][500],
       },
     }),
   }),
-  {} as Record<keyof typeof color, string>,
+  {} as Record<ScaleColor, string>,
 );
 
 export const textField = recipeWithLayer({

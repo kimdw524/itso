@@ -2,6 +2,8 @@ import { createThemeContract } from '@vanilla-extract/css';
 
 import { semanticColor } from '#tokens';
 
+import { lightColor } from '../tokens/scale/color';
+
 const semanticColors = semanticColor.reduce(
   (prev, current) => ({
     ...prev,
@@ -9,7 +11,11 @@ const semanticColors = semanticColor.reduce(
     [`${current}-foreground`]: null,
   }),
   {},
-) as Record<(typeof semanticColor)[number] | `${(typeof semanticColor)[number]}-foreground`, null>;
+) as Record<
+  | (typeof semanticColor)[number]
+  | `${(typeof semanticColor)[number]}-foreground`,
+  null
+>;
 
 export const theme = createThemeContract({
   borderRadius: null,
@@ -17,6 +23,10 @@ export const theme = createThemeContract({
     background: null,
     foreground: null,
     border: null,
+    'border.weak': null,
+    'card.gradient': null,
+    shadow: null,
     ...semanticColors,
+    ...lightColor,
   },
 });

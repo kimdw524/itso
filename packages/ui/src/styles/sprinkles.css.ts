@@ -2,17 +2,17 @@ import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 
 import { sprinklesLayer } from '#styles';
 import { theme } from '#themes';
-import { breakpoint, color, spacing, typography } from '#tokens';
+import { breakpoint, lightColor, spacing, typography } from '#tokens';
 
-type ColorName = keyof typeof color;
-type ColorScale<C extends ColorName> = keyof (typeof color)[C];
+type ColorName = keyof typeof lightColor;
+type ColorScale<C extends ColorName> = keyof (typeof lightColor)[C];
 type Color = Record<`${ColorName}-${ColorScale<ColorName>}`, string>;
 type SemanticColor = Record<keyof typeof theme.color, string>;
 
 const colors = Object.assign(
   {},
   ...[
-    ...Object.entries(color).reduce(
+    ...Object.entries(lightColor).reduce(
       (prev, [name, scales]) => [
         ...prev,
         ...Object.entries(scales).map(

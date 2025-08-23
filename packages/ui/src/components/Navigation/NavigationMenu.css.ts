@@ -1,6 +1,6 @@
 import { styleWithLayer } from '#styleUtils';
 
-import { narrow, wide } from './NavigationDrawer.css';
+import { narrow } from './NavigationDrawer.css';
 
 export const navigationMenu = styleWithLayer({
   display: 'flex',
@@ -8,13 +8,6 @@ export const navigationMenu = styleWithLayer({
   gap: '0.5em',
 
   selectors: {
-    [`${wide} &`]: {
-      position: 'absolute',
-      left: '50%',
-
-      transform: 'translateX(-50%)',
-    },
-
     [`${narrow} &`]: {
       flexDirection: 'column',
       gap: '1em',

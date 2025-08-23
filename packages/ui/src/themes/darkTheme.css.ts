@@ -1,3 +1,5 @@
+import { darkColor } from '../tokens/scale/color';
+
 export const darkThemeVars = {
   borderRadius: '6px',
   color: {
@@ -6,19 +8,23 @@ export const darkThemeVars = {
     primary: '36, 81, 173',
     'primary-foreground': '238, 238, 238',
     secondary: '32, 38, 45',
-    'secondary-foreground': '186, 212, 255',
+    'secondary-foreground': '212, 212, 213',
     muted: '30, 36, 44',
     'muted-foreground': '102, 112, 133',
     accent: '41, 52, 67',
     'accent-foreground': '186, 212, 255',
     border: '38, 43, 51',
+    'border.weak': '32, 32, 32',
     card: '23, 23, 25',
     'card-foreground': '238, 238, 238',
+    'card.gradient': '255, 255, 255',
     success: '22, 163, 74',
     'success-foreground': '255, 255, 255',
     danger: '220, 38, 38',
     'danger-foreground': '255, 255, 255',
     warning: '202, 138, 4',
     'warning-foreground': '30, 23, 0',
+    shadow: '0, 0, 0',
+    ...darkColor,
   },
 };

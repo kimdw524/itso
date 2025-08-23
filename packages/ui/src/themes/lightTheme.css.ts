@@ -1,3 +1,5 @@
+import { lightColor } from '../tokens/scale/color';
+
 export const lightThemeVars = {
   borderRadius: '6px',
   color: {
@@ -6,19 +8,23 @@ export const lightThemeVars = {
     primary: '42, 122, 255',
     'primary-foreground': '240, 248, 255',
     secondary: '240, 242, 245',
-    'secondary-foreground': '32, 32, 33',
+    'secondary-foreground': '48, 48, 49',
     muted: '234, 239, 245',
     'muted-foreground': '120, 120, 120',
     accent: '216, 226, 239',
     'accent-foreground': '32, 32, 33',
     border: '203, 213, 225',
+    'border.weak': '220, 229, 237',
     card: '244, 247, 255',
     'card-foreground': '10, 10, 11',
+    'card.gradient': '179, 195, 255',
     success: '34, 197, 94',
     'success-foreground': '255, 255, 255',
     danger: '239, 68, 68',
     'danger-foreground': '255, 255, 255',
     warning: '251, 191, 36',
     'warning-foreground': '49, 36, 0',
+    shadow: '188, 188, 188',
+    ...lightColor,
   },
 };

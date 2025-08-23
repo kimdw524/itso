@@ -1,8 +1,10 @@
-import { createVar, keyframes } from '@vanilla-extract/css';
+import { createVar, globalStyle, keyframes, style } from '@vanilla-extract/css';
 
 import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
-import { color, semanticColor } from '#tokens';
+import { semanticColor } from '#tokens';
+
+import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
 
 const backgroundVar = createVar();
 const foregroundVar = createVar();
@@ -20,17 +22,17 @@ const semanticColors = semanticColor.reduce(
   {} as Record<(typeof semanticColor)[number], string>,
 );
 
-const scaleColors = Object.entries(color).reduce(
-  (prev, [key, value]) => ({
+const scaleColors = SCALE_COLOR.reduce(
+  (prev, value) => ({
     ...prev,
-    [key]: styleWithLayer({
+    [value]: styleWithLayer({
       vars: {
-        [backgroundVar]: value[500],
+        [backgroundVar]: theme.color[value][500],
         [foregroundVar]: theme.color.background,
       },
     }),
   }),
-  {} as Record<keyof typeof color, string>,
+  {} as Record<ScaleColor, string>,
 );
 
 const pulse = keyframes({
@@ -96,6 +98,12 @@ export const button = recipeWithLayer({
   },
 
   variants: {
+    hasIcon: {
+      true: {
+        gap: '0.5em',
+      },
+    },
+
     color: {
       ...semanticColors,
       ...scaleColors,
@@ -213,4 +221,21 @@ export const button = recipeWithLayer({
       },
     },
   },
+});
+
+export const icon = style({
+  lineHeight: '0',
+});
+
+globalStyle(`${icon} > *`, {
+  width: '1em',
+  height: '1em',
+  lineHeight: '0',
+
+  pointerEvents: 'none',
+});
+
+globalStyle(`${button.classNames.base} svg`, {
+  width: '1em',
+  height: '1em',
 });
