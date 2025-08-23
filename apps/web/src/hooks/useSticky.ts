@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 
 export const useSticky = <T extends HTMLElement>(
   targetRef: React.RefObject<T | null>,
-  top: number,
 ) => {
-  const [isPinned, setIsPinned] = useState(false);
+  const [isStuck, setIsStuck] = useState(false);
 
   useEffect(() => {
     const target = targetRef.current;
@@ -13,11 +12,11 @@ export const useSticky = <T extends HTMLElement>(
       return;
     }
 
-    target.style['top'] = `${top}px`;
+    const top = parseInt(getComputedStyle(target).top);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsPinned(!entry?.isIntersecting);
+        setIsStuck(!entry?.isIntersecting);
       },
       {
         rootMargin: `${-top - 1}px 0px 0px 0px`,
@@ -30,7 +29,7 @@ export const useSticky = <T extends HTMLElement>(
     return () => {
       observer.disconnect();
     };
-  }, [targetRef, top]);
+  }, [targetRef]);
 
-  return isPinned;
+  return { isStuck };
 };
