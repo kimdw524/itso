@@ -7,10 +7,6 @@ export const navigationBarContainer = createContainer();
 
 export const navigationBar = recipeWithLayer({
   base: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '0.5em',
     zIndex: '20',
     position: 'sticky',
     top: '0',
@@ -18,8 +14,8 @@ export const navigationBar = recipeWithLayer({
     width: '100%',
     borderBottom: `1px solid rgb(${theme.color['border.weak']})`,
 
-    backgroundColor: `rgba(${(theme.color.background, 0.5)})`,
-    backdropFilter: 'blur(2rem) saturate(50%)',
+    backgroundColor: `rgba(${theme.color.background}, 0.75)`,
+    backdropFilter: 'blur(2rem) saturate(150%)',
 
     color: `rgb(${theme.color.border})`,
 
@@ -32,17 +28,14 @@ export const navigationBar = recipeWithLayer({
     size: {
       sm: {
         height: '4em',
-        padding: '0 0.75em',
       },
 
       md: {
         height: '5em',
-        padding: '0 1em',
       },
 
       lg: {
         height: '6em',
-        padding: '0 1.25em',
       },
     },
   },
