@@ -1,4 +1,4 @@
-import { createVar, keyframes } from '@vanilla-extract/css';
+import { createVar, globalStyle, keyframes, style } from '@vanilla-extract/css';
 
 import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
@@ -96,6 +96,12 @@ export const button = recipeWithLayer({
   },
 
   variants: {
+    hasIcon: {
+      true: {
+        gap: '0.5em',
+      },
+    },
+
     color: {
       ...semanticColors,
       ...scaleColors,
@@ -213,4 +219,21 @@ export const button = recipeWithLayer({
       },
     },
   },
+});
+
+export const icon = style({
+  lineHeight: '0',
+});
+
+globalStyle(`${icon} > *`, {
+  width: '1em',
+  height: '1em',
+  lineHeight: '0',
+
+  pointerEvents: 'none',
+});
+
+globalStyle(`${button.classNames.base} svg`, {
+  width: '1em',
+  height: '1em',
 });
