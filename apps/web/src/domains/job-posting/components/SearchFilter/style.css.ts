@@ -15,6 +15,8 @@ export const container = recipe({
 
     backgroundColor: 'transparent',
 
+    transition: 'top 1ms',
+
     '::after': {
       position: 'absolute',
       top: '100%',

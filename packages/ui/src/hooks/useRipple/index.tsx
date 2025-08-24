@@ -22,6 +22,9 @@ export const useRipple = <T extends HTMLElement>(ref?: React.Ref<T>) => {
     const element = elementRef.current;
     const ripple = rippleRef.current;
 
+    let timer: ReturnType<typeof setTimeout>;
+    let isAnimationPending = false;
+
     let isFadeIn = false,
       isMouseDown = false,
       isTransitionEnd = true;
@@ -30,16 +33,16 @@ export const useRipple = <T extends HTMLElement>(ref?: React.Ref<T>) => {
       return;
     }
 
-    const handlePointerDown = (e: PointerEvent) => {
-      if (e.button !== 0 || !ripple || !isTransitionEnd) {
-        return;
-      }
+    const clearTimer = () => {
+      clearTimeout(timer);
+      isAnimationPending = false;
+    };
 
-      const x = e.offsetX,
-        y = e.offsetY;
-
-      const width = element.clientWidth / 2 + Math.abs(element.clientWidth / 2 - x),
-        height = element.clientHeight / 2 + Math.abs(element.clientHeight / 2 - y);
+    const runAnimation = (x: number, y: number) => {
+      const width =
+          element.clientWidth / 2 + Math.abs(element.clientWidth / 2 - x),
+        height =
+          element.clientHeight / 2 + Math.abs(element.clientHeight / 2 - y);
       const size = Math.round(Math.sqrt(width ** 2 + height ** 2) * 2);
 
       ripple.style.width = `${size}px`;
@@ -54,15 +57,43 @@ export const useRipple = <T extends HTMLElement>(ref?: React.Ref<T>) => {
       ripple.className = s.ripple({ animation: true });
       ripple.style.opacity = '1';
 
+      isAnimationPending = false;
       isFadeIn = true;
-      isMouseDown = true;
       isTransitionEnd = false;
+    };
+
+    const handleClick = (e: MouseEvent) => {
+      if (!isAnimationPending) {
+        return;
+      }
+
+      clearTimer();
+      runAnimation(e.offsetX, e.offsetY);
+    };
+
+    const handlePointerDown = (e: PointerEvent) => {
+      if (e.button !== 0 || !ripple || !isTransitionEnd) {
+        return;
+      }
+
+      isMouseDown = true;
+
+      if (e.pointerType === 'mouse') {
+        runAnimation(e.offsetX, e.offsetY);
+        return;
+      }
+
+      clearTimer();
+      isAnimationPending = true;
+      timer = setTimeout(() => runAnimation(e.offsetX, e.offsetY), 100);
     };
 
     const handlePointerUp = () => {
       if (!isMouseDown) {
         return;
       }
+
+      clearTimer();
 
       if (!isFadeIn) {
         ripple.style.opacity = '0';
@@ -87,12 +118,14 @@ export const useRipple = <T extends HTMLElement>(ref?: React.Ref<T>) => {
       }
     };
 
+    element.addEventListener('click', handleClick);
     element.addEventListener('pointerdown', handlePointerDown);
     element.addEventListener('pointerup', handlePointerUp);
     element.addEventListener('pointerleave', handlePointerUp);
     ripple.addEventListener('transitionend', handleTransitionEnd);
 
     return () => {
+      element.removeEventListener('click', handleClick);
       element.removeEventListener('pointerdown', handlePointerDown);
       element.removeEventListener('pointerup', handlePointerUp);
       element.removeEventListener('pointerleave', handlePointerUp);
@@ -102,7 +135,9 @@ export const useRipple = <T extends HTMLElement>(ref?: React.Ref<T>) => {
 
   return useMemo(
     () => ({
-      ripple: <div ref={rippleRef} className={s.ripple({ animation: false })} />,
+      ripple: (
+        <div ref={rippleRef} className={s.ripple({ animation: false })} />
+      ),
     }),
     [rippleRef],
   );

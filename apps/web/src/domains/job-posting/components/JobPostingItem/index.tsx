@@ -40,7 +40,7 @@ export const JobPostingItem = ({
             justifyContent="center"
             paddingX="2xl"
             paddingY="3xl"
-            style={{ height: '9rem' }}
+            style={{ height: '9em' }}
           >
             {company.logo !== '' && (
               <CardThumbnail
@@ -61,7 +61,12 @@ export const JobPostingItem = ({
               onClick={(e) => e.preventDefault()}
             />
           </Box>
-          <CardContent sx={{ paddingX: '2xl', paddingY: '3xl' }}>
+          <CardContent
+            sx={{
+              paddingX: { desktop: '2xl', mobile: 'xl' },
+              paddingY: { desktop: '3xl', mobile: '2xl' },
+            }}
+          >
             <Box
               flex
               flexDirection="column"
@@ -86,7 +91,12 @@ export const JobPostingItem = ({
                   {jobPosting.title}
                 </Typography>
                 {/* 태그 */}
-                <Box flex flexWrap="wrap" gap="md" marginY="2xl">
+                <Box
+                  flex
+                  flexWrap="wrap"
+                  gap="md"
+                  sx={{ marginY: { desktop: '2xl', mobile: 'lg' } }}
+                >
                   <ExperienceRangeChip
                     min={jobPosting.minExperience}
                     max={jobPosting.maxExperience}
