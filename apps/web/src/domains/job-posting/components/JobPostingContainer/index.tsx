@@ -2,6 +2,8 @@
 
 import { Suspense, useState } from 'react';
 
+import { Box } from '@repo/ui';
+
 import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList';
 import { useQueryParams } from '@/hooks/useQueryParams';
 
@@ -30,13 +32,16 @@ export const JobPostingContainer = () => {
       <SearchFilter queryParams={queryParams} isDisabled={isShowAll}>
         <ShowAllButton isShowAll={isShowAll} onClick={handleShowAllClick} />
       </SearchFilter>
-      <div className={s.container}>
+      <Box
+        className={s.container}
+        sx={{ fontSize: { mobile: 'sm', desktop: '1rem' } }}
+      >
         <Suspense fallback={<JobPostingListLoading />}>
           <JobPostingList
             queryParams={isShowAll ? emptyQueryParams : queryParams}
           />
         </Suspense>
-      </div>
+      </Box>
     </>
   );
 };
