@@ -22,7 +22,7 @@ export const useRipple = <T extends HTMLElement>(ref?: React.Ref<T>) => {
     const element = elementRef.current;
     const ripple = rippleRef.current;
 
-    let timer: ReturnType<typeof setTimeout> = 0;
+    let timer: ReturnType<typeof setTimeout>;
 
     let isFadeIn = false,
       isMouseDown = false,
