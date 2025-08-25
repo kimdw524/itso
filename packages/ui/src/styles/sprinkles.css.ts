@@ -38,6 +38,7 @@ export const colorProperties = defineProperties({
 });
 
 const size = {
+  auto: 'auto',
   '0': '0',
   '100%': '100%',
   '5em': '5em',
