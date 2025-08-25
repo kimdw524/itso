@@ -2,25 +2,35 @@
 
 import { useEffect, useState } from 'react';
 
-export const useIsScrolled = <T extends HTMLElement | typeof window>(element: T) => {
+export const useIsScrolled = <
+  T extends React.RefObject<HTMLElement | null> | typeof window,
+>(
+  element: T,
+) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
+    const target = element instanceof Window ? element : element.current;
+
+    if (target === null) {
+      return;
+    }
+
     const handleScroll = () => {
-      if (element instanceof Window) {
-        setIsScrolled(element.scrollY !== 0);
+      if (target instanceof Window) {
+        setIsScrolled(target.scrollY !== 0);
         return;
       }
 
-      setIsScrolled(element.scrollTop !== 0);
+      setIsScrolled(target.scrollTop !== 0);
     };
 
     handleScroll();
 
-    element.addEventListener('scroll', handleScroll);
+    target.addEventListener('scroll', handleScroll);
 
     return () => {
-      element.removeEventListener('scroll', handleScroll);
+      target.removeEventListener('scroll', handleScroll);
     };
   }, [element]);
 

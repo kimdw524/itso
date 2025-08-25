@@ -22,7 +22,7 @@ export const Modal = ({ children }: ModalProps) => {
       transition={{ duration: 0.2, ease: 'easeInOut' }}
       className={s.container}
     >
-      {children}
+      <div className={s.inner}>{children}</div>
     </motion.div>
   );
 };

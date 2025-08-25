@@ -16,22 +16,13 @@ export default async function JobPostingPage({
   const response = await fetchJobPosting({ id: Number(id) });
 
   return (
-    <Box className={s.container}>
-      <JobPostingHeader jobPosting={response} />
-      <Box
-        flex
-        gap="lg"
-        flexDirection={{ mobile: 'column', desktop: 'row-reverse' }}
-        padding="lg"
-        className={s.content}
-      >
-        <Box flexShrink="0">
-          <JobPostingInfo jobPosting={response} />
-        </Box>
-        <Box flexGrow="1" className={s.description}>
-          <JobPostingDescription description={response.description} />
-        </Box>
+    <>
+      <JobPostingHeader jobPosting={response}>
+        <JobPostingInfo jobPosting={response} />
+      </JobPostingHeader>
+      <Box padding="lg" className={s.content}>
+        <JobPostingDescription description={response.description} />
       </Box>
-    </Box>
+    </>
   );
 }
