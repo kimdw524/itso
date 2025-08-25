@@ -42,7 +42,7 @@ export const BookmarkButton = ({
       {isBookmarked ? (
         <StarIcon strokeWidth="0" fill={`rgb(${theme.color.yellow[300]})`} />
       ) : (
-        <StarIcon strokeWidth={1} />
+        <StarIcon strokeWidth={1.5} />
       )}
     </Button>
   );

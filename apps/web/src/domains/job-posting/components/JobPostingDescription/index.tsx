@@ -8,9 +8,16 @@ export const JobPostingDescription = ({
   description,
 }: JobPostingDescriptionProps) => {
   return (
-    <Box
-      dangerouslySetInnerHTML={{ __html: description }}
-      sx={{ lineHeight: 'lg', fontSize: 'lg', wordBreak: 'break-all' }}
-    />
+    <>
+      <Box
+        dangerouslySetInnerHTML={{ __html: description }}
+        sx={{
+          lineHeight: 'lg',
+          fontSize: 'lg',
+        }}
+      />
+      {/* JobPostingHeaderSimple 때문에 추가한 padding */}
+      <div style={{ height: '6rem' }} />
+    </>
   );
 };

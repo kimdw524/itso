@@ -37,16 +37,16 @@ globalStyle('main', {
 });
 
 globalStyle('*::-webkit-scrollbar', {
-  width: '0.5rem',
-  height: '0.5rem',
+  width: '0.25rem',
+  height: '0.25rem',
 });
 
 globalStyle('*::-webkit-scrollbar-thumb', {
-  backgroundColor: `rgba(${theme.color.accent}, 0.66)`,
+  backgroundColor: `rgb(${theme.color.border})`,
   borderRadius: theme.borderRadius,
 });
 globalStyle('*::-webkit-scrollbar-thumb:active', {
-  backgroundColor: `rgb(${theme.color.accent})`,
+  backgroundColor: `rgb(${theme.color['border.weak']})`,
 });
 
 globalStyle('*::-webkit-scrollbar-track', {
