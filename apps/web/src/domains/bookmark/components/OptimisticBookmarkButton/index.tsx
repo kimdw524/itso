@@ -8,7 +8,6 @@ import { Button } from '@repo/ui';
 import { theme } from '@repo/ui/themes';
 
 import type { BookmarkType } from '@/domains/bookmark/types/bookmark';
-import { useUserInfo } from '@/domains/user/hooks/api/useUserInfo';
 
 import { useToggleBookmark } from '../../hooks/api/useToggleBookmark';
 
@@ -25,7 +24,6 @@ export const OptimisticBookmarkButton = ({
   defaultValue,
   ...rest
 }: OptimisticBookmarkButtonProps) => {
-  const { isSignedIn } = useUserInfo();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(defaultValue);
   const { toggle } = useToggleBookmark({
     type: bookmarkType,
@@ -36,15 +34,11 @@ export const OptimisticBookmarkButton = ({
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     rest?.onClick?.(e);
 
-    if (!isSignedIn) {
-      return;
-    }
-
     toggle();
     setIsBookmarked((prev) => !prev);
   };
   return (
-    <Button {...rest} onClick={handleClick}>
+    <Button {...rest} onClick={handleClick} aria-label="Bookmark">
       {isBookmarked ? (
         <StarIcon strokeWidth="0" fill={`rgb(${theme.color.yellow[300]})`} />
       ) : (

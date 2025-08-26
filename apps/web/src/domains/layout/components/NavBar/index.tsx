@@ -24,7 +24,7 @@ export const NavBar = () => {
         style={{ maxWidth: STYLE_VARS.CONTAINER_WIDTH }}
       >
         <NavigationLogo>
-          <Link href="/">
+          <Link href="/" aria-label="Navigate to Home">
             <Logo height="1.25em" />
           </Link>
         </NavigationLogo>

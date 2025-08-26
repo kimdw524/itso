@@ -1,5 +1,16 @@
+export const getKSTDate = (
+  params?: ConstructorParameters<typeof Date>[0],
+): Date => {
+  const KST_DIFF = 9 * 60 * 60 * 1000;
+
+  const now = params === undefined ? new Date() : new Date(params);
+  const utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+
+  return new Date(utc + KST_DIFF);
+};
+
 export const formatTime = (isoString: string): string => {
-  const date = new Date(isoString);
+  const date = getKSTDate(isoString);
 
   const yy = String(date.getFullYear()).slice(-2);
   const mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -11,9 +22,9 @@ export const formatTime = (isoString: string): string => {
 };
 
 export const getDday = (isoString: string): string => {
-  const targetDate = new Date(isoString);
+  const targetDate = getKSTDate(isoString);
 
-  const today = new Date();
+  const today = getKSTDate();
   today.setHours(0, 0, 0, 0);
 
   targetDate.setHours(0, 0, 0, 0);
