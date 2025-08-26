@@ -6,7 +6,7 @@ import { MoonIcon, SunIcon } from 'lucide-react';
 
 import { Button } from '@repo/ui';
 
-import * as s from './style.css';
+import ThemeOnly from '../ThemeOnly';
 
 export const ThemeToggleButton = () => {
   const { setTheme, theme } = useTheme();
@@ -23,12 +23,12 @@ export const ThemeToggleButton = () => {
       onClick={toggleTheme}
       aria-label="Toggle Theme"
     >
-      <div className={s.themeWrapper({ mode: 'light' })}>
+      <ThemeOnly theme="light">
         <SunIcon />
-      </div>
-      <div className={s.themeWrapper({ mode: 'dark' })}>
+      </ThemeOnly>
+      <ThemeOnly theme="dark">
         <MoonIcon />
-      </div>
+      </ThemeOnly>
     </Button>
   );
 };
