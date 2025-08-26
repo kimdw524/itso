@@ -21,6 +21,7 @@ export const ThemeToggleButton = () => {
       color="secondary"
       size="icon-md"
       onClick={toggleTheme}
+      aria-label="Toggle Theme"
     >
       <div className={s.themeWrapper({ mode: 'light' })}>
         <SunIcon />
