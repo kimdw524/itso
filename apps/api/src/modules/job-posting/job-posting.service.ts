@@ -1,6 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 
+import { Cache } from 'cache-manager';
 import { plainToInstance } from 'class-transformer';
 import { Repository } from 'typeorm';
 
@@ -15,9 +18,16 @@ import { JobPosting } from './job-posting.entity';
 @Injectable()
 export class JobPostingService {
   constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @InjectRepository(JobPosting)
     private readonly jobPostingRepo: Repository<JobPosting>,
   ) {}
+
+  private viewBuffer = new Map<number, number>();
+
+  async onModuleDestroy() {
+    await this.flushViews();
+  }
 
   async create(data: Partial<JobPosting>): Promise<JobPosting> {
     const entity = this.jobPostingRepo.create(data);
@@ -53,6 +63,31 @@ export class JobPostingService {
 
   async decrementBookmark(data: Partial<JobPosting>): Promise<void> {
     await this.jobPostingRepo.decrement(data, 'bookmarks', 1);
+  }
+
+  async registerView(id: number, ip?: string) {
+    if (ip === undefined) {
+      return;
+    }
+
+    const cacheKey = `view:${id}:${ip}`;
+
+    const isExists = await this.cacheManager.get(cacheKey);
+    if (isExists) {
+      return;
+    }
+
+    this.viewBuffer.set(id, (this.viewBuffer.get(id) ?? 0) + 1);
+    await this.cacheManager.set(cacheKey, true, 600 * 1000);
+  }
+
+  @Cron('*/1 * * * *')
+  private async flushViews() {
+    for (const [id, count] of this.viewBuffer.entries()) {
+      await this.jobPostingRepo.increment({ id }, 'views', count);
+    }
+
+    this.viewBuffer.clear();
   }
 
   async getBookmarkedPostings(
