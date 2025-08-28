@@ -16,13 +16,15 @@ export const fetcher = async <T>(
 
   let response: Response;
   if (isServer) {
-    const { cookies } = await import('next/headers');
+    const { headers, cookies } = await import('next/headers');
+    const header = await headers();
 
     response = await fetch(`${process.env.API_BASE_URL}${url}`, {
       ...init,
       headers: {
         ...init?.headers,
         Cookie: `${USER.COOKIE_NAME}=${(await cookies()).get(USER.COOKIE_NAME)?.value}`,
+        'x-forwarded-for': header.get('x-forwarded-for')?.split(',')[0] ?? '',
       },
     });
   } else {
