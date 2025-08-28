@@ -10,6 +10,8 @@ import {
 
 import { Request } from 'express';
 
+import { getIP } from '@/utils/common';
+
 import { AuthSessionGuard } from '../auth-session-guard/auth-session-gaurd';
 import { JobPostingFilterDto } from './dto';
 import { BookmarkedJobPostingFilterDto } from './dto/bookmarked-job-posting-filter.dto';
@@ -39,7 +41,13 @@ export class JobPostingController {
   }
 
   @Get(':id')
-  getPosting(@Param('id', ParseIntPipe) id: number) {
-    return this.jobPostingService.getPosting(id);
+  async getPosting(@Req() req: Request, @Param('id', ParseIntPipe) id: number) {
+    const posting = await this.jobPostingService.getPosting(id);
+
+    if (posting !== null) {
+      await this.jobPostingService.registerView(id, getIP(req.ips) ?? req.ip);
+    }
+
+    return posting;
   }
 }
