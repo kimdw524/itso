@@ -1,8 +1,9 @@
 import { CacheModule } from '@nestjs/cache-manager';
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { JobPostingRankingModule } from '../job-posting-ranking/job-posting-ranking.module';
 import { JobPostingController } from './job-posting.controller';
 import { JobPosting } from './job-posting.entity';
 import { JobPostingService } from './job-posting.service';
@@ -12,6 +13,7 @@ import { JobPostingService } from './job-posting.service';
     TypeOrmModule.forFeature([JobPosting]),
     CacheModule.register(),
     ScheduleModule.forRoot(),
+    forwardRef(() => JobPostingRankingModule),
   ],
   controllers: [JobPostingController],
   providers: [JobPostingService],
