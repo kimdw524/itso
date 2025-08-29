@@ -1,5 +1,10 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -10,6 +15,7 @@ import { Repository } from 'typeorm';
 import { CursorPaginatedResponse } from '@/types/pagination';
 
 import { Bookmark } from '../bookmark/bookmark.entity';
+import { JobPostingRankingService } from '../job-posting-ranking/job-posting-ranking.service';
 import { JobPostingFilterDto, JobPostingSummaryDto } from './dto';
 import { BookmarkedJobPostingFilterDto } from './dto/bookmarked-job-posting-filter.dto';
 import { JobPostingDto } from './dto/job-posting.dto';
@@ -21,6 +27,8 @@ export class JobPostingService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @InjectRepository(JobPosting)
     private readonly jobPostingRepo: Repository<JobPosting>,
+    @Inject(forwardRef(() => JobPostingRankingService))
+    private readonly jobPostingRankingService: JobPostingRankingService,
   ) {}
 
   private viewBuffer = new Map<number, number>();
@@ -32,6 +40,33 @@ export class JobPostingService {
   async create(data: Partial<JobPosting>): Promise<JobPosting> {
     const entity = this.jobPostingRepo.create(data);
     return await this.jobPostingRepo.save(entity);
+  }
+
+  async getPostingRanking(
+    userId: number | undefined,
+    jobIds: number[],
+    count: number,
+  ) {
+    const result = await this.jobPostingRankingService.getPopularPosting(
+      jobIds,
+      count,
+    );
+
+    return this.getPostingSummaries(
+      userId,
+      result.map((item) => item.postingId),
+    );
+  }
+
+  async getJobId(id: number): Promise<number | null> {
+    const jobPosting = await this.jobPostingRepo.findOne({
+      where: { id },
+      select: ['jobId'],
+    });
+    if (!jobPosting) {
+      return null;
+    }
+    return jobPosting.jobId;
   }
 
   async findById(id: number): Promise<JobPosting | null> {
@@ -85,6 +120,7 @@ export class JobPostingService {
   private async flushViews() {
     for (const [id, count] of this.viewBuffer.entries()) {
       await this.jobPostingRepo.increment({ id }, 'views', count);
+      this.jobPostingRankingService.increaseView(id);
     }
 
     this.viewBuffer.clear();
@@ -318,5 +354,90 @@ export class JobPostingService {
       nextCursor,
       hasNext,
     };
+  }
+
+  async getPostingSummaries(
+    userId: number | undefined,
+    postingIds: number[],
+  ): Promise<JobPostingSummaryDto[]> {
+    if (postingIds.length === 0) {
+      return [];
+    }
+
+    const qb = this.jobPostingRepo
+      .createQueryBuilder('posting')
+      .leftJoin('posting.company', 'company')
+      .select([
+        'company.id',
+        'company.name',
+        'company.logo',
+        'posting.id',
+        'posting.title',
+        'posting.openDate',
+        'posting.dueDate',
+        'posting.jobId',
+        'posting.views',
+        'posting.bookmarks',
+        'posting.minExperience',
+        'posting.maxExperience',
+        'posting.employmentType',
+      ])
+      .orderBy('posting.id', 'DESC')
+      .distinct(true);
+
+    qb.andWhere('posting.closeDate IS NULL');
+    qb.andWhere('posting.id IN (:...postingIds)', { postingIds });
+
+    if (userId == undefined) {
+      qb.addSelect('false AS `isBookmarked`');
+    } else {
+      qb.leftJoin(
+        Bookmark,
+        'bookmark',
+        `bookmark.userId = :userId AND bookmark.targetType = 'job-posting' AND bookmark.targetId = posting.id`,
+        { userId },
+      );
+      qb.addSelect(
+        'CASE WHEN bookmark.targetId IS NOT NULL THEN true ELSE false END as isBookmarked',
+      );
+    }
+
+    const data: {
+      posting_id: number;
+      posting_title: string;
+      posting_open_date: string;
+      posting_due_date: string | null;
+      posting_job_id: number;
+      posting_views: number;
+      posting_bookmarks: number;
+      posting_min_experience: number;
+      posting_max_experience: number;
+      posting_employment_type: number;
+      company_id: number;
+      company_name: string;
+      company_logo: string;
+      isBookmarked: 0 | 1;
+    }[] = await qb.getRawMany();
+
+    const transformedData = data.map((i) => ({
+      id: i.posting_id,
+      title: i.posting_title,
+      openDate: i.posting_open_date,
+      dueDate: i.posting_due_date,
+      jobId: i.posting_job_id,
+      views: i.posting_views,
+      bookmarks: i.posting_bookmarks,
+      minExperience: i.posting_min_experience,
+      maxExperience: i.posting_max_experience,
+      employmentType: i.posting_employment_type,
+      company: {
+        id: i.company_id,
+        name: i.company_name,
+        logo: i.company_logo,
+      },
+      isBookmarked: i.isBookmarked == 1,
+    }));
+
+    return plainToInstance(JobPostingSummaryDto, transformedData);
   }
 }
