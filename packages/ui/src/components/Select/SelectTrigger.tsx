@@ -11,7 +11,12 @@ import * as s from './SelectTrigger.css';
 
 type SelectTriggerProps = UIComponent<'div', typeof s.selectTrigger>;
 
-const SelectTrigger = ({ children, className, sx: propSx }: SelectTriggerProps) => {
+const SelectTrigger = ({
+  children,
+  className,
+  variant,
+  sx: propSx,
+}: SelectTriggerProps) => {
   const selectContext = useContext(SelectContext);
 
   if (!selectContext) {
@@ -25,7 +30,14 @@ const SelectTrigger = ({ children, className, sx: propSx }: SelectTriggerProps) 
   };
 
   return (
-    <div className={clsx(s.selectTrigger({ isActive: state.isActive }), className, sx(propSx))} onClick={handleClick}>
+    <div
+      className={clsx(
+        s.selectTrigger({ isActive: state.isActive, variant }),
+        className,
+        sx(propSx),
+      )}
+      onClick={handleClick}
+    >
       <span className={s.children}>{children}</span>
       <span className={s.icon({ isActive: state.isActive })}>
         <ChevronDownIcon size="1em" strokeWidth="2px" />

@@ -41,11 +41,6 @@ export const selectTrigger = recipe({
 
     width: '100%',
     padding: '0.75em 0.5em',
-    border: '1px solid',
-    borderColor: `rgb(${theme.color.border})`,
-    borderRadius: theme.borderRadius,
-
-    backgroundColor: `rgb(${theme.color.background})`,
 
     transition: 'all 0.2s ease',
 
@@ -57,6 +52,20 @@ export const selectTrigger = recipe({
     isActive: {
       true: {
         borderColor: `rgb(${theme.color.primary})`,
+      },
+    },
+    variant: {
+      contained: {
+        borderRadius: theme.borderRadius,
+
+        backgroundColor: `rgb(${theme.color.secondary})`,
+      },
+      outlined: {
+        border: '1px solid',
+        borderColor: `rgb(${theme.color.border})`,
+        borderRadius: theme.borderRadius,
+
+        backgroundColor: `rgb(${theme.color.background})`,
       },
     },
   },
