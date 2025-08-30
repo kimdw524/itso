@@ -15,7 +15,6 @@ import { getIP } from '@/utils/common';
 import { AuthSessionGuard } from '../auth-session-guard/auth-session-gaurd';
 import { JobPostingFilterDto } from './dto';
 import { BookmarkedJobPostingFilterDto } from './dto/bookmarked-job-posting-filter.dto';
-import { JobPostingRankingFilterDto } from './dto/job-posting-ranking-filter.dto';
 import { JobPostingService } from './job-posting.service';
 
 @Controller('job-posting')
@@ -29,19 +28,6 @@ export class JobPostingController {
   ) {
     const userId = req.session.user;
     return this.jobPostingService.getFilteredPostings(userId, filter);
-  }
-
-  @Get('/ranking')
-  getPostingRanking(
-    @Req() req: Request,
-    @Query() filter: JobPostingRankingFilterDto,
-  ) {
-    const userId = req.session.user;
-    return this.jobPostingService.getPostingRanking(
-      userId,
-      filter.jobIds ?? [],
-      5,
-    );
   }
 
   @UseGuards(AuthSessionGuard)

@@ -1,5 +1,5 @@
 import { Transform, Type } from 'class-transformer';
-import { IsArray, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsArray, IsIn, IsOptional, IsString, Max, Min } from 'class-validator';
 
 export class JobPostingFilterDto {
   @IsOptional()
@@ -38,4 +38,8 @@ export class JobPostingFilterDto {
   @Max(20)
   @Min(1)
   limit?: number;
+
+  @IsOptional()
+  @IsIn(['createdAt', 'recentViews'])
+  orderBy?: 'createdAt' | 'recentViews';
 }

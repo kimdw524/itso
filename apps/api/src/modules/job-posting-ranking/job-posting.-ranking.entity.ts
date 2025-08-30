@@ -24,9 +24,6 @@ export class JobPostingRanking {
   @Column()
   views: number;
 
-  @Column({ name: 'job_id' })
-  jobId: number;
-
   @CreateDateColumn({ name: 'created_at', type: 'datetime' })
   createdAt: Date;
 }

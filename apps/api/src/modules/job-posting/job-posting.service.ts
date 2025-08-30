@@ -15,6 +15,7 @@ import { Repository } from 'typeorm';
 import { CursorPaginatedResponse } from '@/types/pagination';
 
 import { Bookmark } from '../bookmark/bookmark.entity';
+import { JOB_POSTING_RANKING } from '../job-posting-ranking/job-posting-ranking.constants';
 import { JobPostingRankingService } from '../job-posting-ranking/job-posting-ranking.service';
 import { JobPostingFilterDto, JobPostingSummaryDto } from './dto';
 import { BookmarkedJobPostingFilterDto } from './dto/bookmarked-job-posting-filter.dto';
@@ -42,20 +43,23 @@ export class JobPostingService {
     return await this.jobPostingRepo.save(entity);
   }
 
-  async getPostingRanking(
-    userId: number | undefined,
-    jobIds: number[],
-    count: number,
-  ) {
-    const result = await this.jobPostingRankingService.getPopularPosting(
-      jobIds,
-      count,
-    );
-
-    return this.getPostingSummaries(
-      userId,
-      result.map((item) => item.postingId),
-    );
+  async updateRecentViews() {
+    await this.jobPostingRepo
+      .createQueryBuilder()
+      .update(JobPosting)
+      .set({
+        recentViews: () => `
+      COALESCE(
+        (
+          SELECT SUM(r.views)
+          FROM job_posting_ranking r
+          WHERE r.posting_id = job_posting.id
+            AND r.created_at >= NOW() - INTERVAL ${JOB_POSTING_RANKING.AGGREGATE_RANGE} HOUR
+        ), 0
+      )
+    `,
+      })
+      .execute();
   }
 
   async getJobId(id: number): Promise<number | null> {
@@ -151,6 +155,7 @@ export class JobPostingService {
         'posting.dueDate',
         'posting.jobId',
         'posting.views',
+        'posting.recentViews',
         'posting.bookmarks',
         'posting.minExperience',
         'posting.maxExperience',
@@ -173,6 +178,7 @@ export class JobPostingService {
       posting_due_date: string | null;
       posting_job_id: number;
       posting_views: number;
+      posting_recent_views: number;
       posting_bookmarks: number;
       posting_min_experience: number;
       posting_max_experience: number;
@@ -191,6 +197,7 @@ export class JobPostingService {
       dueDate: i.posting_due_date,
       jobId: i.posting_job_id,
       views: i.posting_views,
+      recentViews: i.posting_recent_views,
       bookmarks: i.posting_bookmarks,
       minExperience: i.posting_min_experience,
       maxExperience: i.posting_max_experience,
@@ -234,6 +241,7 @@ export class JobPostingService {
       employmentTypes,
       cursor,
       limit = 20,
+      orderBy,
     } = filter;
 
     const qb = this.jobPostingRepo
@@ -249,14 +257,24 @@ export class JobPostingService {
         'posting.dueDate',
         'posting.jobId',
         'posting.views',
+        'posting.recentViews',
         'posting.bookmarks',
         'posting.minExperience',
         'posting.maxExperience',
         'posting.employmentType',
       ])
-      .orderBy('posting.id', 'DESC')
       .limit(limit + 1)
       .distinct(true);
+
+    switch (orderBy) {
+      case 'recentViews':
+        qb.orderBy('posting.recentViews', 'DESC');
+        break;
+      case 'createdAt':
+      default:
+        qb.orderBy('posting.id', 'DESC');
+        break;
+    }
 
     qb.andWhere('posting.closeDate IS NULL');
 
@@ -314,6 +332,7 @@ export class JobPostingService {
       posting_due_date: string | null;
       posting_job_id: number;
       posting_views: number;
+      posting_recent_views: number;
       posting_bookmarks: number;
       posting_min_experience: number;
       posting_max_experience: number;
@@ -331,6 +350,7 @@ export class JobPostingService {
       dueDate: i.posting_due_date,
       jobId: i.posting_job_id,
       views: i.posting_views,
+      recentViews: i.posting_recent_views,
       bookmarks: i.posting_bookmarks,
       minExperience: i.posting_min_experience,
       maxExperience: i.posting_max_experience,
@@ -377,6 +397,7 @@ export class JobPostingService {
         'posting.dueDate',
         'posting.jobId',
         'posting.views',
+        'posting.recentViews',
         'posting.bookmarks',
         'posting.minExperience',
         'posting.maxExperience',
@@ -409,6 +430,7 @@ export class JobPostingService {
       posting_due_date: string | null;
       posting_job_id: number;
       posting_views: number;
+      posting_recent_views: number;
       posting_bookmarks: number;
       posting_min_experience: number;
       posting_max_experience: number;
@@ -426,6 +448,7 @@ export class JobPostingService {
       dueDate: i.posting_due_date,
       jobId: i.posting_job_id,
       views: i.posting_views,
+      recentViews: i.posting_recent_views,
       bookmarks: i.posting_bookmarks,
       minExperience: i.posting_min_experience,
       maxExperience: i.posting_max_experience,
