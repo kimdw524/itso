@@ -19,6 +19,7 @@ export interface FetchJobPostingListParams {
   minExperience?: number;
   maxExperience?: number;
   employmentTypes?: EmploymentType[];
+  orderBy?: 'createdAt' | 'recentViews';
   cursor?: number;
   limit?: number;
 }
@@ -31,5 +32,5 @@ export const fetchJobPostingList = async (
     params,
   });
 
-  return await res.json();
+  return (await res.json()) as FetchJobPostingListResponse;
 };
