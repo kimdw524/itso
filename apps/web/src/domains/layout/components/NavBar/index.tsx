@@ -31,7 +31,7 @@ export const NavBar = () => {
         <NavigationDrawer>
           <NavigationMenu>
             <NavigationItem>
-              <Link href="/">채용공고</Link>
+              <Link href="/post">채용공고</Link>
             </NavigationItem>
             <NavigationItem>
               <Link href="/bookmark">북마크</Link>
