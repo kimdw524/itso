@@ -33,7 +33,8 @@ export const ScrollArea = ({
     const handleScroll = () => {
       setHasLeftSpace(element.scrollLeft !== 0);
       setHasRightSpace(
-        element.scrollLeft + element.clientWidth < element.scrollWidth,
+        Math.round(element.scrollLeft + element.clientWidth) <
+          element.scrollWidth,
       );
     };
 
