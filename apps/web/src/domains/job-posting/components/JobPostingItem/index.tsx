@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import {
@@ -30,7 +32,7 @@ export const JobPostingItem = ({
   company,
 }: JobPostingItemProps) => {
   return (
-    <Link href={`/post/${jobPosting.id}`}>
+    <Link href={`/post/${jobPosting.id}`} draggable={false}>
       <Card className={s.container} variant="glass">
         <CardInteraction sx={{ display: 'flex', flexDirection: 'column' }}>
           {/* 회사 로고 이미지 */}
