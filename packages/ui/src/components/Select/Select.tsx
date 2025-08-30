@@ -1,6 +1,14 @@
 'use client';
 
-import { useEffect, useImperativeHandle, useReducer, useRef, type CSSProperties, type RefObject } from 'react';
+import {
+  useEffect,
+  useImperativeHandle,
+  useReducer,
+  useRef,
+  type ComponentProps,
+  type CSSProperties,
+  type RefObject,
+} from 'react';
 
 import clsx from 'clsx';
 
@@ -12,11 +20,13 @@ import { SelectContext, selectReducer } from './SelectContext';
 import SelectOptionList from './SelectOptionList';
 import SelectTrigger from './SelectTrigger';
 
-interface SelectProps extends Omit<UIComponent<'div', typeof s.select>, 'ref' | 'onChange'> {
+interface SelectProps
+  extends Omit<UIComponent<'div', typeof s.select>, 'ref' | 'onChange'> {
   ref?: RefObject<{ value?: string } | null>;
   name?: string;
   width?: CSSProperties['width'];
   defaultValue?: string;
+  variant?: ComponentProps<typeof SelectTrigger>['variant'];
   onChange?: (value: string | undefined) => void;
 }
 
@@ -30,6 +40,7 @@ export const Select = ({
   width = '100%',
   size = 'md',
   sx: propSx,
+  variant = 'outlined',
   onChange,
   ...props
 }: SelectProps) => {
@@ -89,7 +100,9 @@ export const Select = ({
         className={clsx(s.select({ size }), className, sx(propSx))}
         {...props}
       >
-        <SelectTrigger>{state.selected !== null && state.items.get(state.selected || '')}</SelectTrigger>
+        <SelectTrigger variant={variant}>
+          {state.selected !== null && state.items.get(state.selected || '')}
+        </SelectTrigger>
         <SelectOptionList>{children}</SelectOptionList>
         <input type="hidden" name={name} value={state.selected || ''} />
       </div>
