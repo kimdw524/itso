@@ -45,6 +45,9 @@ export class JobPosting {
   @Column({ default: 0 })
   views: number;
 
+  @Column({ name: 'recent_views', default: 0 })
+  recentViews: number;
+
   @Column({ default: 0 })
   bookmarks: number;
 
