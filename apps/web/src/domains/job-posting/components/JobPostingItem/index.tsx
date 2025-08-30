@@ -14,8 +14,8 @@ import { OptimisticBookmarkButton } from '@/domains/bookmark/components/Optimist
 import type { CompanySummary } from '@/domains/company/types/company';
 
 import type { JobPostingSummary } from '../../types/job-posting';
-import { formatEmploymentType } from '../../utils';
 import { formatJobName } from '../../utils/formatJobName';
+import { EmploymentTypeChip } from './EmploymentTypeChip';
 import { ExperienceRangeChip } from './ExperienceRangeChip';
 import { JobPostingStatistics } from './JobPostingStatistics';
 import * as s from './style.css';
@@ -40,7 +40,7 @@ export const JobPostingItem = ({
             justifyContent="center"
             paddingX="2xl"
             paddingY="3xl"
-            style={{ height: '9em' }}
+            style={{ height: '8em' }}
           >
             {company.logo !== '' && (
               <CardThumbnail
@@ -78,13 +78,15 @@ export const JobPostingItem = ({
                 <Typography
                   fontSize="sm"
                   fontWeight="light"
-                  sx={{ marginBottom: 'lg' }}
+                  color="secondary-foreground"
+                  sx={{ marginBottom: 'md' }}
                 >
                   {jobPosting.company.name}
                 </Typography>
                 {/* 공고 제목 */}
                 <Typography
                   fontSize="md"
+                  fontWeight="medium"
                   lineHeight="md"
                   style={{ height: '3em', overflow: 'hidden' }}
                 >
@@ -101,9 +103,7 @@ export const JobPostingItem = ({
                     min={jobPosting.minExperience}
                     max={jobPosting.maxExperience}
                   />
-                  <Chip color="blue">
-                    {formatEmploymentType(jobPosting.employmentType)}
-                  </Chip>
+                  <EmploymentTypeChip type={jobPosting.employmentType} />
                   <Chip color="accent">{formatJobName(jobPosting.jobId)}</Chip>
                 </Box>
               </Box>

@@ -11,7 +11,7 @@ export const JobPostingItemLoading = () => {
           justifyContent="center"
           paddingX="2xl"
           paddingY="3xl"
-          style={{ height: '9rem' }}
+          style={{ height: '8rem' }}
         >
           <Skeleton width="100%" height="100%" />
         </Box>
@@ -27,7 +27,7 @@ export const JobPostingItemLoading = () => {
               <Skeleton
                 width="5em"
                 height="1em"
-                sx={{ marginBottom: 'lg', fontSize: 'sm' }}
+                sx={{ marginBottom: 'md', fontSize: 'sm' }}
               />
               {/* 공고 제목 */}
               <Skeleton width="100%" height="3em" />

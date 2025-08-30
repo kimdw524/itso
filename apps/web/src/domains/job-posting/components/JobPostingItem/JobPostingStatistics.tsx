@@ -6,7 +6,7 @@ import { EyeIcon } from 'lucide-react';
 
 import { Box, Typography } from '@repo/ui';
 
-import { formatTime, getDday } from '@/utils/date';
+import { getDday } from '@/utils/date';
 
 import type { JobPostingSummary } from '../../types/job-posting';
 
@@ -36,9 +36,7 @@ export const JobPostingStatistics = ({
   return (
     <Box flex alignItems="center" justifyContent="space-between" gap="lg">
       <Typography fontSize="sm">
-        {jobPosting.dueDate === null
-          ? '상시채용'
-          : `${formatTime(jobPosting.dueDate)} 마감 (${getDday(jobPosting.dueDate)})`}
+        {jobPosting.dueDate === null ? '상시채용' : getDday(jobPosting.dueDate)}
       </Typography>
       {/* 조회수 */}
       <Item
