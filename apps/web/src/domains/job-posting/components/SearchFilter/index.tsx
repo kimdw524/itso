@@ -19,6 +19,7 @@ import {
   JOB_POSTING,
 } from '../../constants/job-posting';
 import { formatExperienceRange } from '../../utils';
+import { SortFilter } from './SortFilter';
 import * as s from './style.css';
 
 interface SearchFilterProps {
@@ -42,8 +43,14 @@ export const SearchFilter = ({
   return (
     <Box
       ref={ref}
+      flex
+      alignItems="center"
+      justifyContent="space-between"
+      gap="lg"
       className={s.container({ isStuck })}
-      sx={{ fontSize: { mobile: 'sm', desktop: 'md' } }}
+      sx={{
+        fontSize: { desktop: 'md', mobile: 'sm' },
+      }}
     >
       <ScrollArea>
         <Box flex gap="lg" alignItems="center">
@@ -131,6 +138,7 @@ export const SearchFilter = ({
           {children}
         </Box>
       </ScrollArea>
+      <SortFilter queryParams={queryParams} />
     </Box>
   );
 };
