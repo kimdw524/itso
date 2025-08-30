@@ -37,18 +37,27 @@ export const useMouseScroll = <T extends React.RefObject<HTMLElement | null>>(
       element.scrollLeft = startLeft + startX - e.x;
     };
 
-    const handleMouseUp = (e: MouseEvent) => {
+    const handleMouseUp = () => {
       isDown = false;
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      element.scrollTo({
+        left: element.scrollLeft + e.deltaY,
+        behavior: 'smooth',
+      });
     };
 
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
+    element.addEventListener('wheel', handleWheel);
 
     return () => {
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      element.removeEventListener('wheel', handleWheel);
     };
   }, [ref]);
 };
