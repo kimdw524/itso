@@ -40,7 +40,7 @@ export const JobPostingItem = ({
             justifyContent="center"
             paddingX="2xl"
             paddingY="3xl"
-            style={{ height: '9em' }}
+            style={{ height: '8em' }}
           >
             {company.logo !== '' && (
               <CardThumbnail
@@ -78,13 +78,15 @@ export const JobPostingItem = ({
                 <Typography
                   fontSize="sm"
                   fontWeight="light"
-                  sx={{ marginBottom: 'lg' }}
+                  color="secondary-foreground"
+                  sx={{ marginBottom: 'md' }}
                 >
                   {jobPosting.company.name}
                 </Typography>
                 {/* 공고 제목 */}
                 <Typography
                   fontSize="md"
+                  fontWeight="medium"
                   lineHeight="md"
                   style={{ height: '3em', overflow: 'hidden' }}
                 >
