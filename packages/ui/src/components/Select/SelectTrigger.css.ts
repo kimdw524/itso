@@ -40,7 +40,6 @@ export const selectTrigger = recipe({
     justifyContent: 'space-between',
 
     width: '100%',
-    padding: '0.75em 0.5em',
 
     transition: 'border-color 0.2s ease',
 
@@ -56,11 +55,13 @@ export const selectTrigger = recipe({
     },
     variant: {
       contained: {
+        padding: '0.75em 0.75em',
         borderRadius: theme.borderRadius,
 
         backgroundColor: `rgb(${theme.color.secondary})`,
       },
       outlined: {
+        padding: '0.75em 0.5em',
         border: '1px solid',
         borderColor: `rgb(${theme.color.border})`,
         borderRadius: theme.borderRadius,
