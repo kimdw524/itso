@@ -27,17 +27,15 @@ export const NavBar = () => {
             <Logo height="1.25em" />
           </Link>
         </NavigationLogo>
-        <NavigationDrawer>
-          <NavBarMenu />
-          <NavigationAside>
-            <div>
+        <NavigationDrawer
+          menu={<NavBarMenu />}
+          aside={
+            <NavigationAside>
               <ThemeToggleButton />
-            </div>
-            <div>
               <AuthButton />
-            </div>
-          </NavigationAside>
-        </NavigationDrawer>
+            </NavigationAside>
+          }
+        />
       </NavigationContainer>
     </NavigationBar>
   );

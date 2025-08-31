@@ -10,12 +10,16 @@ export const NavBarMenu = () => {
 
   return (
     <NavigationMenu>
-      <NavigationItem isSelected={pathname.startsWith('/post')}>
-        <Link href="/post">채용공고</Link>
-      </NavigationItem>
-      <NavigationItem isSelected={pathname.startsWith('/bookmark')}>
-        <Link href="/bookmark">북마크</Link>
-      </NavigationItem>
+      <Link href="/post">
+        <NavigationItem isSelected={pathname.startsWith('/post')}>
+          채용공고
+        </NavigationItem>
+      </Link>
+      <Link href="/bookmark">
+        <NavigationItem isSelected={pathname.startsWith('/bookmark')}>
+          북마크
+        </NavigationItem>
+      </Link>
     </NavigationMenu>
   );
 };

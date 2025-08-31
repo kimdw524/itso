@@ -2,6 +2,8 @@ import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 import { spacing, typography } from '#tokens';
 
+import { narrow } from './NavigationDrawer.css';
+
 export const container = recipeWithLayer({
   base: {
     position: 'relative',
@@ -18,6 +20,14 @@ export const container = recipeWithLayer({
 
     ':hover': {
       color: `rgb(${theme.color.foreground})`,
+    },
+
+    selectors: {
+      [`${narrow} &`]: {
+        padding: `${spacing['2xl']} ${spacing.lg}`,
+
+        fontSize: '1.125em',
+      },
     },
   },
   variants: {
