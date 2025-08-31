@@ -15,7 +15,7 @@ export const icon = recipe({
 
     lineHeight: '0',
 
-    transition: 'all 0.2s ease',
+    transition: 'color 0.2s ease, transform 0.2s ease',
   },
 
   variants: {
@@ -40,9 +40,8 @@ export const selectTrigger = recipe({
     justifyContent: 'space-between',
 
     width: '100%',
-    padding: '0.75em 0.5em',
 
-    transition: 'all 0.2s ease',
+    transition: 'border-color 0.2s ease',
 
     cursor: 'pointer',
     userSelect: 'none',
@@ -56,11 +55,13 @@ export const selectTrigger = recipe({
     },
     variant: {
       contained: {
+        padding: '0.75em 0.75em',
         borderRadius: theme.borderRadius,
 
         backgroundColor: `rgb(${theme.color.secondary})`,
       },
       outlined: {
+        padding: '0.75em 0.5em',
         border: '1px solid',
         borderColor: `rgb(${theme.color.border})`,
         borderRadius: theme.borderRadius,

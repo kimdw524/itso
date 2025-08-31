@@ -16,7 +16,7 @@ export const close = styleWithLayer({
 
   cursor: 'pointer',
 
-  transition: 'all 0.1s ease',
+  transition: 'color 0.1s ease',
 
   ':hover': {
     color: `rgb(${theme.color['foreground']})`,

@@ -28,7 +28,7 @@ export const filterButton = style({
 
   backgroundColor: `rgb(${theme.color.background})`,
 
-  transition: 'all 0.2s ease',
+  transition: 'border-color 0.2s ease',
 
   cursor: 'pointer',
   userSelect: 'none',

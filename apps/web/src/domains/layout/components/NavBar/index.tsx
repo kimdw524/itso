@@ -5,9 +5,7 @@ import {
   NavigationBar,
   NavigationContainer,
   NavigationDrawer,
-  NavigationItem,
   NavigationLogo,
-  NavigationMenu,
 } from '@repo/ui';
 
 import { AuthButton } from '@/domains/user/components/AuthButton';
@@ -15,6 +13,7 @@ import { STYLE_VARS } from '@/styles/vars.css';
 
 import { Logo } from '../Logo';
 import { ThemeToggleButton } from '../ThemeToggleButton';
+import { NavBarMenu } from './NavBarMenu';
 
 export const NavBar = () => {
   return (
@@ -28,24 +27,15 @@ export const NavBar = () => {
             <Logo height="1.25em" />
           </Link>
         </NavigationLogo>
-        <NavigationDrawer>
-          <NavigationMenu>
-            <NavigationItem>
-              <Link href="/post">채용공고</Link>
-            </NavigationItem>
-            <NavigationItem>
-              <Link href="/bookmark">북마크</Link>
-            </NavigationItem>
-          </NavigationMenu>
-          <NavigationAside>
-            <div>
+        <NavigationDrawer
+          menu={<NavBarMenu />}
+          aside={
+            <NavigationAside>
               <ThemeToggleButton />
-            </div>
-            <div>
               <AuthButton />
-            </div>
-          </NavigationAside>
-        </NavigationDrawer>
+            </NavigationAside>
+          }
+        />
       </NavigationContainer>
     </NavigationBar>
   );

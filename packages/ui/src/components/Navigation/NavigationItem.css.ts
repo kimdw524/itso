@@ -1,30 +1,43 @@
-import { styleWithLayer } from '#styleUtils';
+import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 import { spacing, typography } from '#tokens';
 
-import { navigationMenu } from './NavigationMenu.css';
+import { narrow } from './NavigationDrawer.css';
 
-export const container = styleWithLayer({
-  position: 'relative',
+export const container = recipeWithLayer({
+  base: {
+    position: 'relative',
 
-  lineHeight: '0',
-  padding: spacing.lg,
+    lineHeight: '0',
+    padding: spacing.lg,
 
-  color: `rgb(${theme.color['secondary-foreground']})`,
-  fontSize: '0.9375em',
-  fontWeight: typography.weight.semiBold,
+    fontSize: '0.9375em',
+    fontWeight: typography.weight.semiBold,
 
-  transition: 'all 0.2s ease',
+    transition: 'color 0.2s ease',
 
-  cursor: 'pointer',
+    cursor: 'pointer',
 
-  ':hover': {
-    color: `rgb(${theme.color.foreground}) !important`,
+    ':hover': {
+      color: `rgb(${theme.color.foreground})`,
+    },
+
+    selectors: {
+      [`${narrow} &`]: {
+        padding: `${spacing['2xl']} ${spacing.lg}`,
+
+        fontSize: '1.125em',
+      },
+    },
   },
-
-  selectors: {
-    [`${navigationMenu}:hover &`]: {
-      color: `rgba(${theme.color['secondary-foreground']}, 0.33)`,
+  variants: {
+    isSelected: {
+      true: {
+        color: `rgb(${theme.color['secondary-foreground']})`,
+      },
+      false: {
+        color: `rgba(${theme.color['secondary-foreground']}, 0.5)`,
+      },
     },
   },
 });

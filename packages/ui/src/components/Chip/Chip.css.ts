@@ -49,8 +49,6 @@ export const chip = recipeWithLayer({
     backgroundColor: `rgb(${backgroundVar})`,
     color: `rgb(${foregroundVar})`,
 
-    transition: 'all 0.2s ease',
-
     userSelect: 'none',
   },
 

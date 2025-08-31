@@ -4,7 +4,7 @@ import { theme } from '#themes';
 export const selectOption = styleWithLayer({
   padding: '0.75em 0.5em',
 
-  transition: 'all 0.2s ease',
+  transition: 'background-color 0.2s ease',
 
   cursor: 'default',
 

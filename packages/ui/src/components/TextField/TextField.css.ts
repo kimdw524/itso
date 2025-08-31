@@ -42,7 +42,7 @@ export const textField = recipeWithLayer({
 
     color: `rgb(${theme.color.foreground})`,
 
-    transition: 'all 0.15s ease',
+    transition: 'border-color 0.15s ease, color 0.15s ease',
 
     outline: 'none',
 

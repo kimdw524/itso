@@ -16,7 +16,7 @@ export const container = recipeWithLayer({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
 
-    transition: 'all 0.15s ease',
+    transition: 'border-bottom-color 0.15s ease, color 0.15s ease',
 
     cursor: 'pointer',
   },

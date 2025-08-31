@@ -30,7 +30,8 @@ export const wide = styleWithLayer({
 export const popup = recipeWithLayer({
   base: {
     position: 'absolute',
-    top: '0',
+    top: '100%',
+    height: 'calc(100vh - 100%)',
     left: '0',
     width: '100%',
     zIndex: '100',
@@ -41,20 +42,16 @@ export const popup = recipeWithLayer({
 
     backgroundColor: `rgb(${theme.color.background})`,
 
-    transition: 'transform 0.2s ease, opacity 0.2s ease',
+    transition: 'opacity 0.2s ease',
   },
 
   variants: {
     isVisible: {
       true: {
-        transform: 'translateY(0)',
-
         opacity: '1',
       },
 
       false: {
-        transform: 'translateY(-100%)',
-
         opacity: '0',
 
         pointerEvents: 'none',
