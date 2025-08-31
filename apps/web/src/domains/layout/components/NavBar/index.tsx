@@ -5,9 +5,7 @@ import {
   NavigationBar,
   NavigationContainer,
   NavigationDrawer,
-  NavigationItem,
   NavigationLogo,
-  NavigationMenu,
 } from '@repo/ui';
 
 import { AuthButton } from '@/domains/user/components/AuthButton';
@@ -15,6 +13,7 @@ import { STYLE_VARS } from '@/styles/vars.css';
 
 import { Logo } from '../Logo';
 import { ThemeToggleButton } from '../ThemeToggleButton';
+import { NavBarMenu } from './NavBarMenu';
 
 export const NavBar = () => {
   return (
@@ -29,14 +28,7 @@ export const NavBar = () => {
           </Link>
         </NavigationLogo>
         <NavigationDrawer>
-          <NavigationMenu>
-            <NavigationItem>
-              <Link href="/post">채용공고</Link>
-            </NavigationItem>
-            <NavigationItem>
-              <Link href="/bookmark">북마크</Link>
-            </NavigationItem>
-          </NavigationMenu>
+          <NavBarMenu />
           <NavigationAside>
             <div>
               <ThemeToggleButton />

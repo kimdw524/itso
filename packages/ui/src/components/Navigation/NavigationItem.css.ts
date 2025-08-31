@@ -1,30 +1,33 @@
-import { styleWithLayer } from '#styleUtils';
+import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 import { spacing, typography } from '#tokens';
 
-import { navigationMenu } from './NavigationMenu.css';
+export const container = recipeWithLayer({
+  base: {
+    position: 'relative',
 
-export const container = styleWithLayer({
-  position: 'relative',
+    lineHeight: '0',
+    padding: spacing.lg,
 
-  lineHeight: '0',
-  padding: spacing.lg,
+    fontSize: '0.9375em',
+    fontWeight: typography.weight.semiBold,
 
-  color: `rgb(${theme.color['secondary-foreground']})`,
-  fontSize: '0.9375em',
-  fontWeight: typography.weight.semiBold,
+    transition: 'color 0.2s ease',
 
-  transition: 'color 0.2s ease',
+    cursor: 'pointer',
 
-  cursor: 'pointer',
-
-  ':hover': {
-    color: `rgb(${theme.color.foreground}) !important`,
+    ':hover': {
+      color: `rgb(${theme.color.foreground})`,
+    },
   },
-
-  selectors: {
-    [`${navigationMenu}:hover &`]: {
-      color: `rgba(${theme.color['secondary-foreground']}, 0.33)`,
+  variants: {
+    isSelected: {
+      true: {
+        color: `rgb(${theme.color['secondary-foreground']})`,
+      },
+      false: {
+        color: `rgba(${theme.color['secondary-foreground']}, 0.5)`,
+      },
     },
   },
 });
