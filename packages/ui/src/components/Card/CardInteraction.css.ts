@@ -6,8 +6,6 @@ export const cardInteraction = styleWithLayer({
 
   height: '100%',
 
-  transition: 'all 0.15s ease',
-
   cursor: 'pointer',
   userSelect: 'none',
 });

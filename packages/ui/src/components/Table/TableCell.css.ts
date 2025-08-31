@@ -7,7 +7,7 @@ import { interactive } from './TableRow.css';
 export const tableCell = styleWithLayer({
   padding: '0.5em',
 
-  transition: 'all 0.1s ease',
+  transition: 'background-color 0.1s ease, color 0.1s ease',
 
   selectors: {
     [`${interactive} > &`]: {

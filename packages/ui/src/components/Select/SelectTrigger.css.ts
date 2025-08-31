@@ -15,7 +15,7 @@ export const icon = recipe({
 
     lineHeight: '0',
 
-    transition: 'all 0.2s ease',
+    transition: 'color 0.2s ease, transform 0.2s ease',
   },
 
   variants: {
@@ -42,7 +42,7 @@ export const selectTrigger = recipe({
     width: '100%',
     padding: '0.75em 0.5em',
 
-    transition: 'all 0.2s ease',
+    transition: 'border-color 0.2s ease',
 
     cursor: 'pointer',
     userSelect: 'none',

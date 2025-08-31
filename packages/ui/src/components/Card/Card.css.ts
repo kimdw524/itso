@@ -36,7 +36,7 @@ export const card = recipeWithLayer({
 
     color: `rgb(${theme.color.foreground})`,
 
-    transition: 'border-color 0.2s ease',
+    transition: 'border-color 0.2s ease, transform 0.4s ease',
 
     selectors: {
       [`&:has(${cardInteraction}:hover)`]: {
@@ -64,8 +64,6 @@ export const card = recipeWithLayer({
         background: `linear-gradient(rgba(${theme.color['card.gradient']}, 0.06) 0%, rgba(${theme.color['card.gradient']}, 0.02) 100%)`,
         backdropFilter: 'blur(1rem)',
 
-        transition: 'all 0.4s ease',
-
         '::before': {
           position: 'absolute',
           inset: '0',
@@ -74,7 +72,7 @@ export const card = recipeWithLayer({
             'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%)',
 
           opacity: '0',
-          transition: 'all 0.3s ease',
+          transition: 'opacity 0.3s ease',
 
           content: '',
         },

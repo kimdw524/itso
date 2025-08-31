@@ -14,7 +14,7 @@ export const container = styleWithLayer({
   fontSize: '0.9375em',
   fontWeight: typography.weight.semiBold,
 
-  transition: 'all 0.2s ease',
+  transition: 'color 0.2s ease',
 
   cursor: 'pointer',
 

@@ -91,7 +91,7 @@ export const button = recipeWithLayer({
 
     fontSize: '1em',
 
-    transition: 'all 0.2s ease',
+    transition: 'background-color 0.2s ease, color 0.2s ease',
 
     cursor: 'pointer',
     userSelect: 'none',
