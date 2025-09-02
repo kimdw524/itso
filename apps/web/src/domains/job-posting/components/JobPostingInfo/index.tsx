@@ -5,9 +5,8 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import { Share2Icon } from 'lucide-react';
 
-import { Box, Button, Card } from '@repo/ui';
+import { Box, Card } from '@repo/ui';
 
 import { QUERY_CLIENT_CONFIG } from '@/constants/queryClient';
 import { BookmarkButton } from '@/domains/bookmark/components/BookmarkButton';
@@ -15,6 +14,7 @@ import { fetchIsBookmarkQueryOptions } from '@/domains/bookmark/queries';
 
 import type { JobPosting } from '../../types/job-posting';
 import { ApplyButton } from '../ApplyButton';
+import { ShareButton } from '../ShareButton';
 
 interface JobPostingInfoProps extends React.ComponentProps<typeof Card> {
   jobPosting: JobPosting;
@@ -40,9 +40,7 @@ export const JobPostingInfo = async ({ jobPosting }: JobPostingInfoProps) => {
           targetId={jobPosting.id}
         />
       </HydrationBoundary>
-      <Button size="icon-lg" color="secondary">
-        <Share2Icon />
-      </Button>
+      <ShareButton jobPosting={jobPosting} />
       <ApplyButton jobPosting={jobPosting} size="lg" sx={{ flexGrow: '1' }} />
     </Box>
   );
