@@ -14,6 +14,7 @@ import { BookmarkButton } from '@/domains/bookmark/components/BookmarkButton';
 import { fetchIsBookmarkQueryOptions } from '@/domains/bookmark/queries';
 
 import type { JobPosting } from '../../types/job-posting';
+import { ApplyButton } from '../ApplyButton';
 
 interface JobPostingInfoProps extends React.ComponentProps<typeof Card> {
   jobPosting: JobPosting;
@@ -42,9 +43,7 @@ export const JobPostingInfo = async ({ jobPosting }: JobPostingInfoProps) => {
       <Button size="icon-lg" color="secondary">
         <Share2Icon />
       </Button>
-      <Button size="lg" sx={{ flexGrow: '1' }}>
-        지원하기
-      </Button>
+      <ApplyButton jobPosting={jobPosting} size="lg" sx={{ flexGrow: '1' }} />
     </Box>
   );
 };
