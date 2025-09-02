@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BookmarkModule } from './modules/bookmark/bookmark.module';
 import { JobPostingRankingModule } from './modules/job-posting-ranking/job-posting-ranking.module';
 import { JobPostingModule } from './modules/job-posting/job-posting.module';
+import { LogModule } from './modules/log/log.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -27,6 +28,7 @@ import { UserModule } from './modules/user/user.module';
     UserModule,
     BookmarkModule,
     JobPostingRankingModule,
+    LogModule,
   ],
   controllers: [AppController],
   providers: [AppService],
