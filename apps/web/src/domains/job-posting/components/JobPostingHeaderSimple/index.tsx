@@ -1,10 +1,9 @@
-'use client';
-
 import { motion } from 'motion/react';
 
-import { Box, Button, Typography } from '@repo/ui';
+import { Box, Typography } from '@repo/ui';
 
 import type { JobPosting } from '../../types/job-posting';
+import { ApplyButton } from '../ApplyButton';
 import * as s from './style.css';
 
 interface JobPostingHeaderSimpleProps {
@@ -44,7 +43,7 @@ export const JobPostingHeaderSimple = ({
             {jobPosting.title}
           </Typography>
         </Box>
-        <Button sx={{ flexShrink: '0' }}>지원하기</Button>
+        <ApplyButton jobPosting={jobPosting} sx={{ flexShrink: '0' }} />
       </Box>
     </motion.div>
   );
