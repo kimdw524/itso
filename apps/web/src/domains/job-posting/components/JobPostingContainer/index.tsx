@@ -19,6 +19,7 @@ export const JobPostingContainer = () => {
   const queryParams = useQueryParams<FetchJobPostingListParams>({
     jobIds: JOB_ID,
     employmentTypes: EMPLOYMENT_TYPE_KEY,
+    orderBy: 'createdAt',
   });
   // 필터를 비활성화 했을 때 보여줄 비어있는 필터
   const emptyQueryParams = useQueryParams<FetchJobPostingListParams>();

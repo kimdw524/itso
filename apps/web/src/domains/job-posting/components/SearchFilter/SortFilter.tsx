@@ -9,11 +9,11 @@ interface SortFilterProps {
 }
 
 export const SortFilter = ({ queryParams }: SortFilterProps) => {
-  const { setParam } = queryParams;
+  const { setParam, getParam } = queryParams;
 
   return (
     <Select
-      defaultValue="createdAt"
+      defaultValue={getParam('orderBy')}
       width="fit-content"
       variant="contained"
       onChange={(value) =>
