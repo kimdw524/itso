@@ -6,7 +6,7 @@ import { Button } from '@repo/ui';
 
 import { LogOnClick } from '@/components/LogOnClick';
 
-import type { JobPosting } from '../../types/job-posting';
+import type { JobPosting } from '../../models';
 import { shareJobPosting } from '../../utils';
 
 interface ShareButtonProps {

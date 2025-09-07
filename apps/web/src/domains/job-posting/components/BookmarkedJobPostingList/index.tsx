@@ -3,13 +3,13 @@
 import React from 'react';
 
 import { JOB_POSTING } from '../../constants/job-posting';
-import { useFetchBookmarkedJobPostingListSuspense } from '../../hooks/api/useFetchBookmarkedJobPostingList';
+import { JobPostingService } from '../../services/JobPostingService';
 import { JobPostingItem } from '../JobPostingItem';
 import { JobPostingListLoading } from '../JobPostingList/loading';
 
 export const BookmarkedJobPostingList = () => {
   const { data, trigger, isFetchingNextPage } =
-    useFetchBookmarkedJobPostingListSuspense({
+    JobPostingService.useFetchBookmarkedListSuspense({
       limit: JOB_POSTING.LIST_LIMIT,
     });
 

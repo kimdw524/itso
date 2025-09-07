@@ -7,9 +7,8 @@ import { StarIcon } from 'lucide-react';
 import { Button } from '@repo/ui';
 import { theme } from '@repo/ui/themes';
 
-import type { BookmarkType } from '@/domains/bookmark/types/bookmark';
-
-import { useToggleBookmark } from '../../hooks/api/useToggleBookmark';
+import type { BookmarkType } from '../../models';
+import { BookmarkService } from '../../services/BookmarkService';
 
 interface OptimisticBookmarkButtonProps
   extends Omit<React.ComponentProps<typeof Button>, 'defaultValue'> {
@@ -25,7 +24,7 @@ export const OptimisticBookmarkButton = ({
   ...rest
 }: OptimisticBookmarkButtonProps) => {
   const [isBookmarked, setIsBookmarked] = useState<boolean>(defaultValue);
-  const { toggle } = useToggleBookmark({
+  const { toggle } = BookmarkService.useToggleBookmark({
     type: bookmarkType,
     id: targetId,
     isBookmarked,

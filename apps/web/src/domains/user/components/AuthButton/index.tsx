@@ -1,10 +1,10 @@
-import { fetchUserInfo } from '@/api/user/fetchUserInfo';
-
+import { UserService } from '../../services/UserService';
 import { GoogleOAuthButton } from './GoogleOAuthButton';
 import { SignOutButton } from './SignOutButton';
 
 export const AuthButton = async () => {
-  const userInfo = await fetchUserInfo();
+  const userInfo = await UserService.getInfo();
+
   return (
     <>
       {userInfo === null ? (

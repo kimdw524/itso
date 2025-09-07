@@ -1,4 +1,4 @@
-import type { JobPosting } from '../types/job-posting';
+import type { JobPosting } from '../models';
 
 export const shareJobPosting = async (jobPosting: JobPosting) => {
   try {

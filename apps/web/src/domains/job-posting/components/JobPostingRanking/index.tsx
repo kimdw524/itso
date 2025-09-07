@@ -1,11 +1,10 @@
-import { fetchJobPostingList } from '@/api/job-posting/fetchJobPostingList';
-
+import { JobPostingService } from '../../services/JobPostingService';
 import { JobPostingHorizontalList } from '../JobPostingHorizontalList';
 import { JobPostingItem } from '../JobPostingItem';
 import { JobPostingRankingLoading } from './loading';
 
 export const JobPostingRanking = async () => {
-  const { data } = await fetchJobPostingList({
+  const { data } = await JobPostingService.getJobPostingList({
     orderBy: 'recentViews',
     limit: 8,
   });

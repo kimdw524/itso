@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react';
 
 import { Chip } from '@repo/ui';
 
-import type { ExperienceType } from '../../types/job-posting';
+import type { ExperienceType } from '../../models';
 import { formatExperienceRange } from '../../utils';
 import { getExperienceType } from '../../utils/getExperienceType';
 
@@ -18,5 +18,9 @@ export const ExperienceRangeChip = ({ min, max }: ExperienceRangeChipProps) => {
     'NO-MATTER': 'amber',
   };
 
-  return <Chip color={color[getExperienceType(min, max)]}>{formatExperienceRange(min, max)}</Chip>;
+  return (
+    <Chip color={color[getExperienceType(min, max)]}>
+      {formatExperienceRange(min, max)}
+    </Chip>
+  );
 };

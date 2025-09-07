@@ -1,4 +1,4 @@
-import type { ExperienceType } from '../types/job-posting';
+import type { ExperienceType } from '../models';
 
 /**
  * 요구 경력이 주어지면 ExperienceType을 반환한다.

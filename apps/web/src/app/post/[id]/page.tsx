@@ -1,9 +1,9 @@
 import { Box } from '@repo/ui';
 
-import { fetchJobPosting } from '@/api/job-posting/fetchJobPosting';
 import { JobPostingDescription } from '@/domains/job-posting/components/JobPostingDescription';
 import { JobPostingHeader } from '@/domains/job-posting/components/JobPostingHeader';
 import { JobPostingInfo } from '@/domains/job-posting/components/JobPostingInfo';
+import { JobPostingService } from '@/domains/job-posting/services/JobPostingService';
 
 import * as s from './style.css';
 
@@ -13,7 +13,7 @@ export default async function JobPostingPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const response = await fetchJobPosting({ id: Number(id) });
+  const response = await JobPostingService.getJobPosting({ id: Number(id) });
 
   return (
     <>

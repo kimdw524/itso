@@ -2,15 +2,16 @@
 
 import { cloneElement, type ReactElement } from 'react';
 
-import { createLogo, type CreateLogRequest } from '@/api/log/createLog';
+import { LogService } from '@/domains/log/services/LogService';
+import type { RequestType } from '@/utils/http';
 
-interface LogOnClickProps extends CreateLogRequest {
+interface LogOnClickProps extends RequestType<typeof LogService.create> {
   children: ReactElement<{ onClick?: () => void }>;
 }
 
 export const LogOnClick = ({ children, ...rest }: LogOnClickProps) => {
   const handleClick = () => {
-    void createLogo(rest);
+    void LogService.create(rest);
     children.props?.onClick?.();
   };
 
