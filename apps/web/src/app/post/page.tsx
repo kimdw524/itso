@@ -2,7 +2,6 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 import { Box } from '@repo/ui';
 
-import { fetchJobPostingList } from '@/api/job-posting/fetchJobPostingList';
 import { QUERY_KEYS } from '@/constants/queryKeys';
 import { JobPostingContainer } from '@/domains/job-posting/components/JobPostingContainer';
 import {
@@ -10,6 +9,7 @@ import {
   JOB_ID,
   JOB_POSTING,
 } from '@/domains/job-posting/constants/job-posting';
+import { JobPostingService } from '@/domains/job-posting/services/JobPostingService';
 import { getQueryClient } from '@/utils/getQueryClient';
 
 export default async function PostPage() {
@@ -23,7 +23,7 @@ export default async function PostPage() {
       orderBy: 'createdAt',
       limit: JOB_POSTING.LIST_LIMIT,
     }),
-    queryFn: () => fetchJobPostingList({}),
+    queryFn: () => JobPostingService.getJobPostingList({}),
   });
 
   return (
