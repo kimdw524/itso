@@ -1,4 +1,4 @@
-import type { CompanySummary } from '@/domains/company/types/company';
+import type { CompanySummary } from '@/domains/company/models';
 
 import type { JOB_POSTING } from '../constants/job-posting';
 

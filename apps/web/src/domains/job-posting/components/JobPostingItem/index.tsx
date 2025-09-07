@@ -13,7 +13,7 @@ import {
 } from '@repo/ui';
 
 import { OptimisticBookmarkButton } from '@/domains/bookmark/components/OptimisticBookmarkButton';
-import type { CompanySummary } from '@/domains/company/types/company';
+import type { CompanySummary } from '@/domains/company/models';
 
 import type { JobPostingSummary } from '../../models';
 import { formatJobName } from '../../utils/formatJobName';
