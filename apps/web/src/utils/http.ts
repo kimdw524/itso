@@ -35,6 +35,10 @@ export const http = {
   ) {
     return this.request<Response>(url, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...init?.headers,
+      },
       body: body == undefined ? undefined : JSON.stringify(body),
       ...init,
     });
@@ -47,6 +51,11 @@ export const http = {
   ) {
     return this.request<Response>(url, {
       method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...init?.headers,
+      },
+
       body: body == undefined ? undefined : JSON.stringify(body),
       ...init,
     });
@@ -59,6 +68,11 @@ export const http = {
   ) {
     return this.request<Response>(url, {
       method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        ...init?.headers,
+      },
+
       body: body == undefined ? undefined : JSON.stringify(body),
       ...init,
     });
