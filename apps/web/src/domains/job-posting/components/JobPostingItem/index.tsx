@@ -15,7 +15,7 @@ import {
 import { OptimisticBookmarkButton } from '@/domains/bookmark/components/OptimisticBookmarkButton';
 import type { CompanySummary } from '@/domains/company/types/company';
 
-import type { JobPostingSummary } from '../../types/job-posting';
+import type { JobPostingSummary } from '../../models';
 import { formatJobName } from '../../utils/formatJobName';
 import { EmploymentTypeChip } from './EmploymentTypeChip';
 import { ExperienceRangeChip } from './ExperienceRangeChip';

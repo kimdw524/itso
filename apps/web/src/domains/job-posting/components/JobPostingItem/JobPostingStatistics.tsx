@@ -8,7 +8,7 @@ import { Box, Typography } from '@repo/ui';
 
 import { getDday } from '@/utils/date';
 
-import type { JobPostingSummary } from '../../types/job-posting';
+import type { JobPostingSummary } from '../../models';
 
 const Item = ({ icon, value }: { icon: ReactNode; value: ReactNode }) => {
   return (

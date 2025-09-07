@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react';
 
 import { Chip } from '@repo/ui';
 
-import type { EmploymentType } from '../../types/job-posting';
+import type { EmploymentType } from '../../models';
 import { formatEmploymentType } from '../../utils';
 
 interface EmploymentTypeChipProps {

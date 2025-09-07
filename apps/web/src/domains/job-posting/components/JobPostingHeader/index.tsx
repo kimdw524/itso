@@ -7,7 +7,7 @@ import { AnimatePresence } from 'motion/react';
 import { Box, Typography } from '@repo/ui';
 import { useIsInViewport } from '@repo/utils';
 
-import type { JobPosting } from '../../types/job-posting';
+import type { JobPosting } from '../../models';
 import { JobPostingHeaderSimple } from '../JobPostingHeaderSimple';
 import { JobDetail } from './JobDetail';
 import * as s from './style.css';

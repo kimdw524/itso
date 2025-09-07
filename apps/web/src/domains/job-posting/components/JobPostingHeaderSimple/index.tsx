@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 
 import { Box, Typography } from '@repo/ui';
 
-import type { JobPosting } from '../../types/job-posting';
+import type { JobPosting } from '../../models';
 import { ApplyButton } from '../ApplyButton';
 import * as s from './style.css';
 

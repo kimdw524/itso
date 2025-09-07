@@ -2,7 +2,6 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 import { Box } from '@repo/ui';
 
-import { QUERY_KEYS } from '@/constants/queryKeys';
 import { JobPostingContainer } from '@/domains/job-posting/components/JobPostingContainer';
 import {
   EMPLOYMENT_TYPE_KEY,
@@ -17,7 +16,7 @@ export default async function PostPage() {
 
   await queryClient.prefetchInfiniteQuery({
     initialPageParam: undefined,
-    queryKey: QUERY_KEYS['job-posting'].list({
+    queryKey: JobPostingService.queryKeys.list({
       jobIds: JOB_ID,
       employmentTypes: EMPLOYMENT_TYPE_KEY,
       orderBy: 'createdAt',

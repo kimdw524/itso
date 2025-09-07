@@ -7,10 +7,8 @@ import { StarIcon } from 'lucide-react';
 import { Button } from '@repo/ui';
 import { theme } from '@repo/ui/themes';
 
-import type { BookmarkType } from '@/domains/bookmark/types/bookmark';
-
-import { useFetchIsBookmarked } from '../../hooks/api/useFetchIsBookmarked';
-import { useToggleBookmark } from '../../hooks/api/useToggleBookmark';
+import type { BookmarkType } from '../../models';
+import { BookmarkService } from '../../services/BookmarkService';
 
 interface BookmarkButtonProps extends React.ComponentProps<typeof Button> {
   bookmarkType: BookmarkType;
@@ -22,11 +20,14 @@ export const BookmarkButton = ({
   targetId,
   ...rest
 }: BookmarkButtonProps) => {
-  const { data } = useFetchIsBookmarked({ type: bookmarkType, id: targetId });
+  const { data } = BookmarkService.useFetchIsBookmarked({
+    type: bookmarkType,
+    id: targetId,
+  });
 
   const isBookmarked = !!data?.isBookmarked;
 
-  const { toggle } = useToggleBookmark({
+  const { toggle } = BookmarkService.useToggleBookmark({
     type: bookmarkType,
     id: targetId,
     isBookmarked,

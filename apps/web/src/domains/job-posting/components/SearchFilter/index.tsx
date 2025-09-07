@@ -5,26 +5,31 @@ import { useRef, type ReactNode } from 'react';
 import { Box, ScrollArea } from '@repo/ui';
 import { useOverlay } from '@repo/utils';
 
-import type { FetchJobPostingListParams } from '@/api/job-posting/fetchJobPostingList';
 import { CheckboxModal } from '@/components/CheckboxModal';
 import { DisableWrapper } from '@/components/DisableWrapper';
 import { FilterButton } from '@/components/FilterButton';
 import { RangeModal } from '@/components/RangeModal';
 import { useQueryParams } from '@/hooks/useQueryParams';
 import { useSticky } from '@/hooks/useSticky';
+import type { RequestType } from '@/utils/http';
 
 import {
   EMPLOYMENT_TYPE_KEY,
   JOB_ID,
   JOB_POSTING,
 } from '../../constants/job-posting';
+import type { JobPostingService } from '../../services/JobPostingService';
 import { formatExperienceRange } from '../../utils';
 import { SortFilter } from './SortFilter';
 import * as s from './style.css';
 
 interface SearchFilterProps {
   children?: ReactNode;
-  queryParams: ReturnType<typeof useQueryParams<FetchJobPostingListParams>>;
+  queryParams: ReturnType<
+    typeof useQueryParams<
+      RequestType<typeof JobPostingService.getJobPostingList>
+    >
+  >;
   isDisabled?: boolean;
 }
 

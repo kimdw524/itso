@@ -1,8 +1,9 @@
-import type { BookmarkType } from '../../types/bookmark';
+import type { BookmarkType } from '@/domains/bookmark/models';
+
 import { useCreateBookmark } from './useCreateBookmark';
 import { useRemoveBookmark } from './useRemoveBookmark';
 
-interface UseToggleBookmarkProps {
+export interface UseToggleBookmarkProps {
   type: BookmarkType;
   id: number;
   isBookmarked: boolean;

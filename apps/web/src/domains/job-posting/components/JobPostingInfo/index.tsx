@@ -10,9 +10,9 @@ import { Box, Card } from '@repo/ui';
 
 import { QUERY_CLIENT_CONFIG } from '@/constants/queryClient';
 import { BookmarkButton } from '@/domains/bookmark/components/BookmarkButton';
-import { fetchIsBookmarkQueryOptions } from '@/domains/bookmark/queries';
+import { BookmarkService } from '@/domains/bookmark/services/BookmarkService';
 
-import type { JobPosting } from '../../types/job-posting';
+import type { JobPosting } from '../../models';
 import { ApplyButton } from '../ApplyButton';
 import { ShareButton } from '../ShareButton';
 
@@ -24,7 +24,10 @@ export const JobPostingInfo = async ({ jobPosting }: JobPostingInfoProps) => {
   const queryClient = new QueryClient(QUERY_CLIENT_CONFIG);
 
   await queryClient.prefetchQuery(
-    fetchIsBookmarkQueryOptions({ type: 'job-posting', id: jobPosting.id }),
+    BookmarkService.queryOptions.isBookmarked({
+      type: 'job-posting',
+      id: jobPosting.id,
+    }),
   );
 
   const state = dehydrate(queryClient);
