@@ -12,6 +12,7 @@ export const serializeQueryString = <
   },
 >(
   params: T,
+  delimiter?: string,
 ): string => {
   const result: string[] = [];
 
@@ -23,9 +24,14 @@ export const serializeQueryString = <
     }
 
     if (Array.isArray(value)) {
-      for (const item of value) {
-        result.push(`${key}=${item}`);
+      if (delimiter === undefined) {
+        for (const item of value) {
+          result.push(`${key}=${item}`);
+        }
+        continue;
       }
+
+      result.push(`${key}=${value.join(delimiter)}`);
       continue;
     }
 
@@ -40,13 +46,20 @@ export const serializeQueryString = <
  */
 export function parseQueryString(
   query: string,
+  delimiter?: string,
 ): Record<string, string | string[]> {
   const params = new URLSearchParams(query);
   const result: Record<string, string | string[]> = {};
 
   for (const key of params.keys()) {
     const values = params.getAll(key);
-    result[key] = values.length > 1 ? values : values[0]!;
+    if (delimiter === undefined) {
+      result[key] = values.length > 1 ? values : values[0]!;
+      continue;
+    }
+
+    const splitted = values[0]?.split(delimiter) ?? [];
+    result[key] = splitted.length > 1 ? splitted : result[0]!;
   }
 
   return result;
