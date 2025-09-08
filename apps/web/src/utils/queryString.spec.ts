@@ -24,7 +24,7 @@ describe('parseQueryString', () => {
   });
 
   it('delimter가 주어지면 delimiter를 기준으로 배열을 만든다.', () => {
-    const result = parseQueryString('a=1,2,3', ',');
-    expect(result).toEqual({ a: ['1', '2', '3'] });
+    const result = parseQueryString('a=1,2,3&b=test', ',');
+    expect(result).toEqual({ a: ['1', '2', '3'], b: 'test' });
   });
 });

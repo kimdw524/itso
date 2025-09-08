@@ -58,8 +58,8 @@ export function parseQueryString(
       continue;
     }
 
-    const splitted = values[0]?.split(delimiter) ?? [];
-    result[key] = splitted.length > 1 ? splitted : result[0]!;
+    const splitted = values[0]!.split(delimiter)!;
+    result[key] = splitted.length > 1 ? splitted : splitted[0]!;
   }
 
   return result;
