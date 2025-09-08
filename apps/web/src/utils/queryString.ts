@@ -34,3 +34,20 @@ export const serializeQueryString = <
 
   return result.join('&');
 };
+
+/**
+ * queryString을 object로 변환하는 함수
+ */
+export function parseQueryString(
+  query: string,
+): Record<string, string | string[]> {
+  const params = new URLSearchParams(query);
+  const result: Record<string, string | string[]> = {};
+
+  for (const key of params.keys()) {
+    const values = params.getAll(key);
+    result[key] = values.length > 1 ? values : values[0]!;
+  }
+
+  return result;
+}
