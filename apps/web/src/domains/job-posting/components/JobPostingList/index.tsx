@@ -5,7 +5,6 @@ import React from 'react';
 import { useQueryParams } from '@/hooks/useQueryParams';
 import type { RequestType } from '@/utils/http';
 
-import { JOB_POSTING } from '../../constants/job-posting';
 import { JobPostingService } from '../../services/JobPostingService';
 import { JobPostingItem } from '../JobPostingItem';
 import { JobPostingListLoading } from './loading';
@@ -20,10 +19,7 @@ interface JobPostingListProps {
 
 export const JobPostingList = ({ queryParams }: JobPostingListProps) => {
   const { data, trigger, isFetchingNextPage } =
-    JobPostingService.useFetchListSuspense({
-      ...queryParams.rawParams,
-      limit: JOB_POSTING.LIST_LIMIT,
-    });
+    JobPostingService.useFetchListSuspense(queryParams.rawParams);
 
   return (
     <>

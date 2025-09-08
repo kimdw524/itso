@@ -1,4 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { serializeQueryString } from '@/utils/queryString';
 
 export const useQueryParams = <
   Params extends {
@@ -11,6 +13,7 @@ export const useQueryParams = <
   },
 >(
   initialValue: Partial<Params> = {},
+  delimiter?: string,
 ) => {
   const [params, setParams] = useState<Partial<Params>>(initialValue);
 
@@ -38,27 +41,17 @@ export const useQueryParams = <
   }, []);
 
   const getParams = useCallback((): string => {
-    const result: string[] = [];
-
-    for (const key in params) {
-      const value = params[key];
-
-      if (value === undefined) {
-        continue;
-      }
-
-      if (Array.isArray(value)) {
-        for (const item of value) {
-          result.push(`${key}=${item}`);
-        }
-        continue;
-      }
-
-      result.push(`${key}=${encodeURIComponent(value)}`);
-    }
-
-    return result.join('&');
+    return serializeQueryString(params);
   }, [params]);
+
+  // 상태와 URL(search param)을 동기화 하는 로직
+  useEffect(() => {
+    window.history.replaceState(
+      {},
+      '',
+      `?${serializeQueryString(params, delimiter)}`,
+    );
+  }, [params, delimiter]);
 
   return useMemo(
     () => ({

@@ -5,28 +5,25 @@ import { Suspense, useState } from 'react';
 import { Box } from '@repo/ui';
 
 import { useQueryParams } from '@/hooks/useQueryParams';
-import type { RequestType } from '@/utils/http';
 
-import { EMPLOYMENT_TYPE_KEY, JOB_ID } from '../../constants/job-posting';
-import type { JobPostingService } from '../../services/JobPostingService';
+import type { JobPostingSearchFilter } from '../../models';
 import { JobPostingList } from '../JobPostingList';
 import { JobPostingListLoading } from '../JobPostingList/loading';
 import { SearchFilter } from '../SearchFilter';
 import { ShowAllButton } from './ShowAllButton';
 import * as s from './style.css';
 
-export const JobPostingContainer = () => {
+interface JobPostingContainerProps {
+  filter: JobPostingSearchFilter;
+}
+
+export const JobPostingContainer = ({ filter }: JobPostingContainerProps) => {
   const [isShowAll, setShowAll] = useState<boolean>(false);
-  const queryParams = useQueryParams<
-    RequestType<typeof JobPostingService.getJobPostingList>
-  >({
-    jobIds: JOB_ID,
-    employmentTypes: EMPLOYMENT_TYPE_KEY,
-    orderBy: 'createdAt',
-  });
+
+  const queryParams = useQueryParams<JobPostingSearchFilter>(filter, ',');
+
   // 필터를 비활성화 했을 때 보여줄 비어있는 필터
-  const emptyQueryParams =
-    useQueryParams<RequestType<typeof JobPostingService.getJobPostingList>>();
+  // const emptyQueryParams = useQueryParams<SearchFilter>();
 
   const handleShowAllClick = () => {
     setShowAll((prev) => !prev);
@@ -42,9 +39,7 @@ export const JobPostingContainer = () => {
         sx={{ fontSize: { mobile: 'sm', desktop: '1rem' } }}
       >
         <Suspense fallback={<JobPostingListLoading />}>
-          <JobPostingList
-            queryParams={isShowAll ? emptyQueryParams : queryParams}
-          />
+          <JobPostingList queryParams={queryParams} />
         </Suspense>
       </Box>
     </>
