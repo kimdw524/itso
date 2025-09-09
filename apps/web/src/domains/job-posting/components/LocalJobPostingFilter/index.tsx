@@ -25,5 +25,5 @@ export const LocalJobPostingFilter = () => {
     router.replace(`?${queryString}`);
   }, [router]);
 
-  return <div></div>;
+  return <></>;
 };
