@@ -22,9 +22,6 @@ export const JobPostingContainer = ({ filter }: JobPostingContainerProps) => {
 
   const queryParams = useQueryParams<JobPostingSearchFilter>(filter, ',');
 
-  // 필터를 비활성화 했을 때 보여줄 비어있는 필터
-  // const emptyQueryParams = useQueryParams<SearchFilter>();
-
   const handleShowAllClick = () => {
     setShowAll((prev) => !prev);
   };
@@ -39,7 +36,13 @@ export const JobPostingContainer = ({ filter }: JobPostingContainerProps) => {
         sx={{ fontSize: { mobile: 'sm', desktop: '1rem' } }}
       >
         <Suspense fallback={<JobPostingListLoading />}>
-          <JobPostingList queryParams={queryParams} />
+          <JobPostingList
+            params={
+              isShowAll
+                ? { orderBy: queryParams.getParam('orderBy') }
+                : queryParams.rawParams
+            }
+          />
         </Suspense>
       </Box>
     </>

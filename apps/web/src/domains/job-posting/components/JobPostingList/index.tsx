@@ -2,24 +2,18 @@
 
 import React from 'react';
 
-import { useQueryParams } from '@/hooks/useQueryParams';
-import type { RequestType } from '@/utils/http';
-
+import type { JobPostingSearchFilter } from '../../models';
 import { JobPostingService } from '../../services/JobPostingService';
 import { JobPostingItem } from '../JobPostingItem';
 import { JobPostingListLoading } from './loading';
 
 interface JobPostingListProps {
-  queryParams: ReturnType<
-    typeof useQueryParams<
-      RequestType<typeof JobPostingService.getJobPostingList>
-    >
-  >;
+  params: JobPostingSearchFilter;
 }
 
-export const JobPostingList = ({ queryParams }: JobPostingListProps) => {
+export const JobPostingList = ({ params }: JobPostingListProps) => {
   const { data, trigger, isFetchingNextPage } =
-    JobPostingService.useFetchListSuspense(queryParams.rawParams);
+    JobPostingService.useFetchListSuspense(params);
 
   return (
     <>
