@@ -67,12 +67,20 @@ export const useRipple = <T extends HTMLElement>(ref?: React.Ref<T>) => {
         return;
       }
 
+      if (element instanceof HTMLButtonElement && element.disabled) {
+        return;
+      }
+
       clearTimer();
       runAnimation(e.offsetX, e.offsetY);
     };
 
     const handlePointerDown = (e: PointerEvent) => {
       if (e.button !== 0 || !ripple || !isTransitionEnd) {
+        return;
+      }
+
+      if (element instanceof HTMLButtonElement && element.disabled) {
         return;
       }
 
