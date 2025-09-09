@@ -1,12 +1,18 @@
 import type { CompanySummary } from '@/domains/company/models';
+import type { RequestType } from '@/utils/http';
 
 import type { JOB_POSTING } from '../constants/job-posting';
+import type { JobPostingService } from '../services/JobPostingService';
 
 export type EmploymentType = keyof typeof JOB_POSTING.EMPLOYMENT_TYPE;
 
 export type JobId = keyof typeof JOB_POSTING.JOB_NAME;
 
 export type ExperienceType = 'ENTRY' | 'EXPERIENCED' | 'NO-MATTER';
+
+export type JobPostingSearchFilter = RequestType<
+  typeof JobPostingService.getJobPostingList
+>;
 
 export interface JobPostingSummary {
   id: number;

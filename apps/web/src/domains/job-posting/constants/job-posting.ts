@@ -1,5 +1,7 @@
 import { getKeys } from '@/utils/getKeys';
 
+import type { JobPostingSearchFilter } from '../models';
+
 const EMPLOYMENT_TYPE = {
   1: '정규직',
   2: '계약직',
@@ -41,3 +43,12 @@ export const JOB_ID = getKeys(JOB_POSTING.JOB_NAME).map((jobId) => jobId);
 export const EMPLOYMENT_TYPE_KEY = getKeys(JOB_POSTING.EMPLOYMENT_TYPE).map(
   (type) => type,
 );
+
+export const JOB_POSTING_DEFAULT_FILTER = {
+  jobIds: JOB_ID,
+  employmentTypes: EMPLOYMENT_TYPE_KEY,
+  orderBy: 'createdAt',
+  limit: JOB_POSTING.LIST_LIMIT,
+} satisfies JobPostingSearchFilter;
+
+export const JOB_POSTING_FILTER_STORAGE = 'post_filter';

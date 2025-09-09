@@ -1,28 +1,42 @@
+import type { SearchParams } from 'next/dist/server/request/search-params';
+
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 import { Box } from '@repo/ui';
 
 import { JobPostingContainer } from '@/domains/job-posting/components/JobPostingContainer';
-import {
-  EMPLOYMENT_TYPE_KEY,
-  JOB_ID,
-  JOB_POSTING,
-} from '@/domains/job-posting/constants/job-posting';
+import { LocalJobPostingFilter } from '@/domains/job-posting/components/LocalJobPostingFilter';
+import { JOB_POSTING_DEFAULT_FILTER } from '@/domains/job-posting/constants/job-posting';
+import type { JobPostingSearchFilter } from '@/domains/job-posting/models';
+import { jobPostingFilterSchema } from '@/domains/job-posting/schemas/jobPostingFilter';
 import { JobPostingService } from '@/domains/job-posting/services/JobPostingService';
 import { getQueryClient } from '@/utils/getQueryClient';
 
-export default async function PostPage() {
+export default async function PostPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const search = await searchParams;
+
+  // searchParams가 없으면 localStorage에 저장된 값을 불러온다.
+  if (Object.keys(search).length == 0) {
+    return <LocalJobPostingFilter />;
+  }
+
   const queryClient = getQueryClient();
+
+  const result = jobPostingFilterSchema.safeParse(search);
+  const filter = (
+    result.success
+      ? { ...JOB_POSTING_DEFAULT_FILTER, ...result.data }
+      : JOB_POSTING_DEFAULT_FILTER
+  ) as JobPostingSearchFilter;
 
   await queryClient.prefetchInfiniteQuery({
     initialPageParam: undefined,
-    queryKey: JobPostingService.queryKeys.list({
-      jobIds: JOB_ID,
-      employmentTypes: EMPLOYMENT_TYPE_KEY,
-      orderBy: 'createdAt',
-      limit: JOB_POSTING.LIST_LIMIT,
-    }),
-    queryFn: () => JobPostingService.getJobPostingList({}),
+    queryKey: JobPostingService.queryKeys.list(filter),
+    queryFn: () => JobPostingService.getJobPostingList(filter),
   });
 
   return (
@@ -31,7 +45,7 @@ export default async function PostPage() {
       style={{ isolation: 'isolate' }}
     >
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <JobPostingContainer />
+        <JobPostingContainer filter={filter} />
       </HydrationBoundary>
     </Box>
   );

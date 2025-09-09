@@ -1,36 +1,40 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import { Box } from '@repo/ui';
 
 import { useQueryParams } from '@/hooks/useQueryParams';
-import type { RequestType } from '@/utils/http';
+import { serializeQueryString } from '@/utils/queryString';
 
-import { EMPLOYMENT_TYPE_KEY, JOB_ID } from '../../constants/job-posting';
-import type { JobPostingService } from '../../services/JobPostingService';
+import { JOB_POSTING_FILTER_STORAGE } from '../../constants/job-posting';
+import type { JobPostingSearchFilter } from '../../models';
 import { JobPostingList } from '../JobPostingList';
 import { JobPostingListLoading } from '../JobPostingList/loading';
 import { SearchFilter } from '../SearchFilter';
 import { ShowAllButton } from './ShowAllButton';
 import * as s from './style.css';
 
-export const JobPostingContainer = () => {
+interface JobPostingContainerProps {
+  filter: JobPostingSearchFilter;
+}
+
+export const JobPostingContainer = ({ filter }: JobPostingContainerProps) => {
   const [isShowAll, setShowAll] = useState<boolean>(false);
-  const queryParams = useQueryParams<
-    RequestType<typeof JobPostingService.getJobPostingList>
-  >({
-    jobIds: JOB_ID,
-    employmentTypes: EMPLOYMENT_TYPE_KEY,
-    orderBy: 'createdAt',
-  });
-  // 필터를 비활성화 했을 때 보여줄 비어있는 필터
-  const emptyQueryParams =
-    useQueryParams<RequestType<typeof JobPostingService.getJobPostingList>>();
+
+  const queryParams = useQueryParams<JobPostingSearchFilter>(filter, ',');
 
   const handleShowAllClick = () => {
     setShowAll((prev) => !prev);
   };
+
+  useEffect(() => {
+    // 필터가 변경되면 localStorage에 저장한다.
+    localStorage.setItem(
+      JOB_POSTING_FILTER_STORAGE,
+      serializeQueryString(queryParams.rawParams, ','),
+    );
+  }, [queryParams.rawParams]);
 
   return (
     <>
@@ -43,7 +47,11 @@ export const JobPostingContainer = () => {
       >
         <Suspense fallback={<JobPostingListLoading />}>
           <JobPostingList
-            queryParams={isShowAll ? emptyQueryParams : queryParams}
+            params={
+              isShowAll
+                ? { orderBy: queryParams.getParam('orderBy') }
+                : queryParams.rawParams
+            }
           />
         </Suspense>
       </Box>
