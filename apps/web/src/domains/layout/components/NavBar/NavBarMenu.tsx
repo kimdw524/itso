@@ -15,6 +15,11 @@ export const NavBarMenu = () => {
           채용공고
         </NavigationItem>
       </Link>
+      <Link href="/company">
+        <NavigationItem isSelected={pathname.startsWith('/company')}>
+          기업
+        </NavigationItem>
+      </Link>
       <Link href="/bookmark">
         <NavigationItem isSelected={pathname.startsWith('/bookmark')}>
           북마크
