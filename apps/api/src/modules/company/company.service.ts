@@ -72,7 +72,7 @@ export class CompanyService {
 
         if (cursor === undefined) {
           qb.andWhere('company.id > :cursorId', {
-            cursorId: cursorId ?? 0,
+            cursorId: isFinite(cursorId) ? cursorId : 0,
           });
         } else {
           qb.andWhere(
