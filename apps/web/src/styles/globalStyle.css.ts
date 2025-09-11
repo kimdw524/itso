@@ -19,7 +19,7 @@ globalStyle('body', {
   vars: {
     [STYLE_VARS.CONTAINER_WIDTH]: '1440px',
     [STYLE_VARS.NAVBAR_HEIGHT]: '4em',
-    [STYLE_VARS.STICKY_JOB_POSTING_FILTER_TOP]: STYLE_VARS.NAVBAR_HEIGHT,
+    [STYLE_VARS.STICKY_HEADER_TOP]: STYLE_VARS.NAVBAR_HEIGHT,
   },
   '@media': {
     [`(min-width: ${breakpoint.desktop}px)`]: {
