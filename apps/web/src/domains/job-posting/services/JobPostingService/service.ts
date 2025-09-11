@@ -21,10 +21,10 @@ export const service = {
     maxExperience?: number;
     employmentTypes?: EmploymentType[];
     orderBy?: 'createdAt' | 'recentViews';
-    cursor?: number;
+    cursor?: string;
     limit?: number;
   }) {
-    return http.get<CursorPaginatedResponse<JobPostingSummary, number>>(
+    return http.get<CursorPaginatedResponse<JobPostingSummary, string>>(
       '/job-posting',
       { params },
     );
