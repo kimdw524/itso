@@ -4,11 +4,13 @@ import { Suspense } from 'react';
 
 import { Box } from '@repo/ui';
 
+import { StickyHeader } from '@/components/StickyHeader';
 import { useQueryParams } from '@/hooks/useQueryParams';
 
 import type { CompanyFilter } from '../../models';
 import { CompanyList } from '../CompanyList';
 import { CompanyListLoading } from '../CompanyList/loading';
+import { SortFilter } from '../SortFilter';
 import * as s from './style.css';
 
 interface CompanyContainerProps {
@@ -20,6 +22,11 @@ export const CompanyContainer = ({ filter }: CompanyContainerProps) => {
 
   return (
     <>
+      <StickyHeader>
+        <Box flex justifyContent="flex-end" width="100%">
+          <SortFilter queryParams={queryParams} />
+        </Box>
+      </StickyHeader>
       <Box
         flex
         flexDirection="column"
