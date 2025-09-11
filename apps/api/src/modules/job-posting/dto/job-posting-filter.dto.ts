@@ -35,6 +35,11 @@ export class JobPostingFilterDto {
 
   @IsOptional()
   @Type(() => Number)
+  @Min(0)
+  cursorId?: number;
+
+  @IsOptional()
+  @Type(() => Number)
   @Max(20)
   @Min(1)
   limit?: number;

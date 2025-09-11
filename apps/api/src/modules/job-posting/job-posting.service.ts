@@ -240,9 +240,12 @@ export class JobPostingService {
       maxExperience,
       employmentTypes,
       cursor,
+      cursorId,
       limit = 20,
       orderBy,
     } = filter;
+
+    let cursorKey: keyof JobPosting;
 
     const qb = this.jobPostingRepo
       .createQueryBuilder('posting')
@@ -269,10 +272,28 @@ export class JobPostingService {
     switch (orderBy) {
       case 'recentViews':
         qb.orderBy('posting.recentViews', 'DESC');
+        if (cursor === undefined) {
+          qb.andWhere('posting.id > :cursorId', {
+            cursorId: cursorId ?? 0,
+          });
+        } else {
+          qb.andWhere(
+            'posting.recentViews < :cursor OR (posting.recentViews = :cursor AND posting.id > :cursorId)',
+            {
+              cursor: cursor,
+              cursorId: cursorId ?? 0,
+            },
+          );
+        }
+        cursorKey = 'recentViews';
         break;
       case 'createdAt':
       default:
         qb.orderBy('posting.id', 'DESC');
+        if (cursor !== undefined) {
+          qb.andWhere('posting.id < :cursor', { cursor: cursor });
+        }
+        cursorKey = 'id';
         break;
     }
 
@@ -305,10 +326,6 @@ export class JobPostingService {
       qb.andWhere('posting.employmentType IN (:...employmentTypes)', {
         employmentTypes,
       });
-    }
-
-    if (cursor !== undefined) {
-      qb.andWhere('posting.id < :cursor', { cursor });
     }
 
     if (userId == undefined) {
@@ -367,12 +384,16 @@ export class JobPostingService {
     const slicedData = hasNext
       ? transformedData.slice(0, limit)
       : transformedData;
-    const nextCursor = hasNext ? slicedData[slicedData.length - 1].id : null;
+    const nextCursor = hasNext
+      ? slicedData[slicedData.length - 1][cursorKey]
+      : null;
+    const nextCursorId = hasNext ? slicedData[slicedData.length - 1].id : null;
 
     return {
       data: plainToInstance(JobPostingSummaryDto, slicedData),
-      nextCursor,
       hasNext,
+      nextCursor,
+      nextCursorId,
     };
   }
 
