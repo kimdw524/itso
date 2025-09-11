@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 
 import { CursorPaginatedResponse } from '@/types/pagination';
 
@@ -15,5 +15,10 @@ export class CompanyController {
     @Query() filter: CompanyFilterDto,
   ): Promise<CursorPaginatedResponse<Company>> {
     return await this.companyService.search(filter);
+  }
+
+  @Get(':id')
+  async getCompany(@Param('id', ParseIntPipe) id: number) {
+    return await this.companyService.find({ id });
   }
 }

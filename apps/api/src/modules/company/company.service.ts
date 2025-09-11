@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
@@ -21,6 +21,11 @@ export class CompanyService {
   }
 
   async find(data: Partial<Company>): Promise<Company | null> {
+    const res = await this.companyRepo.findOneBy(data);
+    if (!res) {
+      throw new NotFoundException('company not found');
+    }
+
     return await this.companyRepo.findOneBy(data);
   }
 
