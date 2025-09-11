@@ -10,3 +10,7 @@ export interface Company {
   logo: string;
   description: string | null;
 }
+
+export interface CompanyFilter {
+  orderBy?: 'name' | 'bookmarks';
+}
