@@ -13,4 +13,8 @@ export const service = {
       params: { ...params, limit: COMPANY_LIST_LIMIT },
     });
   },
+
+  async getCompany(params: { id: number }) {
+    return http.get<Company>(`/company/${params.id}`);
+  },
 };
