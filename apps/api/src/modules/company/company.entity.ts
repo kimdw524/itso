@@ -1,10 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('company')
 export class Company {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Index()
   @Column({ length: 40, unique: true })
   name: string;
 
@@ -14,6 +15,7 @@ export class Company {
   @Column({ length: 512, nullable: true })
   logo: string;
 
+  @Index()
   @Column({ default: 0 })
   bookmarks: number;
 }

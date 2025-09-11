@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { BookmarkModule } from './modules/bookmark/bookmark.module';
+import { CompanyModule } from './modules/company/company.module';
 import { JobPostingRankingModule } from './modules/job-posting-ranking/job-posting-ranking.module';
 import { JobPostingModule } from './modules/job-posting/job-posting.module';
 import { LogModule } from './modules/log/log.module';
@@ -29,6 +30,7 @@ import { UserModule } from './modules/user/user.module';
     BookmarkModule,
     JobPostingRankingModule,
     LogModule,
+    CompanyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
