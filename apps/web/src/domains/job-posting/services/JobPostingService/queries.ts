@@ -19,7 +19,7 @@ export const queryOptions = {
     queryKey: queryKeys.list(params),
     initialPageParam: undefined,
     gcTime: 0,
-    queryFn: ({ pageParam }: { pageParam?: number }) =>
+    queryFn: ({ pageParam }: { pageParam?: string }) =>
       service.getJobPostingList({ ...params, cursor: pageParam }),
     getNextPageParam: (
       lastPage: ResponseType<typeof service.getJobPostingList>,

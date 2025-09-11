@@ -22,6 +22,7 @@ export const container = recipeWithLayer({
     zIndex: '10',
 
     width: '100%',
+    minWidth: 'max-content',
     border: `1px solid rgb(${theme.color.border})`,
     borderRadius: theme.borderRadius,
     margin: '0.5rem 0',

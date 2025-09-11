@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import { Box, ScrollArea } from '@repo/ui';
 import { useOverlay } from '@repo/utils';
@@ -9,8 +9,8 @@ import { CheckboxModal } from '@/components/CheckboxModal';
 import { DisableWrapper } from '@/components/DisableWrapper';
 import { FilterButton } from '@/components/FilterButton';
 import { RangeModal } from '@/components/RangeModal';
+import { StickyHeader } from '@/components/StickyHeader';
 import { useQueryParams } from '@/hooks/useQueryParams';
-import { useSticky } from '@/hooks/useSticky';
 import type { RequestType } from '@/utils/http';
 
 import {
@@ -21,7 +21,6 @@ import {
 import type { JobPostingService } from '../../services/JobPostingService';
 import { formatExperienceRange } from '../../utils';
 import { SortFilter } from './SortFilter';
-import * as s from './style.css';
 
 interface SearchFilterProps {
   children?: ReactNode;
@@ -42,21 +41,8 @@ export const SearchFilter = ({
 
   const { getParam, setParam } = queryParams;
 
-  const ref = useRef<HTMLDivElement>(null);
-  const { isStuck } = useSticky(ref);
-
   return (
-    <Box
-      ref={ref}
-      flex
-      alignItems="center"
-      justifyContent="space-between"
-      gap="lg"
-      className={s.container({ isStuck })}
-      sx={{
-        fontSize: { desktop: 'md', mobile: 'sm' },
-      }}
-    >
+    <StickyHeader>
       <ScrollArea>
         <Box flex gap="lg" alignItems="center">
           <DisableWrapper
@@ -144,6 +130,6 @@ export const SearchFilter = ({
         </Box>
       </ScrollArea>
       <SortFilter queryParams={queryParams} />
-    </Box>
+    </StickyHeader>
   );
 };

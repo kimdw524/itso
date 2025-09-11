@@ -8,7 +8,7 @@ import { STYLE_VARS } from '@/styles/vars.css';
 export const container = recipe({
   base: {
     position: 'sticky',
-    top: STYLE_VARS.STICKY_JOB_POSTING_FILTER_TOP,
+    top: STYLE_VARS.STICKY_HEADER_TOP,
     zIndex: '10',
 
     padding: `${spacing['3xl']} 0`,
