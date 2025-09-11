@@ -3,12 +3,7 @@ import { IsIn, IsOptional, Max, Min } from 'class-validator';
 
 export class CompanyFilterDto {
   @IsOptional()
-  cursor?: number | string;
-
-  @IsOptional()
-  @Type(() => Number)
-  @Min(0)
-  cursorId?: number;
+  cursor?: string;
 
   @IsOptional()
   @Type(() => Number)

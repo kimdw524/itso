@@ -48,16 +48,20 @@ export class CompanyService {
   async search(
     filter: CompanyFilterDto,
   ): Promise<CursorPaginatedResponse<Company>> {
-    const limit = filter.limit ?? 20;
+    const { orderBy, limit = 20 } = filter;
+
+    const cursor = filter.cursor?.split(',')[0],
+      cursorId = Number(filter.cursor?.split(',')[1]);
+
     let cursorKey: keyof Company;
     const qb = this.companyRepo.createQueryBuilder('company');
 
-    switch (filter.orderBy) {
+    switch (orderBy) {
       case 'name':
       default:
         qb.addOrderBy('company.name', 'ASC');
         qb.andWhere('company.name > :name', {
-          name: filter.cursor ?? '',
+          name: cursor ?? '',
         });
         cursorKey = 'name';
 
@@ -66,14 +70,17 @@ export class CompanyService {
         qb.addOrderBy('company.bookmarks', 'DESC');
         qb.addOrderBy('company.id', 'ASC');
 
-        if (filter.cursor === undefined) {
+        if (cursor === undefined) {
           qb.andWhere('company.id > :cursorId', {
-            cursorId: filter.cursorId ?? 0,
+            cursorId: cursorId ?? 0,
           });
         } else {
           qb.andWhere(
             '(company.bookmarks < :cursor) OR (company.bookmarks = :cursor AND company.id > :cursorId)',
-            { cursor: filter.cursor, cursorId: filter.cursorId ?? 0 },
+            {
+              cursor: Number(cursor),
+              cursorId: isFinite(cursorId) ? cursorId : 0,
+            },
           );
         }
         cursorKey = 'bookmarks';
@@ -86,9 +93,10 @@ export class CompanyService {
 
     const hasNext = data.length > limit;
     const slicedData = data.slice(0, limit);
-    const nextCursor = hasNext ? slicedData.at(-1)![cursorKey] : null;
-    const nextCursorId = hasNext ? slicedData.at(-1)!.id : null;
+    const nextCursor = hasNext
+      ? `${slicedData.at(-1)![cursorKey]},${slicedData.at(-1)!.id}`
+      : null;
 
-    return { data: slicedData, hasNext, nextCursor, nextCursorId };
+    return { data: slicedData, hasNext, nextCursor };
   }
 }

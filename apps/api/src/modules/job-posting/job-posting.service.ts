@@ -239,12 +239,12 @@ export class JobPostingService {
       minExperience,
       maxExperience,
       employmentTypes,
-      cursor,
-      cursorId,
       limit = 20,
       orderBy,
     } = filter;
 
+    const cursor = filter.cursor?.split(',')[0],
+      cursorId = Number(filter.cursor?.split(',')[1]);
     let cursorKey: keyof JobPosting;
 
     const qb = this.jobPostingRepo
@@ -274,14 +274,14 @@ export class JobPostingService {
         qb.orderBy('posting.recentViews', 'DESC');
         if (cursor === undefined) {
           qb.andWhere('posting.id > :cursorId', {
-            cursorId: cursorId ?? 0,
+            cursorId: isFinite(cursorId) ? cursorId : 0,
           });
         } else {
           qb.andWhere(
             'posting.recentViews < :cursor OR (posting.recentViews = :cursor AND posting.id > :cursorId)',
             {
-              cursor: cursor,
-              cursorId: cursorId ?? 0,
+              cursor: Number(cursor),
+              cursorId: isFinite(cursorId) ? cursorId : 0,
             },
           );
         }
@@ -291,7 +291,7 @@ export class JobPostingService {
       default:
         qb.orderBy('posting.id', 'DESC');
         if (cursor !== undefined) {
-          qb.andWhere('posting.id < :cursor', { cursor: cursor });
+          qb.andWhere('posting.id < :cursor', { cursor: Number(cursor) });
         }
         cursorKey = 'id';
         break;
@@ -385,15 +385,12 @@ export class JobPostingService {
       ? transformedData.slice(0, limit)
       : transformedData;
     const nextCursor = hasNext
-      ? slicedData[slicedData.length - 1][cursorKey]
+      ? `${slicedData[slicedData.length - 1][cursorKey]},${slicedData[slicedData.length - 1].id}`
       : null;
-    const nextCursorId = hasNext ? slicedData[slicedData.length - 1].id : null;
-
     return {
       data: plainToInstance(JobPostingSummaryDto, slicedData),
       hasNext,
       nextCursor,
-      nextCursorId,
     };
   }
 
