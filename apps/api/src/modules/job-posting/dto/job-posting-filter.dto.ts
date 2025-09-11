@@ -29,14 +29,7 @@ export class JobPostingFilterDto {
   employmentTypes?: number[];
 
   @IsOptional()
-  @Type(() => Number)
-  @Min(0)
-  cursor?: number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @Min(0)
-  cursorId?: number;
+  cursor?: string;
 
   @IsOptional()
   @Type(() => Number)

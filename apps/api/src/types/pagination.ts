@@ -8,7 +8,6 @@ export interface PaginatedResponse<T> {
 
 export interface CursorPaginatedResponse<T> {
   data: T[];
-  nextCursor: number | string | null;
-  nextCursorId?: number | string | null;
+  nextCursor: string | null;
   hasNext: boolean;
 }
