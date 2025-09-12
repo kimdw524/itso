@@ -15,5 +15,5 @@ export interface Company {
 }
 
 export interface CompanyFilter {
-  orderBy?: 'name' | 'bookmarks';
+  orderBy?: 'name' | 'bookmarks' | 'lastPostedAt' | 'postings';
 }

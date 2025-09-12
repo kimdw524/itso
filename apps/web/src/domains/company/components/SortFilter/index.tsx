@@ -16,9 +16,13 @@ export const SortFilter = ({ queryParams }: SortFilterProps) => {
       defaultValue={getParam('orderBy') ?? 'name'}
       width="fit-content"
       variant="contained"
-      onChange={(value) => setParam('orderBy', value as 'name' | 'bookmarks')}
+      onChange={(value) =>
+        setParam('orderBy', value as keyof CompanyFilter['orderBy'])
+      }
     >
       <SelectOption value="name">이름순</SelectOption>
+      <SelectOption value="lastPostedAt">마지막 공고 순</SelectOption>
+      <SelectOption value="postings">공고 많은 순</SelectOption>
       <SelectOption value="bookmarks">북마크 많은 순</SelectOption>
     </Select>
   );

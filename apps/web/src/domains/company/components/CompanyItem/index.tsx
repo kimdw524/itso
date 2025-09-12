@@ -5,6 +5,7 @@ import { ChevronRight, StarIcon } from 'lucide-react';
 import { Box, Typography } from '@repo/ui';
 
 import { Separator } from '@/components/Separator';
+import { fromKSTDate, getTimeSince } from '@/utils/date';
 
 import type { Company } from '../../models';
 import { Info } from './Info';
@@ -47,13 +48,17 @@ export const CompanyItem = ({ company }: CompanyItemProps) => {
           </Typography>
           <Box flex alignItems="center" gap="md" color="secondary-foreground">
             <Separator separator={<span className={s.separator} />}>
-              <Info icon={<StarIcon size="1rem" />}>0</Info>
-              <Info text="마지막 공고">3일 전</Info>
+              <Info icon={<StarIcon size="1rem" />}>{company.bookmarks}</Info>
+              <Info text="마지막 공고">
+                {company.lastPostedAt === null
+                  ? '없음'
+                  : getTimeSince(fromKSTDate(company.lastPostedAt))}
+              </Info>
             </Separator>
           </Box>
         </div>
         <Box flex alignItems="center">
-          <span>3개 공고 확인하기</span>
+          <span>{company.postings}개 공고 확인하기</span>
           <ChevronRight strokeWidth={1} className={s.navigation} />
         </Box>
       </Box>

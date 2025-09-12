@@ -6,7 +6,7 @@ import type { Company } from '../../models';
 
 export const service = {
   async getCompanyList(params: {
-    orderBy?: 'name' | 'bookmarks';
+    orderBy?: 'name' | 'bookmarks' | 'lastPostedAt' | 'postings';
     cursor?: string;
   }) {
     return http.get<CursorPaginatedResponse<Company, string>>('/company', {
