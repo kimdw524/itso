@@ -12,6 +12,6 @@ export class CompanyFilterDto {
   limit?: number;
 
   @IsOptional()
-  @IsIn(['name', 'bookmarks'])
-  orderBy?: 'name' | 'bookmarks';
+  @IsIn(['name', 'bookmarks', 'lastPostedAt', 'postings'])
+  orderBy?: 'name' | 'bookmarks' | 'lastPostedAt' | 'postings';
 }

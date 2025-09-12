@@ -67,7 +67,9 @@ export class CompanyService {
 
         break;
       case 'bookmarks':
-        qb.addOrderBy('company.bookmarks', 'DESC');
+      case 'lastPostedAt':
+      case 'postings':
+        qb.addOrderBy(`company.${orderBy}`, 'DESC');
         qb.addOrderBy('company.id', 'ASC');
 
         if (cursor === undefined) {
@@ -76,14 +78,14 @@ export class CompanyService {
           });
         } else {
           qb.andWhere(
-            '(company.bookmarks < :cursor) OR (company.bookmarks = :cursor AND company.id > :cursorId)',
+            `(company.${orderBy} < :cursor) OR (company.${orderBy} = :cursor AND company.id > :cursorId)`,
             {
               cursor: Number(cursor),
               cursorId: isFinite(cursorId) ? cursorId : 0,
             },
           );
         }
-        cursorKey = 'bookmarks';
+        cursorKey = orderBy;
         break;
     }
 
@@ -94,7 +96,7 @@ export class CompanyService {
     const hasNext = data.length > limit;
     const slicedData = data.slice(0, limit);
     const nextCursor = hasNext
-      ? `${slicedData.at(-1)![cursorKey]},${slicedData.at(-1)!.id}`
+      ? `${slicedData.at(-1)![cursorKey as string]},${slicedData.at(-1)!.id}`
       : null;
 
     return { data: slicedData, hasNext, nextCursor };

@@ -7,10 +7,13 @@ export interface CompanySummary {
 export interface Company {
   id: number;
   name: string;
-  logo: string;
+  logo: string | null;
   description: string | null;
+  bookmarks: number;
+  postings: number;
+  lastPostedAt: string | null;
 }
 
 export interface CompanyFilter {
-  orderBy?: 'name' | 'bookmarks';
+  orderBy?: 'name' | 'bookmarks' | 'lastPostedAt' | 'postings';
 }
