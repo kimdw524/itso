@@ -18,13 +18,13 @@ export class JobCrawlerTask {
     private readonly companyService: CompanyService,
   ) {}
 
-  onModuleInit() {
+  async onModuleInit() {
+    await this.companyService.syncCompany();
     void this.handleCron();
   }
 
   @Cron('0 2,14,20 * * 1-5')
   async handleCron() {
-    await this.companyService.syncCompany();
     await this.updateJobPosting();
   }
 
