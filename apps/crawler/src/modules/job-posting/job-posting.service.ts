@@ -1,7 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { IsNull, Repository, UpdateResult } from 'typeorm';
+import {
+  FindOneOptions,
+  FindOptionsWhere,
+  IsNull,
+  Repository,
+  UpdateResult,
+} from 'typeorm';
 
 import { JobPostingDto } from './dto/job-posting.dto';
 import { JobPosting } from './job-posting.entity';
@@ -13,9 +19,27 @@ export class JobPostingService {
     private readonly jobPostingRepo: Repository<JobPosting>,
   ) {}
 
+  async count(data: FindOneOptions<JobPosting>['where']): Promise<number> {
+    return await this.jobPostingRepo.count({ where: data });
+  }
+
   async create(data: Partial<JobPosting>): Promise<JobPosting> {
     const entity = this.jobPostingRepo.create(data);
     return await this.jobPostingRepo.save(entity);
+  }
+
+  async getLastPosted(companyId: number): Promise<Date | null> {
+    const jobPosting = await this.jobPostingRepo.findOne({
+      where: { companyId },
+      order: { openDate: 'DESC' },
+      select: ['companyId', 'openDate'],
+    });
+
+    if (jobPosting === null) {
+      return null;
+    }
+
+    return jobPosting.openDate;
   }
 
   async findById(id: number): Promise<JobPosting | null> {
@@ -37,11 +61,11 @@ export class JobPostingService {
     return { ...jobPosting, description: jobPosting.description };
   }
 
-  async isExists(data: Partial<JobPosting>): Promise<boolean> {
+  async isExists(data: FindOptionsWhere<JobPosting>): Promise<boolean> {
     return await this.jobPostingRepo.existsBy(data);
   }
 
-  async getAllOpenPostings(): Promise<JobPostingDto[]> {
+  async getAllOpenPostings(): Promise<JobPosting[]> {
     const jobPostings = await this.jobPostingRepo.find({
       where: { closeDate: IsNull() },
     });

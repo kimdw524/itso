@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 
 import { CursorPaginatedResponse } from '@/types/pagination';
 
 import { Company } from './company.entity';
-import { CompanyFilterDto } from './dto/company-filter.dto';
+import { CompanyFilterDto } from './dto';
 
 @Injectable()
 export class CompanyService {
@@ -20,7 +20,7 @@ export class CompanyService {
     return await this.companyRepo.save(entity);
   }
 
-  async find(data: Partial<Company>): Promise<Company | null> {
+  async find(data: FindOptionsWhere<Company>): Promise<Company | null> {
     const res = await this.companyRepo.findOneBy(data);
     if (!res) {
       throw new NotFoundException('company not found');
@@ -33,15 +33,15 @@ export class CompanyService {
     return await this.companyRepo.find();
   }
 
-  async isExists(data: Partial<Company>): Promise<boolean> {
+  async isExists(data: FindOptionsWhere<Company>): Promise<boolean> {
     return await this.companyRepo.existsBy(data);
   }
 
-  async incrementBookmark(data: Partial<Company>): Promise<void> {
+  async incrementBookmark(data: FindOptionsWhere<Company>): Promise<void> {
     await this.companyRepo.increment(data, 'bookmarks', 1);
   }
 
-  async decrementBookmark(data: Partial<Company>): Promise<void> {
+  async decrementBookmark(data: FindOptionsWhere<Company>): Promise<void> {
     await this.companyRepo.decrement(data, 'bookmarks', 1);
   }
 

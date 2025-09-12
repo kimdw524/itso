@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository, UpdateResult } from 'typeorm';
 
 import { GREETING_LIST } from '@/constats/greeting';
 import { NINEHIRE_LIST } from '@/constats/ninehire';
@@ -22,7 +22,7 @@ export class CompanyService {
     return await this.companyRepo.save(entity);
   }
 
-  async find(data: Partial<Company>): Promise<Company | null> {
+  async find(data: FindOptionsWhere<Company>): Promise<Company | null> {
     return await this.companyRepo.findOneBy(data);
   }
 
@@ -30,34 +30,44 @@ export class CompanyService {
     return await this.companyRepo.find();
   }
 
+  async update(
+    companyId: number,
+    params: { lastPostedAt: Date | null; postings: number },
+  ): Promise<UpdateResult> {
+    const result = await this.companyRepo.update({ id: companyId }, params);
+    return result;
+  }
+
   async syncCompany(): Promise<void> {
     const greetingCrawler = new GreetingCrawler();
     const ninehireCrawler = new NinehireCrawler();
 
-    for (const company of GREETING_LIST) {
-      if ((await this.find({ name: company.name })) === null) {
-        await this.create({
-          name: company.name,
-          logo: await greetingCrawler.getLogoImageURL(company.url),
-        });
-      }
-    }
-
-    for (const company of NINEHIRE_LIST) {
-      if ((await this.find({ name: company.name })) === null) {
-        try {
+    await Promise.all([
+      ...GREETING_LIST.map(async (company) => {
+        if ((await this.find({ name: company.name })) === null) {
           await this.create({
             name: company.name,
-            logo: await ninehireCrawler.getLogoImageURL(company.url),
+            logo: await greetingCrawler.getLogoImageURL(company.url),
           });
-        } catch (error) {
-          Logger.error(
-            `${company.name} 회사를 DB에 등록하지 못했습니다.`,
-            error,
-          );
         }
-      }
-    }
+      }),
+
+      ...NINEHIRE_LIST.map(async (company) => {
+        if ((await this.find({ name: company.name })) === null) {
+          try {
+            await this.create({
+              name: company.name,
+              logo: await ninehireCrawler.getLogoImageURL(company.url),
+            });
+          } catch (error) {
+            Logger.error(
+              `${company.name} 회사를 DB에 등록하지 못했습니다.`,
+              error,
+            );
+          }
+        }
+      }),
+    ]);
 
     return;
   }

@@ -7,6 +7,7 @@ import { Company } from 'src/modules/company/company.entity';
 import { CompanyService } from 'src/modules/company/company.service';
 import { JobPostingService } from 'src/modules/job-posting/job-posting.service';
 import { getJobIdByKeyword, mapJobPosting } from 'src/utils/job';
+import { IsNull } from 'typeorm';
 
 @Injectable()
 export class JobCrawlerTask {
@@ -18,22 +19,26 @@ export class JobCrawlerTask {
     private readonly companyService: CompanyService,
   ) {}
 
-  onModuleInit() {
+  async onModuleInit() {
+    await this.companyService.syncCompany();
     void this.handleCron();
   }
 
   @Cron('0 2,14,20 * * 1-5')
   async handleCron() {
-    await this.companyService.syncCompany();
     await this.updateJobPosting();
   }
 
-  private closePostings(previousJobPostings: ReturnType<typeof mapJobPosting>) {
+  private async closePostings(
+    previousJobPostings: ReturnType<typeof mapJobPosting>,
+  ): Promise<Set<number>> {
+    const set = new Set<number>();
     let count = 0;
     for (const company of Object.values(previousJobPostings)) {
       for (const posting of Object.values(company)) {
         count++;
-        void this.jobPostingService.closePostings(
+        set.add(posting.companyId);
+        await this.jobPostingService.closePostings(
           posting.companyId,
           posting.postingId,
         );
@@ -43,13 +48,15 @@ export class JobCrawlerTask {
     if (count > 0) {
       this.logger.log(`${count}개의 공고를 마감하였습니다.`);
     }
+
+    return set;
   }
 
   private async createPosting(
     companyId: number,
     post: JobPosting,
     previousJobPostings: ReturnType<typeof mapJobPosting>,
-  ) {
+  ): Promise<boolean> {
     try {
       const isExists = Object.hasOwn(
         previousJobPostings[companyId] ?? {},
@@ -58,14 +65,14 @@ export class JobCrawlerTask {
 
       if (isExists) {
         delete previousJobPostings[companyId]?.[post.postingId];
-        return;
+        return false;
       }
 
       const jobId = getJobIdByKeyword(post.title);
 
       // IT 직군이 아닐 경우 등록하지 않는다.
       if (jobId === 0) {
-        return;
+        return false;
       }
 
       const detail = await this.crawlerService.getJobPostingDetail(post);
@@ -83,15 +90,36 @@ export class JobCrawlerTask {
         minExperience: detail.minExperience,
         maxExperience: detail.maxExperience,
       });
+      return true;
     } catch (error) {
       Logger.error(
         `${post.company} 회사 공고를 추가하지 못했습니다. (${post.link})`,
         error,
       );
+      return false;
+    }
+  }
+
+  private async updateCompany(id: number) {
+    const postings = await this.jobPostingService.count({
+      companyId: id,
+      closeDate: IsNull(),
+    });
+    const date = await this.jobPostingService.getLastPosted(id);
+    await this.companyService.update(id, {
+      postings,
+      lastPostedAt: date,
+    });
+  }
+
+  private async updateCompanies(companies: number[]) {
+    for (const company of companies) {
+      await this.updateCompany(company);
     }
   }
 
   private async updateJobPosting() {
+    const set = new Set<number>();
     const jobPostings: JobPosting[] =
       await this.crawlerService.getAllJobPostings();
 
@@ -108,18 +136,30 @@ export class JobCrawlerTask {
     for (const post of jobPostings) {
       // company가 존재하지 않으면 등록하지 않는다.
       if (!companies[post.company]) {
-        return;
+        continue;
       }
 
       const companyId = companies[post.company].id;
 
       postPromises.push(
-        this.createPosting(companyId, post, previousJobPostings),
+        (async () => {
+          const result = await this.createPosting(
+            companyId,
+            post,
+            previousJobPostings,
+          );
+
+          if (result) {
+            set.add(companyId);
+          }
+        })(),
       );
     }
 
     await Promise.all(postPromises);
 
-    this.closePostings(previousJobPostings);
+    const closedSet = await this.closePostings(previousJobPostings);
+
+    await this.updateCompanies([...new Set([...set, ...closedSet])]);
   }
 }
