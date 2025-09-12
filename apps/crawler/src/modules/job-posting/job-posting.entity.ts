@@ -34,7 +34,7 @@ export class JobPosting {
     type: 'datetime',
     nullable: true,
   })
-  dueDate?: Date;
+  dueDate: Date | null;
 
   @Column({ name: 'link', length: 2048 })
   link: string;
@@ -44,6 +44,12 @@ export class JobPosting {
 
   @Column({ name: 'views', default: 0 })
   views: number;
+
+  @Column({ name: 'recent_views', default: 0 })
+  recentViews: number;
+
+  @Column({ default: 0 })
+  bookmarks: number;
 
   @Column({ name: 'min_experience', type: 'tinyint' })
   minExperience: number;
@@ -62,5 +68,5 @@ export class JobPosting {
     type: 'datetime',
     nullable: true,
   })
-  closeDate?: Date;
+  closeDate: Date | null;
 }

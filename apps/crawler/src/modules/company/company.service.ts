@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository, UpdateResult } from 'typeorm';
 
 import { GREETING_LIST } from '@/constats/greeting';
 import { NINEHIRE_LIST } from '@/constats/ninehire';
@@ -22,12 +22,20 @@ export class CompanyService {
     return await this.companyRepo.save(entity);
   }
 
-  async find(data: Partial<Company>): Promise<Company | null> {
+  async find(data: FindOptionsWhere<Company>): Promise<Company | null> {
     return await this.companyRepo.findOneBy(data);
   }
 
   async findAll(): Promise<Company[]> {
     return await this.companyRepo.find();
+  }
+
+  async update(
+    companyId: number,
+    params: { lastPostedAt: Date | null; postings: number },
+  ): Promise<UpdateResult> {
+    const result = await this.companyRepo.update({ id: companyId }, params);
+    return result;
   }
 
   async syncCompany(): Promise<void> {
