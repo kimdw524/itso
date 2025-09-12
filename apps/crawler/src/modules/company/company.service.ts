@@ -34,30 +34,32 @@ export class CompanyService {
     const greetingCrawler = new GreetingCrawler();
     const ninehireCrawler = new NinehireCrawler();
 
-    for (const company of GREETING_LIST) {
-      if ((await this.find({ name: company.name })) === null) {
-        await this.create({
-          name: company.name,
-          logo: await greetingCrawler.getLogoImageURL(company.url),
-        });
-      }
-    }
-
-    for (const company of NINEHIRE_LIST) {
-      if ((await this.find({ name: company.name })) === null) {
-        try {
+    await Promise.all([
+      ...GREETING_LIST.map(async (company) => {
+        if ((await this.find({ name: company.name })) === null) {
           await this.create({
             name: company.name,
-            logo: await ninehireCrawler.getLogoImageURL(company.url),
+            logo: await greetingCrawler.getLogoImageURL(company.url),
           });
-        } catch (error) {
-          Logger.error(
-            `${company.name} 회사를 DB에 등록하지 못했습니다.`,
-            error,
-          );
         }
-      }
-    }
+      }),
+
+      ...NINEHIRE_LIST.map(async (company) => {
+        if ((await this.find({ name: company.name })) === null) {
+          try {
+            await this.create({
+              name: company.name,
+              logo: await ninehireCrawler.getLogoImageURL(company.url),
+            });
+          } catch (error) {
+            Logger.error(
+              `${company.name} 회사를 DB에 등록하지 못했습니다.`,
+              error,
+            );
+          }
+        }
+      }),
+    ]);
 
     return;
   }
