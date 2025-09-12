@@ -41,7 +41,7 @@ export class JobPostingService {
     return await this.jobPostingRepo.existsBy(data);
   }
 
-  async getAllOpenPostings(): Promise<JobPostingDto[]> {
+  async getAllOpenPostings(): Promise<JobPosting[]> {
     const jobPostings = await this.jobPostingRepo.find({
       where: { closeDate: IsNull() },
     });
