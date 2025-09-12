@@ -4,7 +4,7 @@ import { CursorPaginatedResponse } from '@/types/pagination';
 
 import { Company } from './company.entity';
 import { CompanyService } from './company.service';
-import { CompanyFilterDto } from './dto/company-filter.dto';
+import { CompanyFilterDto } from './dto';
 
 @Controller('company')
 export class CompanyController {
