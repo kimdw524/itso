@@ -29,7 +29,7 @@ export const CompanyItem = ({ company }: CompanyItemProps) => {
       >
         <div>
           <Box className={s.imageContainer}>
-            {company.logo !== '' && (
+            {company.logo && (
               <img
                 src={company.logo}
                 style={{ maxHeight: '1.5rem' }}
