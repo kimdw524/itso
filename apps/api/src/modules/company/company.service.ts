@@ -80,7 +80,7 @@ export class CompanyService {
           qb.andWhere(
             `(company.${orderBy} < :cursor) OR (company.${orderBy} = :cursor AND company.id > :cursorId)`,
             {
-              cursor: Number(cursor),
+              cursor,
               cursorId: isFinite(cursorId) ? cursorId : 0,
             },
           );
@@ -95,9 +95,16 @@ export class CompanyService {
 
     const hasNext = data.length > limit;
     const slicedData = data.slice(0, limit);
-    const nextCursor = hasNext
-      ? `${slicedData.at(-1)![cursorKey as string]},${slicedData.at(-1)!.id}`
-      : null;
+    let nextCursor: string | null = null;
+    if (hasNext) {
+      const cursor: unknown = slicedData.at(-1)![cursorKey as string];
+
+      if (cursorKey === 'lastPostedAt') {
+        nextCursor = `${(cursor as Date).toISOString()},${slicedData.at(-1)!.id}`;
+      } else {
+        nextCursor = `${cursor as string},${slicedData.at(-1)!.id}`;
+      }
+    }
 
     return { data: slicedData, hasNext, nextCursor };
   }
