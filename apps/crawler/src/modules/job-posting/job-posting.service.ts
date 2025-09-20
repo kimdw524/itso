@@ -28,6 +28,14 @@ export class JobPostingService {
     return await this.jobPostingRepo.save(entity);
   }
 
+  async update(
+    id: JobPosting['id'],
+    data: Partial<JobPosting>,
+  ): Promise<UpdateResult> {
+    const result = await this.jobPostingRepo.update({ id }, data);
+    return result;
+  }
+
   async getLastPosted(companyId: number): Promise<Date | null> {
     const jobPosting = await this.jobPostingRepo.findOne({
       where: { companyId },

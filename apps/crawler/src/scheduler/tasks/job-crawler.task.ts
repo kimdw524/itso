@@ -63,8 +63,39 @@ export class JobCrawlerTask {
         post.postingId,
       );
 
+      // 이미 공고가 DB에 존재하는 경우
       if (isExists) {
-        delete previousJobPostings[companyId]?.[post.postingId];
+        const previous = previousJobPostings[companyId][post.postingId];
+
+        const serializedPrevious = `${previous.title}-${previous.dueDate?.toISOString?.() ?? 'null'}`;
+        const serializedCurrent = `${post.title}-${post.dueDate ? new Date(post.dueDate).toISOString() : 'null'}`;
+
+        // 공고의 제목과 마감일이 바뀌지 않았으면 업데이트 하지 않는다.
+        if (serializedCurrent === serializedPrevious) {
+          delete previousJobPostings[companyId]?.[post.postingId];
+          return false;
+        }
+
+        // 바뀌었으면 업데이트 한다.
+        const jobId = getJobIdByKeyword(post.title);
+        const detail = await this.crawlerService.getJobPostingDetail(post);
+        await this.jobPostingService.update(previous.id, {
+          jobId,
+          companyId,
+          title: post.title,
+          link: post.link,
+          postingId: post.postingId,
+          openDate: new Date(post.openDate),
+          dueDate: post.dueDate === null ? undefined : new Date(post.dueDate),
+          description: detail.html,
+          employmentType: detail.employmentType,
+          minExperience: detail.minExperience,
+          maxExperience: detail.maxExperience,
+        });
+
+        Logger.log(
+          `${previous.id}번 공고가 변경되었습니다. (${serializedPrevious} -> ${serializedCurrent})`,
+        );
         return false;
       }
 
