@@ -23,6 +23,7 @@ import { UserModule } from './modules/user/user.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [__dirname + '/**/*.entity.{ts,js}'],
+      timezone: 'Z',
     }),
     JobPostingModule,
     AuthModule,

@@ -5,7 +5,7 @@ import { ChevronRight, StarIcon } from 'lucide-react';
 import { Box, Typography } from '@repo/ui';
 
 import { Separator } from '@/components/Separator';
-import { fromKSTDate, getTimeSince } from '@/utils/date';
+import { getTimeSince } from '@/utils/date';
 
 import type { Company } from '../../models';
 import { Info } from './Info';
@@ -52,7 +52,7 @@ export const CompanyItem = ({ company }: CompanyItemProps) => {
               <Info text="마지막 공고">
                 {company.lastPostedAt === null
                   ? '없음'
-                  : getTimeSince(fromKSTDate(company.lastPostedAt))}
+                  : getTimeSince(new Date(company.lastPostedAt))}
               </Info>
             </Separator>
           </Box>
