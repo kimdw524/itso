@@ -9,15 +9,6 @@ export const getKSTDate = (
   return new Date(utc + KST_DIFF);
 };
 
-export const fromKSTDate = (
-  params?: ConstructorParameters<typeof Date>[0],
-): Date => {
-  const now = params === undefined ? new Date() : new Date(params);
-  const utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
-
-  return new Date(utc);
-};
-
 export const getTimeSince = (date: Date) => {
   const diff = getKSTDate().getTime() - date.getTime();
 
