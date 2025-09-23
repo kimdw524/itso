@@ -12,11 +12,13 @@ import { RangeModal } from '@/components/RangeModal';
 import { StickyHeader } from '@/components/StickyHeader';
 import { useQueryParams } from '@/hooks/useQueryParams';
 import type { RequestType } from '@/utils/http';
+import { serializeQueryString } from '@/utils/queryString';
 
 import {
   EMPLOYMENT_TYPE_KEY,
   JOB_ID,
   JOB_POSTING,
+  JOB_POSTING_FILTER_STORAGE,
 } from '../../constants/job-posting';
 import type { JobPostingService } from '../../services/JobPostingService';
 import { formatExperienceRange } from '../../utils';
@@ -39,7 +41,16 @@ export const SearchFilter = ({
 }: SearchFilterProps) => {
   const { push } = useOverlay();
 
-  const { getParam, setParam } = queryParams;
+  const { getParam, setParam: setParamOrigin, rawParams } = queryParams;
+
+  const setParam = (...params: Parameters<typeof setParamOrigin>) => {
+    setParamOrigin(...params);
+
+    localStorage.setItem(
+      JOB_POSTING_FILTER_STORAGE,
+      serializeQueryString({ ...rawParams, [params[0]]: params[1] }, ','),
+    );
+  };
 
   return (
     <StickyHeader>
