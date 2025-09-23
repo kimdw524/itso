@@ -12,11 +12,13 @@ import { RangeModal } from '@/components/RangeModal';
 import { StickyHeader } from '@/components/StickyHeader';
 import { useQueryParams } from '@/hooks/useQueryParams';
 import type { RequestType } from '@/utils/http';
+import { serializeQueryString } from '@/utils/queryString';
 
 import {
   EMPLOYMENT_TYPE_KEY,
   JOB_ID,
   JOB_POSTING,
+  JOB_POSTING_FILTER_STORAGE,
 } from '../../constants/job-posting';
 import type { JobPostingService } from '../../services/JobPostingService';
 import { formatExperienceRange } from '../../utils';
@@ -39,7 +41,16 @@ export const SearchFilter = ({
 }: SearchFilterProps) => {
   const { push } = useOverlay();
 
-  const { getParam, setParam } = queryParams;
+  const { getParam, setParam: setParamOrigin, rawParams } = queryParams;
+
+  const setParam = (...params: Parameters<typeof setParamOrigin>) => {
+    setParamOrigin(...params);
+
+    localStorage.setItem(
+      JOB_POSTING_FILTER_STORAGE,
+      serializeQueryString({ ...rawParams, [params[0]]: params[1] }, ','),
+    );
+  };
 
   return (
     <StickyHeader>
@@ -57,7 +68,7 @@ export const SearchFilter = ({
                   <CheckboxModal
                     header="직무 선택"
                     items={JOB_ID}
-                    defaultChecked={getParam('jobIds') || []}
+                    defaultChecked={getParam('jobIds') ?? []}
                     renderChildren={(jobId) => JOB_POSTING.JOB_NAME[jobId]}
                     style={{ maxWidth: '512px' }}
                     onConfirm={(checked) => setParam('jobIds', checked)}
@@ -106,7 +117,7 @@ export const SearchFilter = ({
                     defaultMaxValue={
                       getParam('maxExperience') === 99
                         ? 16
-                        : getParam('maxExperience') || 16
+                        : (getParam('maxExperience') ?? 16)
                     }
                     renderDescription={(min, max) =>
                       formatExperienceRange(min, max == 16 ? 99 : max)
@@ -121,8 +132,8 @@ export const SearchFilter = ({
               }
             >
               {formatExperienceRange(
-                getParam('minExperience') || 0,
-                getParam('maxExperience') || 99,
+                getParam('minExperience') ?? 0,
+                getParam('maxExperience') ?? 99,
               )}
             </FilterButton>
           </DisableWrapper>
