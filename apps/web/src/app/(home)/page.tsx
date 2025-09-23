@@ -2,15 +2,22 @@ import { Box } from '@repo/ui';
 
 import { Section } from '@/components/Section';
 
+import { FilterShortcut } from './_components/FilterShortcut';
 import { JobPostingList } from './_components/JobPostingList';
 
 export default async function HomePage() {
   return (
     <Box
+      flex
+      flexDirection="column"
+      gap="2xl"
       padding={{ desktop: '2xl', mobile: 'xl' }}
       fontSize={{ desktop: 'md', mobile: 'sm' }}
       style={{ isolation: 'isolate' }}
     >
+      <Section description="⚡ 관심 있는 포지션을 클릭해 보세요!">
+        <FilterShortcut />
+      </Section>
       <Section
         title="🔥 인기 공고"
         description="최근 3일 기준으로 조회수가 가장 높은 공고를 정리했어요."

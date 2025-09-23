@@ -4,16 +4,18 @@ import { Typography } from '@repo/ui';
 
 interface SectionProps {
   children: ReactNode;
-  title: ReactNode;
+  title?: ReactNode;
   description?: ReactNode;
 }
 
 export const Section = ({ children, title, description }: SectionProps) => {
   return (
     <section>
-      <Typography fontSize="2xl" fontWeight="semiBold" lineHeight="md">
-        {title}
-      </Typography>
+      {title !== undefined && (
+        <Typography fontSize="2xl" fontWeight="semiBold" lineHeight="md">
+          {title}
+        </Typography>
+      )}
       {description !== undefined && (
         <Typography sx={{ marginY: 'lg' }}>{description}</Typography>
       )}
