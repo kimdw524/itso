@@ -10,7 +10,7 @@ export const getKSTDate = (
 };
 
 export const getTimeSince = (date: Date) => {
-  const diff = getKSTDate().getTime() - date.getTime();
+  const diff = getKSTDate().getTime() - getKSTDate(date).getTime();
 
   const minute = 1000 * 60;
   const hour = minute * 60;
