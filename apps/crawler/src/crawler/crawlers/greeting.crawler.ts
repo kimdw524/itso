@@ -38,8 +38,9 @@ export class GreetingCrawler {
   static getDescriptionValue(text: string, key: string): string | undefined {
     return text
       .split(`bVgotQ">${key}</span>`)?.[1]
-      ?.split('jZdylq">')?.[1]
-      ?.split('</span>')?.[0];
+      ?.split('<span')?.[1]
+      ?.split('>')?.[1]
+      ?.split('</span')?.[0];
   }
 
   static getExperience(text: string | undefined): {
