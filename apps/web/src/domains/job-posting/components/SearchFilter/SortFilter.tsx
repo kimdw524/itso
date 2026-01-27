@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react';
 
-import { Select, SelectOption } from '@repo/ui';
+import { Select, SelectOption } from '@kimdw-rtk/ui';
 
 import type { SearchFilter } from '.';
 

@@ -1,6 +1,5 @@
+import { UIProvider } from '@kimdw-rtk/ui';
 import { render, type RenderResult } from '@testing-library/react';
-
-import { UIProvider } from '@repo/ui';
 
 export const renderWithProviders = (
   children: React.ReactElement,

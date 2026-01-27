@@ -7,8 +7,8 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-} from '@repo/ui';
-import { useOverlay } from '@repo/utils';
+} from '@kimdw-rtk/ui';
+import { useOverlay } from '@kimdw-rtk/utils';
 
 import { useCheckboxes } from '@/hooks/useCheckboxes';
 

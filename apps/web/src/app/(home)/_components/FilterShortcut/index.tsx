@@ -1,4 +1,4 @@
-import { Box, ScrollArea } from '@repo/ui';
+import { Box, ScrollArea } from '@kimdw-rtk/ui';
 
 import { FilterShortcutItem } from '../FilterShortcutItem';
 

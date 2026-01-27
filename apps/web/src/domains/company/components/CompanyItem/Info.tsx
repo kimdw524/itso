@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { Box, Typography } from '@repo/ui';
+import { Box, Typography } from '@kimdw-rtk/ui';
 
 interface InfoProps {
   children: ReactNode;

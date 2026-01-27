@@ -1,7 +1,6 @@
+import { theme } from '@kimdw-rtk/ui/theme';
+import { spacing } from '@kimdw-rtk/ui/token';
 import { style } from '@vanilla-extract/css';
-
-import { theme } from '@repo/ui/themes';
-import { spacing } from '@repo/ui/tokens';
 
 export const container = style({
   display: 'flex',

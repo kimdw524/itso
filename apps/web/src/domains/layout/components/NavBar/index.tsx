@@ -6,7 +6,7 @@ import {
   NavigationContainer,
   NavigationDrawer,
   NavigationLogo,
-} from '@repo/ui';
+} from '@kimdw-rtk/ui';
 
 import { AuthButton } from '@/domains/user/components/AuthButton';
 import { STYLE_VARS } from '@/styles/vars.css';

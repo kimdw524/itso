@@ -1,8 +1,7 @@
 'use client';
 
+import { Button } from '@kimdw-rtk/ui';
 import { Share2Icon } from 'lucide-react';
-
-import { Button } from '@repo/ui';
 
 import { LogOnClick } from '@/components/LogOnClick';
 

@@ -1,6 +1,5 @@
+import { theme } from '@kimdw-rtk/ui/theme';
 import { globalStyle, style } from '@vanilla-extract/css';
-
-import { theme } from '@repo/ui/themes';
 
 export const container = style({});
 

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { NavigationItem, NavigationMenu } from '@repo/ui';
+import { NavigationItem, NavigationMenu } from '@kimdw-rtk/ui';
 
 export const NavBarMenu = () => {
   const pathname = usePathname() ?? '';

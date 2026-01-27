@@ -1,6 +1,5 @@
+import { Typography } from '@kimdw-rtk/ui';
 import { KeyRoundIcon } from 'lucide-react';
-
-import { Typography } from '@repo/ui';
 
 import { GoogleOAuthButton } from '@/domains/user/components/AuthButton/GoogleOAuthButton';
 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Card, CardContent, CardInteraction, Typography } from '@repo/ui';
+import { Card, CardContent, CardInteraction, Typography } from '@kimdw-rtk/ui';
 
 import { Separator } from '@/components/Separator';
 import type { JobPostingSearchFilter } from '@/domains/job-posting/models';

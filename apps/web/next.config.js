@@ -9,7 +9,6 @@ const withVanillaExtract = createVanillaExtractPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@repo/ui'],
   output: 'standalone',
   outputFileTracingRoot: path.join(__dirname, '../../'),
 };

@@ -1,8 +1,7 @@
 import Link from 'next/link';
 
+import { Box, Button, Typography } from '@kimdw-rtk/ui';
 import { ArrowLeftIcon } from 'lucide-react';
-
-import { Box, Button, Typography } from '@repo/ui';
 
 import { StickyHeader } from '@/components/StickyHeader';
 

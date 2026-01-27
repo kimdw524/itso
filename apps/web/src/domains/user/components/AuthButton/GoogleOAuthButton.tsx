@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { Button } from '@repo/ui';
+import { Button } from '@kimdw-rtk/ui';
 
 import GoogleLogo from '@/assets/images/google_logo.svg';
 

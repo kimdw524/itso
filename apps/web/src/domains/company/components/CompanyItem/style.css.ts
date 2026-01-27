@@ -1,6 +1,5 @@
+import { theme } from '@kimdw-rtk/ui/theme';
 import { globalStyle, keyframes, style } from '@vanilla-extract/css';
-
-import { theme } from '@repo/ui/themes';
 
 import { fadeIn } from '@/styles/keyframes.css';
 

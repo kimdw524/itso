@@ -10,7 +10,7 @@ import {
   CardThumbnail,
   Chip,
   Typography,
-} from '@repo/ui';
+} from '@kimdw-rtk/ui';
 
 import { OptimisticBookmarkButton } from '@/domains/bookmark/components/OptimisticBookmarkButton';
 import type { CompanySummary } from '@/domains/company/models';
@@ -42,13 +42,18 @@ export const JobPostingItem = ({
             justifyContent="center"
             paddingX="2xl"
             paddingY="3xl"
-            style={{ height: '8em' }}
+            style={{
+              height: '8em',
+            }}
           >
             {company.logo !== '' && (
               <CardThumbnail
                 src={company.logo}
                 alt="logo"
-                style={{ maxWidth: '75%', maxHeight: '100%' }}
+                style={{
+                  maxWidth: '75%',
+                  maxHeight: '100%',
+                }}
               />
             )}
             {/* 북마크 버튼 */}

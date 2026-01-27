@@ -1,4 +1,4 @@
-import { Box } from '@repo/ui';
+import { Box } from '@kimdw-rtk/ui';
 
 import { JobPostingDescription } from '@/domains/job-posting/components/JobPostingDescription';
 import { JobPostingHeader } from '@/domains/job-posting/components/JobPostingHeader';

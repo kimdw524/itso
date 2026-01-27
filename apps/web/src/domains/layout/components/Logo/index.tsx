@@ -1,4 +1,4 @@
-import { theme } from '@repo/ui/themes';
+import { theme } from '@kimdw-rtk/ui/theme';
 
 type LogoProps = React.ComponentProps<'svg'>;
 

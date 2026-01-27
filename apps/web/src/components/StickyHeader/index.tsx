@@ -2,7 +2,7 @@
 
 import { useRef, type ReactNode } from 'react';
 
-import { Box } from '@repo/ui';
+import { Box } from '@kimdw-rtk/ui';
 
 import { useSticky } from '@/hooks/useSticky';
 

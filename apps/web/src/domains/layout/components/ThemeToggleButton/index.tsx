@@ -2,9 +2,8 @@
 
 import { useTheme } from 'next-themes';
 
+import { Button } from '@kimdw-rtk/ui';
 import { MoonIcon, SunIcon } from 'lucide-react';
-
-import { Button } from '@repo/ui';
 
 import ThemeOnly from '../ThemeOnly';
 
@@ -23,12 +22,14 @@ export const ThemeToggleButton = () => {
       onClick={toggleTheme}
       aria-label="Toggle Theme"
     >
-      <ThemeOnly theme="light">
-        <SunIcon />
-      </ThemeOnly>
-      <ThemeOnly theme="dark">
-        <MoonIcon />
-      </ThemeOnly>
+      <div>
+        <ThemeOnly theme="light">
+          <SunIcon />
+        </ThemeOnly>
+        <ThemeOnly theme="dark">
+          <MoonIcon />
+        </ThemeOnly>
+      </div>
     </Button>
   );
 };

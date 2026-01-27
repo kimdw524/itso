@@ -1,4 +1,4 @@
-import { Box } from '@repo/ui';
+import { Box } from '@kimdw-rtk/ui';
 
 import { Section } from '@/components/Section';
 

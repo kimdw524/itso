@@ -1,6 +1,5 @@
+import { Box } from '@kimdw-rtk/ui';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-
-import { Box } from '@repo/ui';
 
 import { CompanyJobPostingContainer } from '@/domains/company/components/CompanyJobPostingContainer';
 import { CompanyJobPostingHeader } from '@/domains/company/components/CompanyJobPostingHeader';

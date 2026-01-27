@@ -2,9 +2,8 @@
 
 import type { ReactNode } from 'react';
 
+import { usePreventScroll } from '@kimdw-rtk/utils';
 import { motion } from 'motion/react';
-
-import { usePreventScroll } from '@repo/utils';
 
 import * as s from './style.css';
 

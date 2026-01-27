@@ -1,6 +1,6 @@
 'use client';
 
-import { useDialog } from '@repo/ui';
+import { useDialog } from '@kimdw-rtk/ui';
 
 import * as s from './style.css';
 

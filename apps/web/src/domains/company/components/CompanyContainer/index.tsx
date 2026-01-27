@@ -2,7 +2,7 @@
 
 import { Suspense } from 'react';
 
-import { Box } from '@repo/ui';
+import { Box } from '@kimdw-rtk/ui';
 
 import { StickyHeader } from '@/components/StickyHeader';
 import { useQueryParams } from '@/hooks/useQueryParams';

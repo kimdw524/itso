@@ -2,9 +2,8 @@
 
 import type { ReactNode } from 'react';
 
+import { Box, Typography } from '@kimdw-rtk/ui';
 import { EyeIcon } from 'lucide-react';
-
-import { Box, Typography } from '@repo/ui';
 
 import { getDday } from '@/utils/date';
 

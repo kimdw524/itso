@@ -1,6 +1,5 @@
+import { theme } from '@kimdw-rtk/ui/theme';
 import { style } from '@vanilla-extract/css';
-
-import { theme } from '@repo/ui/themes';
 
 import { STYLE_VARS } from '@/styles/vars.css';
 
