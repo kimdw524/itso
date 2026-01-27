@@ -1,8 +1,7 @@
 import Link from 'next/link';
 
+import { Box, Typography } from '@kimdw-rtk/ui';
 import { ChevronRight, StarIcon } from 'lucide-react';
-
-import { Box, Typography } from '@repo/ui';
 
 import { Separator } from '@/components/Separator';
 import { getTimeSince } from '@/utils/date';

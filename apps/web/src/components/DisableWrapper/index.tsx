@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
 
+import { sx, type UIComponent } from '@kimdw-rtk/ui';
 import clsx from 'clsx';
-
-import { sx, type UIComponent } from '@repo/ui';
 
 import * as s from './style.css';
 

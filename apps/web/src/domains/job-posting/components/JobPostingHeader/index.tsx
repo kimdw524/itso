@@ -2,10 +2,9 @@
 
 import { useRef, type ReactNode } from 'react';
 
+import { Box, Typography } from '@kimdw-rtk/ui';
+import { useIsInViewport } from '@kimdw-rtk/utils';
 import { AnimatePresence } from 'motion/react';
-
-import { Box, Typography } from '@repo/ui';
-import { useIsInViewport } from '@repo/utils';
 
 import type { JobPosting } from '../../models';
 import { JobPostingHeaderSimple } from '../JobPostingHeaderSimple';

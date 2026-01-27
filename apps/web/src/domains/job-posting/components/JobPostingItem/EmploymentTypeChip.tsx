@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react';
 
-import { Chip } from '@repo/ui';
+import { Chip } from '@kimdw-rtk/ui';
 
 import type { EmploymentType } from '../../models';
 import { formatEmploymentType } from '../../utils';

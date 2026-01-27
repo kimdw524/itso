@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { Box, Typography } from '@repo/ui';
+import { Box, Typography } from '@kimdw-rtk/ui';
 
 import { BookmarkedJobPostingList } from '@/domains/job-posting/components/BookmarkedJobPostingList';
 import { JobPostingListLoading } from '@/domains/job-posting/components/JobPostingList/loading';

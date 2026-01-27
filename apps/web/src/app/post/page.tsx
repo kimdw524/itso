@@ -1,8 +1,7 @@
 import type { SearchParams } from 'next/dist/server/request/search-params';
 
+import { Box } from '@kimdw-rtk/ui';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-
-import { Box } from '@repo/ui';
 
 import { JobPostingContainer } from '@/domains/job-posting/components/JobPostingContainer';
 import { LocalJobPostingFilter } from '@/domains/job-posting/components/LocalJobPostingFilter';

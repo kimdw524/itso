@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { Box } from '@repo/ui';
+import { Box } from '@kimdw-rtk/ui';
 
 import * as s from '@/domains/job-posting/components/JobPostingContainer/style.css';
 import { JobPostingList } from '@/domains/job-posting/components/JobPostingList';

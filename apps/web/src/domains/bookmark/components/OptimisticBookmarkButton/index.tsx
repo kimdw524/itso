@@ -2,10 +2,9 @@
 
 import { useState, type MouseEvent } from 'react';
 
+import { Button } from '@kimdw-rtk/ui';
+import { theme } from '@kimdw-rtk/ui/theme';
 import { StarIcon } from 'lucide-react';
-
-import { Button } from '@repo/ui';
-import { theme } from '@repo/ui/themes';
 
 import type { BookmarkType } from '../../models';
 import { BookmarkService } from '../../services/BookmarkService';

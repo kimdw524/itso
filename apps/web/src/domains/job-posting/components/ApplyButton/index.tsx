@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from 'react';
 
-import { Button } from '@repo/ui';
+import { Button } from '@kimdw-rtk/ui';
 
 import { LogOnClick } from '@/components/LogOnClick';
 

@@ -9,8 +9,8 @@ import {
   DialogHeader,
   Range,
   Typography,
-} from '@repo/ui';
-import { useOverlay } from '@repo/utils';
+} from '@kimdw-rtk/ui';
+import { useOverlay } from '@kimdw-rtk/utils';
 
 interface RangeModalProps extends ComponentProps<typeof Dialog> {
   header: ReactNode;

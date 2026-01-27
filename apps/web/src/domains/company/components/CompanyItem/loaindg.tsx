@@ -1,4 +1,4 @@
-import { Box, Skeleton } from '@repo/ui';
+import { Box, Skeleton } from '@kimdw-rtk/ui';
 
 export const CompanyItemLoading = () => {
   return (

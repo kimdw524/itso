@@ -1,4 +1,10 @@
-import { Box, Card, CardContent, CardInteraction, Skeleton } from '@repo/ui';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardInteraction,
+  Skeleton,
+} from '@kimdw-rtk/ui';
 
 export const JobPostingItemLoading = () => {
   return (

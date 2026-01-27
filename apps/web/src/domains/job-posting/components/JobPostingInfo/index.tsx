@@ -1,12 +1,11 @@
 import type React from 'react';
 
+import { Box, Card } from '@kimdw-rtk/ui';
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-
-import { Box, Card } from '@repo/ui';
 
 import { QUERY_CLIENT_CONFIG } from '@/constants/queryClient';
 import { BookmarkButton } from '@/domains/bookmark/components/BookmarkButton';

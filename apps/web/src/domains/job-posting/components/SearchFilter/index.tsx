@@ -2,8 +2,8 @@
 
 import { type ReactNode } from 'react';
 
-import { Box, ScrollArea } from '@repo/ui';
-import { useOverlay } from '@repo/utils';
+import { Box, ScrollArea } from '@kimdw-rtk/ui';
+import { useOverlay } from '@kimdw-rtk/utils';
 
 import { CheckboxModal } from '@/components/CheckboxModal';
 import { DisableWrapper } from '@/components/DisableWrapper';

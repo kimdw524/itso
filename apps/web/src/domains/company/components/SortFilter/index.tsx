@@ -1,4 +1,4 @@
-import { Select, SelectOption } from '@repo/ui';
+import { Select, SelectOption } from '@kimdw-rtk/ui';
 
 import type { useQueryParams } from '@/hooks/useQueryParams';
 

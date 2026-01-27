@@ -1,6 +1,5 @@
+import { Box, Typography } from '@kimdw-rtk/ui';
 import { motion } from 'motion/react';
-
-import { Box, Typography } from '@repo/ui';
 
 import type { JobPosting } from '../../models';
 import { ApplyButton } from '../ApplyButton';

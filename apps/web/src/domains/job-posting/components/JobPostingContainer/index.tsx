@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react';
 
-import { Box } from '@repo/ui';
+import { Box } from '@kimdw-rtk/ui';
 
 import { useQueryParams } from '@/hooks/useQueryParams';
 

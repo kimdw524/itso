@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { Box, ScrollArea } from '@repo/ui';
+import { Box, ScrollArea } from '@kimdw-rtk/ui';
 
 import * as s from './style.css';
 

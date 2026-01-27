@@ -1,4 +1,4 @@
-import { Button } from '@repo/ui';
+import { Button } from '@kimdw-rtk/ui';
 
 interface ShowAllButtonProps {
   isShowAll: boolean;

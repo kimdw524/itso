@@ -1,7 +1,6 @@
+import { theme } from '@kimdw-rtk/ui/theme';
+import { spacing } from '@kimdw-rtk/ui/token';
 import { recipe } from '@vanilla-extract/recipes';
-
-import { theme } from '@repo/ui/themes';
-import { spacing } from '@repo/ui/tokens';
 
 import { STYLE_VARS } from '@/styles/vars.css';
 

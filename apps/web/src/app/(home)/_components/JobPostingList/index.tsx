@@ -1,4 +1,4 @@
-import { withSuspense } from '@repo/utils';
+import { withSuspense } from '@kimdw-rtk/utils';
 
 import { JobPostingHorizontalList } from '@/domains/job-posting/components/JobPostingHorizontalList';
 import { JobPostingItem } from '@/domains/job-posting/components/JobPostingItem';

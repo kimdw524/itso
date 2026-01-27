@@ -1,7 +1,6 @@
+import { breakpoint } from '@kimdw-rtk/ui';
+import { theme } from '@kimdw-rtk/ui/theme';
 import { fontFace, globalStyle } from '@vanilla-extract/css';
-
-import { theme } from '@repo/ui/themes';
-import { breakpoint } from '@repo/ui/tokens';
 
 import { STYLE_VARS } from './vars.css';
 
@@ -22,7 +21,7 @@ globalStyle('body', {
     [STYLE_VARS.STICKY_HEADER_TOP]: STYLE_VARS.NAVBAR_HEIGHT,
   },
   '@media': {
-    [`(min-width: ${breakpoint.desktop}px)`]: {
+    [`(min-width: ${breakpoint.desktop})`]: {
       vars: {
         [STYLE_VARS.NAVBAR_HEIGHT]: '5em',
       },
