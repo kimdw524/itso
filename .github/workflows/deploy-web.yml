@@ -7,12 +7,16 @@ on:
     branches: [develop]
     paths:
       - 'apps/web/**'
+  pull_request:
+    branches: [develop]
+    paths:
+      - 'apps/web/**'
 
 env:
   APP_NAME: itso-web
   APP_DIR: apps/web
-  NODE_VERSION: 20
-  PNPM_VERSION: 9.0.0
+  NODE_VERSION: 22
+  PNPM_VERSION: 10.0.0
 
 jobs:
   deploy:
@@ -36,12 +40,20 @@ jobs:
         run: |
           echo "${{ secrets.WEB_ENV }}" > ${{ env.APP_DIR }}/.env
 
-      - name: Install & Build
+      - name: Install & test
         run: |
           pnpm install --frozen-lockfile
+          pnpm -C ${{ env.APP_DIR }} run check-types
+          pnpm -C ${{ env.APP_DIR }} run lint
+          pnpm -C ${{ env.APP_DIR }} run test
+
+      - name: Build
+        if: github.event_name != 'pull_request'
+        run: |
           pnpm -C ${{ env.APP_DIR }} run build
 
       - name: Pack runtime
+        if: github.event_name != 'pull_request'
         run: |
           set -e
           mkdir -p .release/dist
@@ -53,6 +65,7 @@ jobs:
           tar -C .release -czf app.tgz .
 
       - name: Upload
+        if: github.event_name != 'pull_request'
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -63,6 +76,7 @@ jobs:
           target: '/srv/${{ env.APP_NAME }}'
 
       - name: Deploy
+        if: github.event_name != 'pull_request'
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
