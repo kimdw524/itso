@@ -12,7 +12,7 @@ env:
   APP_NAME: itso-api
   APP_DIR: apps/api
   NODE_VERSION: 22
-  PNPM_VERSION: 10.0.0
+  PNPM_VERSION: 10.28.2
 
 jobs:
   deploy:
