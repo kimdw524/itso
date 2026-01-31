@@ -5,8 +5,6 @@ import { JobPostingHeader } from '@/domains/job-posting/components/JobPostingHea
 import { JobPostingInfo } from '@/domains/job-posting/components/JobPostingInfo';
 import { JobPostingService } from '@/domains/job-posting/services/JobPostingService';
 
-import * as s from './style.css';
-
 export default async function JobPostingPage({
   params,
 }: {
@@ -20,7 +18,7 @@ export default async function JobPostingPage({
       <JobPostingHeader jobPosting={response}>
         <JobPostingInfo jobPosting={response} />
       </JobPostingHeader>
-      <Box padding="lg" className={s.content}>
+      <Box padding="lg">
         <JobPostingDescription description={response.description} />
       </Box>
     </>
