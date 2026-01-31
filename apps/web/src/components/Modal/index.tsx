@@ -13,6 +13,7 @@ interface ModalProps {
 
 export const Modal = ({ children }: ModalProps) => {
   usePreventScroll();
+
   return (
     <motion.div
       initial={{ opacity: 0, translateY: '3%' }}

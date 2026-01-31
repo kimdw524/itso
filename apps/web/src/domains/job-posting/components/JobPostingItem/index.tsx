@@ -53,6 +53,8 @@ export const JobPostingItem = ({
                 style={{
                   maxWidth: '75%',
                   maxHeight: '100%',
+                  width: 'auto',
+                  height: 'auto',
                 }}
               />
             )}
