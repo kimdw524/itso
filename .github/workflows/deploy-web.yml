@@ -43,14 +43,16 @@ jobs:
       - name: Install & test
         run: |
           pnpm install --frozen-lockfile
-          pnpm -C ${{ env.APP_DIR }} run check-types
-          pnpm -C ${{ env.APP_DIR }} run lint
-          pnpm -C ${{ env.APP_DIR }} run test
+          cd ${{ env.APP_DIR }}
+          pnpm run check-types
+          pnpm run lint
+          pnpm run test
 
       - name: Build
         if: github.event_name != 'pull_request'
         run: |
-          pnpm -C ${{ env.APP_DIR }} run build
+          cd ${{ env.APP_DIR }}
+          pnpm run build
 
       - name: Pack runtime
         if: github.event_name != 'pull_request'

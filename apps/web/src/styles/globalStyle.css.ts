@@ -1,5 +1,5 @@
-import { breakpoint } from '@kimdw-rtk/ui';
 import { theme } from '@kimdw-rtk/ui/theme';
+import { breakpoint } from '@kimdw-rtk/ui/token';
 import { fontFace, globalStyle } from '@vanilla-extract/css';
 
 import { STYLE_VARS } from './vars.css';
