@@ -1,5 +1,5 @@
-import { JobPostingHorizontalList } from '@/domains/job-posting/components/JobPostingHorizontalList';
-import { JobPostingItemLoading } from '@/domains/job-posting/components/JobPostingItem/loading';
+import { JobPostingHorizontalList } from '@/features/job-posting/components/JobPostingHorizontalList';
+import { JobPostingItemLoading } from '@/features/job-posting/components/JobPostingItem/loading';
 
 export const JobPostingListLoading = async () => {
   return (

@@ -3,13 +3,13 @@ import type { SearchParams } from 'next/dist/server/request/search-params';
 import { Box } from '@kimdw-rtk/ui';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-import { JobPostingContainer } from '@/domains/job-posting/components/JobPostingContainer';
-import { LocalJobPostingFilter } from '@/domains/job-posting/components/LocalJobPostingFilter';
-import { JOB_POSTING_DEFAULT_FILTER } from '@/domains/job-posting/constants/job-posting';
-import type { JobPostingSearchFilter } from '@/domains/job-posting/models';
-import { jobPostingFilterSchema } from '@/domains/job-posting/schemas/jobPostingFilter';
-import { JobPostingService } from '@/domains/job-posting/services/JobPostingService';
-import { getQueryClient } from '@/utils/getQueryClient';
+import { JobPostingContainer } from '@/features/job-posting/components/JobPostingContainer';
+import { LocalJobPostingFilter } from '@/features/job-posting/components/LocalJobPostingFilter';
+import { JOB_POSTING_DEFAULT_FILTER } from '@/features/job-posting/constants/job-posting';
+import type { JobPostingSearchFilter } from '@/features/job-posting/models';
+import { jobPostingFilterSchema } from '@/features/job-posting/schemas/jobPostingFilter';
+import { JobPostingService } from '@/features/job-posting/services/JobPostingService';
+import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 export default async function PostPage({
   searchParams,

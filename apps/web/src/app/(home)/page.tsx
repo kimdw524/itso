@@ -1,6 +1,6 @@
 import { Box } from '@kimdw-rtk/ui';
 
-import { Section } from '@/components/Section';
+import { Section } from '@/shared/components/Section';
 
 import { FilterShortcut } from './_components/FilterShortcut';
 import { JobPostingList } from './_components/JobPostingList';

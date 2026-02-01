@@ -1,8 +1,8 @@
 import { withSuspense } from '@kimdw-rtk/utils';
 
-import { JobPostingHorizontalList } from '@/domains/job-posting/components/JobPostingHorizontalList';
-import { JobPostingItem } from '@/domains/job-posting/components/JobPostingItem';
-import { JobPostingService } from '@/domains/job-posting/services/JobPostingService';
+import { JobPostingHorizontalList } from '@/features/job-posting/components/JobPostingHorizontalList';
+import { JobPostingItem } from '@/features/job-posting/components/JobPostingItem';
+import { JobPostingService } from '@/features/job-posting/services/JobPostingService';
 
 import { JobPostingListLoading } from './loading';
 

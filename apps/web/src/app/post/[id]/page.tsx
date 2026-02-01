@@ -1,9 +1,9 @@
 import { Box } from '@kimdw-rtk/ui';
 
-import { JobPostingDescription } from '@/domains/job-posting/components/JobPostingDescription';
-import { JobPostingHeader } from '@/domains/job-posting/components/JobPostingHeader';
-import { JobPostingInfo } from '@/domains/job-posting/components/JobPostingInfo';
-import { JobPostingService } from '@/domains/job-posting/services/JobPostingService';
+import { JobPostingDescription } from '@/features/job-posting/components/JobPostingDescription';
+import { JobPostingHeader } from '@/features/job-posting/components/JobPostingHeader';
+import { JobPostingInfo } from '@/features/job-posting/components/JobPostingInfo';
+import { JobPostingService } from '@/features/job-posting/services/JobPostingService';
 
 export default async function JobPostingPage({
   params,

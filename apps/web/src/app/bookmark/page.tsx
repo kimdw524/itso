@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 
 import { Box, Typography } from '@kimdw-rtk/ui';
 
-import { BookmarkedJobPostingList } from '@/domains/job-posting/components/BookmarkedJobPostingList';
-import { JobPostingListLoading } from '@/domains/job-posting/components/JobPostingList/loading';
+import { BookmarkedJobPostingList } from '@/features/job-posting/components/BookmarkedJobPostingList';
+import { JobPostingListLoading } from '@/features/job-posting/components/JobPostingList/loading';
 
 import * as s from './page.css';
 

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
-import { USER } from '@/domains/user/constants/user';
-import { UserService } from '@/domains/user/services/UserService';
+import { USER } from '@/features/user/constants/user';
+import { UserService } from '@/features/user/services/UserService';
 
 export const dynamic = 'force-dynamic';
 

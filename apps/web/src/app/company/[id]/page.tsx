@@ -1,11 +1,11 @@
 import { Box } from '@kimdw-rtk/ui';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-import { CompanyJobPostingContainer } from '@/domains/company/components/CompanyJobPostingContainer';
-import { CompanyJobPostingHeader } from '@/domains/company/components/CompanyJobPostingHeader';
-import type { JobPostingSearchFilter } from '@/domains/job-posting/models';
-import { JobPostingService } from '@/domains/job-posting/services/JobPostingService';
-import { getQueryClient } from '@/utils/getQueryClient';
+import { CompanyJobPostingContainer } from '@/features/company/components/CompanyJobPostingContainer';
+import { CompanyJobPostingHeader } from '@/features/company/components/CompanyJobPostingHeader';
+import type { JobPostingSearchFilter } from '@/features/job-posting/models';
+import { JobPostingService } from '@/features/job-posting/services/JobPostingService';
+import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 export default async function CompanyPage({
   params,
