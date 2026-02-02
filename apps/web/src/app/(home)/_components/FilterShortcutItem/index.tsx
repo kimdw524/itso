@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 import { Card, CardContent, CardInteraction, Typography } from '@kimdw-rtk/ui';
 
-import { Separator } from '@/components/Separator';
-import type { JobPostingSearchFilter } from '@/domains/job-posting/models';
+import type { JobPostingSearchFilter } from '@/features/job-posting/models';
 import {
   formatExperienceRange,
   formatJobName,
-} from '@/domains/job-posting/utils';
-import { serializeQueryString } from '@/utils/queryString';
+} from '@/features/job-posting/utils';
+import { Separator } from '@/shared/components/Separator';
+import { serializeQueryString } from '@/shared/utils/queryString';
 
 interface FilterShortcutItemProps
   extends Required<

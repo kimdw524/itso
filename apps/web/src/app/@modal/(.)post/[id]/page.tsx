@@ -1,5 +1,5 @@
 import JobPostingPage from '@/app/post/[id]/page';
-import { Modal } from '@/components/Modal';
+import { Modal } from '@/shared/components/Modal';
 
 export default async function JobPostingModal({
   params,

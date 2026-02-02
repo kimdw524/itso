@@ -1,9 +1,5 @@
-import { Box } from '@kimdw-rtk/ui';
-
-import { JobPostingDescription } from '@/domains/job-posting/components/JobPostingDescription';
-import { JobPostingHeader } from '@/domains/job-posting/components/JobPostingHeader';
-import { JobPostingInfo } from '@/domains/job-posting/components/JobPostingInfo';
-import { JobPostingService } from '@/domains/job-posting/services/JobPostingService';
+import { JobPostingDetail } from '@/features/job-posting/components/JobPostingDetail';
+import { JobPostingService } from '@/features/job-posting/services/JobPostingService';
 
 export default async function JobPostingPage({
   params,
@@ -14,13 +10,9 @@ export default async function JobPostingPage({
   const response = await JobPostingService.getJobPosting({ id: Number(id) });
 
   return (
-    <>
-      <JobPostingHeader jobPosting={response}>
-        <JobPostingInfo jobPosting={response} />
-      </JobPostingHeader>
-      <Box padding="lg">
-        <JobPostingDescription description={response.description} />
-      </Box>
-    </>
+    <JobPostingDetail
+      jobPosting={response}
+      description={response.description}
+    />
   );
 }

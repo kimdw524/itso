@@ -1,5 +1,5 @@
-import { USER } from '@/domains/user/constants/user';
-import { serializeQueryString } from '@/utils/queryString';
+import { USER } from '@/features/user/constants/user';
+import { serializeQueryString } from '@/shared/utils/queryString';
 
 export const fetcher = async <T>(
   input: Parameters<typeof fetch>[0],

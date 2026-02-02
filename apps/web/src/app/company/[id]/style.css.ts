@@ -1,4 +1,4 @@
-import { breakpoint } from '@kimdw-rtk/ui';
+import { breakpoint } from '@kimdw-rtk/ui/token';
 import { style } from '@vanilla-extract/css';
 
 export const content = style({
