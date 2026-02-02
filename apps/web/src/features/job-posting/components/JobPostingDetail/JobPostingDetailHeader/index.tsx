@@ -6,20 +6,20 @@ import { Box, Typography } from '@kimdw-rtk/ui';
 import { useIsInViewport } from '@kimdw-rtk/utils';
 import { AnimatePresence } from 'motion/react';
 
-import type { JobPosting } from '../../models';
-import { JobPostingHeaderSimple } from '../JobPostingHeaderSimple';
+import type { JobPosting } from '../../../models';
+import { JobPostingDetailFooter } from '../JobPostingDetailFooter';
 import { JobDetail } from './JobDetail';
 import * as s from './style.css';
 
-interface JobPostingHeaderProps {
+interface JobPostingDetailHeaderProps {
   children: ReactNode;
   jobPosting: JobPosting;
 }
 
-export const JobPostingHeader = ({
+export const JobPostingDetailHeader = ({
   children,
   jobPosting,
-}: JobPostingHeaderProps) => {
+}: JobPostingDetailHeaderProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { isInViewport } = useIsInViewport(ref);
 
@@ -53,7 +53,7 @@ export const JobPostingHeader = ({
         </Box>
       </Box>
       <AnimatePresence>
-        {!isInViewport && <JobPostingHeaderSimple jobPosting={jobPosting} />}
+        {!isInViewport && <JobPostingDetailFooter jobPosting={jobPosting} />}
       </AnimatePresence>
     </>
   );

@@ -11,15 +11,17 @@ import { QUERY_CLIENT_CONFIG } from '@/constants/queryClient';
 import { BookmarkButton } from '@/features/bookmark/components/BookmarkButton';
 import { BookmarkService } from '@/features/bookmark/services/BookmarkService';
 
-import type { JobPosting } from '../../models';
-import { ApplyButton } from '../ApplyButton';
-import { ShareButton } from '../ShareButton';
+import type { JobPosting } from '../../../models';
+import { ApplyButton } from '../../ApplyButton';
+import { ShareButton } from '../../ShareButton';
 
-interface JobPostingInfoProps extends React.ComponentProps<typeof Card> {
+interface JobPostingActionsProps extends React.ComponentProps<typeof Card> {
   jobPosting: JobPosting;
 }
 
-export const JobPostingInfo = async ({ jobPosting }: JobPostingInfoProps) => {
+export const JobPostingActions = async ({
+  jobPosting,
+}: JobPostingActionsProps) => {
   const queryClient = new QueryClient(QUERY_CLIENT_CONFIG);
 
   await queryClient.prefetchQuery(

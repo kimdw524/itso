@@ -1,17 +1,18 @@
 import { Box, Typography } from '@kimdw-rtk/ui';
 import { motion } from 'motion/react';
 
-import type { JobPosting } from '../../models';
-import { ApplyButton } from '../ApplyButton';
+import type { JobPosting } from '@/features/job-posting/models';
+
+import { ApplyButton } from '../../ApplyButton';
 import * as s from './style.css';
 
-interface JobPostingHeaderSimpleProps {
+interface JobPostingDetailFooterProps {
   jobPosting: JobPosting;
 }
 
-export const JobPostingHeaderSimple = ({
+export const JobPostingDetailFooter = ({
   jobPosting,
-}: JobPostingHeaderSimpleProps) => {
+}: JobPostingDetailFooterProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, translateY: '100%' }}

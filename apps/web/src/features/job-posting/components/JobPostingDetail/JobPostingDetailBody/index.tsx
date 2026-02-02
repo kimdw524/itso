@@ -1,16 +1,16 @@
 import { Box } from '@kimdw-rtk/ui';
 
-interface JobPostingDescriptionProps {
-  description: string;
+interface JobPostingDetailBodyProps {
+  children: string;
 }
 
-export const JobPostingDescription = ({
-  description,
-}: JobPostingDescriptionProps) => {
+export const JobPostingDetailBody = ({
+  children,
+}: JobPostingDetailBodyProps) => {
   return (
     <>
       <Box
-        dangerouslySetInnerHTML={{ __html: description }}
+        dangerouslySetInnerHTML={{ __html: children }}
         sx={{
           lineHeight: 'lg',
           fontSize: 'lg',

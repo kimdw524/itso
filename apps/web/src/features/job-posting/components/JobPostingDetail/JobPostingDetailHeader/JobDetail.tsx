@@ -2,8 +2,8 @@ import { Box } from '@kimdw-rtk/ui';
 
 import { Separator } from '@/shared/components/Separator';
 
-import type { JobPosting } from '../../models';
-import { formatEmploymentType, formatExperienceRange } from '../../utils';
+import type { JobPosting } from '../../../models';
+import { formatEmploymentType, formatExperienceRange } from '../../../utils';
 import { InfoItem } from './InfoItem';
 import * as s from './style.css';
 
