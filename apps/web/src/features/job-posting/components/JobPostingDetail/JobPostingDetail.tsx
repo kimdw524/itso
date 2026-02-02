@@ -1,7 +1,7 @@
 import { Box } from '@kimdw-rtk/ui';
 
 import type { JobPosting } from '../../models';
-import { JobPostingActions } from './JobPostingDetail';
+import { JobPostingActions } from './JobPostingDetailActions';
 import { JobPostingDetailBody } from './JobPostingDetailBody';
 import { JobPostingDetailHeader } from './JobPostingDetailHeader';
 

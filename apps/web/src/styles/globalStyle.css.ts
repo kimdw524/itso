@@ -33,6 +33,9 @@ globalStyle('main', {
   margin: '0 auto',
   width: '100%',
   maxWidth: STYLE_VARS.CONTAINER_WIDTH,
+  minHeight: `calc(100vh - ${STYLE_VARS.NAVBAR_HEIGHT})`,
+
+  position: 'relative',
 });
 
 globalStyle('*::-webkit-scrollbar', {
