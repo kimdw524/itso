@@ -12,20 +12,15 @@ import { BookmarkService } from '../../services/BookmarkService';
 interface BookmarkButtonProps extends React.ComponentProps<typeof Button> {
   bookmarkType: BookmarkType;
   targetId: number;
+  isBookmarked: boolean;
 }
 
 export const BookmarkButton = ({
   bookmarkType,
   targetId,
+  isBookmarked,
   ...rest
 }: BookmarkButtonProps) => {
-  const { data } = BookmarkService.useFetchIsBookmarked({
-    type: bookmarkType,
-    id: targetId,
-  });
-
-  const isBookmarked = !!data?.isBookmarked;
-
   const { toggle } = BookmarkService.useToggleBookmark({
     type: bookmarkType,
     id: targetId,

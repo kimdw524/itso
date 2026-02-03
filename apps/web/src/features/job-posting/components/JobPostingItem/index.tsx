@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@kimdw-rtk/ui';
 
-import { OptimisticBookmarkButton } from '@/features/bookmark/components/OptimisticBookmarkButton';
+import { BookmarkButton } from '@/features/bookmark/components/BookmarkButton';
 import type { CompanySummary } from '@/features/company/models';
 
 import type { JobPostingSummary } from '../../models';
@@ -59,14 +59,14 @@ export const JobPostingItem = ({
               />
             )}
             {/* 북마크 버튼 */}
-            <OptimisticBookmarkButton
+            <BookmarkButton
               size="icon-md"
               variant="ghost"
               color="secondary"
               className={s.bookmarkButton}
               bookmarkType="job-posting"
               targetId={jobPosting.id}
-              defaultValue={jobPosting.isBookmarked}
+              isBookmarked={jobPosting.isBookmarked}
               onClick={(e) => e.preventDefault()}
             />
           </Box>
