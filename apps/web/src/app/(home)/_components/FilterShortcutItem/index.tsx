@@ -35,13 +35,14 @@ export const FilterShortcutItem = ({
   return (
     <Link href={`/post?${queryString}`}>
       <Card
-        color="secondary"
-        variant="contained"
+        color="transparent"
+        variant="outlined"
+        size="xl"
         style={{ width: 'fit-content' }}
       >
         <CardInteraction>
-          <CardContent sx={{ padding: 'lg' }}>
-            <Typography fontWeight="medium" sx={{ marginBottom: 'md' }}>
+          <CardContent>
+            <Typography fontWeight="medium" sx={{ marginBottom: 'lg' }}>
               {name}
             </Typography>
             <Typography color="secondary-foreground" fontSize="sm">
