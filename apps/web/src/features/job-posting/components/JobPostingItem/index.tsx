@@ -33,7 +33,7 @@ export const JobPostingItem = ({
 }: JobPostingItemProps) => {
   return (
     <Link href={`/post/${jobPosting.id}`} draggable={false}>
-      <Card className={s.container} variant="glass">
+      <Card className={s.container}>
         <CardInteraction sx={{ display: 'flex', flexDirection: 'column' }}>
           {/* 회사 로고 이미지 */}
           <Box
