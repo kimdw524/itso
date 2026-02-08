@@ -6,6 +6,7 @@ import { FindOptionsWhere, Repository, UpdateResult } from 'typeorm';
 import { GREETING_LIST } from '@/constats/greeting';
 import { NINEHIRE_LIST } from '@/constats/ninehire';
 import { GreetingCrawler } from '@/crawler/crawlers/greeting.crawler';
+import { FileUtil } from '@/utils';
 
 import { NinehireCrawler } from './../../crawler/crawlers/ninehire.crawler';
 import { Company } from './company.entity';
@@ -44,21 +45,54 @@ export class CompanyService {
 
     await Promise.all([
       ...GREETING_LIST.map(async (company) => {
-        if ((await this.find({ name: company.name })) === null) {
-          await this.create({
-            name: company.name,
-            logo: await greetingCrawler.getLogoImageURL(company.url),
-          });
+        const companyEntity = await this.find({ name: company.name });
+        if (companyEntity !== null) {
+          try {
+            const image = await greetingCrawler.getLogoImageURL(company.url);
+            let logo = '';
+
+            if (image) {
+              const url = new URL(image, company.url).href;
+              logo = await FileUtil.storeStaticImage(url);
+            }
+
+            await this.companyRepo.update(
+              { id: companyEntity.id },
+              { logo: `${process.env.STATIC_URL}/${logo}` },
+            );
+
+            // await this.create({
+            //   name: company.name,
+            //   logo,
+            // });
+          } catch (error) {
+            Logger.error(
+              `${company.name} 회사를 DB에 등록하지 못했습니다.`,
+              error,
+            );
+          }
         }
       }),
 
       ...NINEHIRE_LIST.map(async (company) => {
-        if ((await this.find({ name: company.name })) === null) {
+        const companyEntity = await this.find({ name: company.name });
+        if (companyEntity !== null) {
           try {
-            await this.create({
-              name: company.name,
-              logo: await ninehireCrawler.getLogoImageURL(company.url),
-            });
+            const image = await ninehireCrawler.getLogoImageURL(company.url);
+            let logo = '';
+
+            if (image) {
+              const url = new URL(image, company.url).href;
+              logo = await FileUtil.storeStaticImage(url);
+            }
+            await this.companyRepo.update(
+              { id: companyEntity.id },
+              { logo: `${process.env.STATIC_URL}/${logo}` },
+            );
+            // await this.create({
+            //   name: company.name,
+            //   logo,
+            // });
           } catch (error) {
             Logger.error(
               `${company.name} 회사를 DB에 등록하지 못했습니다.`,

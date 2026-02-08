@@ -86,4 +86,20 @@ export const NINEHIRE_LIST = [
     url: 'https://career.kakaostyle.com',
     companyId: '1573cfe0-2c72-11ef-950a-65a32c77a0c3',
   },
+  {
+    name: '클래스101',
+    url: 'https://jobs.class101.net',
+    companyId: 'f20ace90-8932-11f0-8815-d9c0c4c32872',
+  },
+  {
+    name: '클라썸',
+    url: 'https://careers.classum.com',
+    companyId: '256de090-217a-11f0-967f-d5658b439dd4',
+  },
+  {
+    name: '라포랩스',
+    url: 'https://www.rapportlabs.kr',
+    companyId:
+      'https://image.ninehire.com/brand/4e1cfd70-6de0-11f0-9567-477c783608ca/3a9099e0-87b9-11f0-8b6f-cf0306163900.png',
+  },
 ] satisfies Ninehire[];
