@@ -6,7 +6,7 @@ interface Greething {
 export const GREETING_LIST = [
   { name: '현대오토에버', url: 'https://career.hyundai-autoever.com/ko/apply' },
   { name: '와드', url: 'https://career.catchtable.co.kr/ko/jobs' },
-  { name: '리디', url: 'https://ridi.career.greetinghr.com/ko/recruit' },
+  { name: '리디', url: 'https://ridi.career.greetinghr.com/ko/home' },
   { name: '카카오페이', url: 'https://kakaopay.career.greetinghr.com/ko/main' },
   {
     name: '카카오모빌리티',
@@ -22,7 +22,7 @@ export const GREETING_LIST = [
   },
   { name: '야놀자', url: 'https://careers.yanolja.co/ko/home ' },
   { name: '피알앤디컴퍼니(헤이딜러)', url: 'https://www.prnd.co.kr/ko/apply' },
-  { name: '브레이브모바일(숨고)', url: 'https://www.soomgo.team/ko/career' },
+  { name: '브레이브모바일(숨고)', url: 'https://www.soomgo.team/career' },
   { name: '데브시스터즈', url: 'https://careers.devsisters.com/ko/position' },
   { name: '카카오게임즈', url: 'https://recruit.kakaogames.com/ko/joinjuskr' },
   { name: '베이글코드', url: 'https://career.bagelcode.com/ko/career' },
@@ -46,10 +46,11 @@ export const GREETING_LIST = [
   { name: '버즈빌', url: 'https://buzzvil.career.greetinghr.com/ko/home' },
   { name: '컬리', url: 'https://kurly.career.greetinghr.com/ko/home' },
   { name: '11번가', url: 'https://11st.career.greetinghr.com/ko/career' },
-  { name: '라포랩스', url: 'https://www.rapportlabs.kr/ko/jobs' },
   { name: 'NICE그룹', url: 'https://nice.career.greetinghr.com/ko/guide' },
-  { name: '클래스101', url: 'https://jobs.class101.net/ko/guide' },
-  { name: '뤼이드', url: 'https://careers.riiid.com/ko/applynow' },
+  {
+    name: '소크라에이아이',
+    url: 'https://socraai.career.greetinghr.com/ko/career',
+  },
   {
     name: '한국평가정보',
     url: 'https://kcs-team.career.greetinghr.com/ko/list',
@@ -73,7 +74,6 @@ export const GREETING_LIST = [
     url: 'https://mycle.career.greetinghr.com/ko/career',
   },
   { name: '힐링페이퍼', url: 'https://career.gangnamunni.com/ko/home' },
-  { name: '클라썸', url: 'https://careers.classum.com/ko/apply' },
   { name: '오케스트로', url: 'https://career.okestro.com/ko/recruit' },
   { name: '스푼랩스', url: 'https://career.spoonlabs.com/ko/recruiting' },
   { name: '두핸즈', url: 'https://career.dohands.com/ko/home' },

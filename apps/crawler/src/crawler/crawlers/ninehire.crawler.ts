@@ -167,9 +167,8 @@ export class NinehireCrawler {
         method: 'GET',
       });
       const text = await result.text();
-      const code = text.split('2Fbrand%2F')[1].split('.png')[0];
 
-      return `https://image.ninehire.com/brand/${code}.png`;
+      return text.split('"image":{"fileUrl":"')[1].split('"')[0];
     } catch {
       return '';
     }
