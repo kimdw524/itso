@@ -9,6 +9,7 @@ import { BookmarkModule } from './modules/bookmark/bookmark.module';
 import { CompanyModule } from './modules/company/company.module';
 import { JobPostingRankingModule } from './modules/job-posting-ranking/job-posting-ranking.module';
 import { JobPostingModule } from './modules/job-posting/job-posting.module';
+import { LastUpdateModule } from './modules/last-update/last-update.module';
 import { LogModule } from './modules/log/log.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -30,6 +31,7 @@ import { UserModule } from './modules/user/user.module';
     UserModule,
     BookmarkModule,
     JobPostingRankingModule,
+    LastUpdateModule,
     LogModule,
     CompanyModule,
   ],
