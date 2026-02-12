@@ -11,6 +11,7 @@ import { JobPostingRankingModule } from './modules/job-posting-ranking/job-posti
 import { JobPostingModule } from './modules/job-posting/job-posting.module';
 import { LastUpdateModule } from './modules/last-update/last-update.module';
 import { LogModule } from './modules/log/log.module';
+import { SearchModule } from './modules/search/search.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -34,6 +35,7 @@ import { UserModule } from './modules/user/user.module';
     LastUpdateModule,
     LogModule,
     CompanyModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],
