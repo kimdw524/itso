@@ -7,6 +7,7 @@ import { Separator } from '@/shared/components/Separator';
 import { getTimeSince } from '@/shared/utils/date';
 
 import type { Company } from '../../models';
+import { CompanyLogo } from '../CompanyLogo';
 import { Info } from './Info';
 import * as s from './style.css';
 
@@ -29,14 +30,11 @@ export const CompanyItem = ({ company }: CompanyItemProps) => {
       >
         <div>
           <Box className={s.imageContainer}>
-            {company.logo && (
-              <img
-                src={company.logo}
-                style={{ maxHeight: '1.5rem' }}
-                alt="Logo"
-                loading="lazy"
-              />
-            )}
+            <CompanyLogo
+              logo={company.logo}
+              alt={company.name}
+              style={{ maxHeight: '1.5rem' }}
+            />
           </Box>
           <Typography
             fontSize="xl"

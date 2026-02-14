@@ -4,6 +4,7 @@ import { globalStyle, style } from '@vanilla-extract/css';
 import { fadeIn } from '@/styles/keyframes.css';
 
 export const container = style({
+  overflow: 'clip',
   border: `1px solid rgb(${theme.color['border.weak']})`,
 
   background: `linear-gradient(

@@ -7,12 +7,12 @@ import {
   Card,
   CardContent,
   CardInteraction,
-  CardThumbnail,
   Chip,
   Typography,
 } from '@kimdw-rtk/ui';
 
 import { BookmarkButton } from '@/features/bookmark/components/BookmarkButton';
+import { CompanyLogo } from '@/features/company/components/CompanyLogo';
 import type { CompanySummary } from '@/features/company/models';
 
 import type { JobPostingSummary } from '../../models';
@@ -46,18 +46,16 @@ export const JobPostingItem = ({
               height: '8em',
             }}
           >
-            {company.logo !== '' && (
-              <CardThumbnail
-                src={company.logo}
-                alt="logo"
-                style={{
-                  maxWidth: '75%',
-                  maxHeight: '100%',
-                  width: 'auto',
-                  height: 'auto',
-                }}
-              />
-            )}
+            <CompanyLogo
+              logo={company.logo}
+              alt={company.name}
+              style={{
+                maxWidth: '75%',
+                maxHeight: '100%',
+                width: 'auto',
+                height: 'auto',
+              }}
+            />
             {/* 북마크 버튼 */}
             <BookmarkButton
               size="icon-md"

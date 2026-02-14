@@ -1,6 +1,7 @@
 import { Box, Typography } from '@kimdw-rtk/ui';
 import { motion } from 'motion/react';
 
+import { CompanyLogo } from '@/features/company/components/CompanyLogo';
 import type { JobPosting } from '@/features/job-posting/models';
 
 import { ApplyButton } from '../../ApplyButton';
@@ -38,7 +39,11 @@ export const JobPostingDetailFooter = ({
             flexGrow: '1',
           }}
         >
-          <img src={jobPosting.company.logo} alt="logo" className={s.logo} />
+          <CompanyLogo
+            logo={jobPosting.company.logo}
+            alt={jobPosting.company.name}
+            className={s.logo}
+          />
           <Typography fontSize="md" fontWeight="medium" lineHeight="sm">
             {jobPosting.title}
           </Typography>
