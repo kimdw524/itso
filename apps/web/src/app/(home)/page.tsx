@@ -3,6 +3,7 @@ import { Box } from '@kimdw-rtk/ui';
 import { Section } from '@/shared/components/Section';
 
 import { FilterShortcut } from './_components/FilterShortcut';
+import { HomeHeader } from './_components/HomeHeader';
 import { JobPostingList } from './_components/JobPostingList';
 
 export default async function HomePage() {
@@ -15,6 +16,7 @@ export default async function HomePage() {
       fontSize={{ desktop: 'md', mobile: 'sm' }}
       style={{ isolation: 'isolate' }}
     >
+      <HomeHeader />
       <Section title="인기 포지션">
         <FilterShortcut />
       </Section>
