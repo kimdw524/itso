@@ -1,17 +1,43 @@
-interface CompanyLogoProps extends React.ComponentProps<'img'> {
+import type { CSSProperties } from 'react';
+
+import { clsx } from 'clsx';
+
+import * as s from './style.css';
+
+interface CompanyLogoProps {
   logo: string | null;
   alt: string;
+  className?: string;
+  style?: CSSProperties;
+  isSquare?: boolean;
 }
 
 export const CompanyLogo = ({
   logo,
   alt,
-  loading,
-  ...rest
+  className,
+  style,
+  isSquare = false,
 }: CompanyLogoProps) => {
+  if (logo === null) {
+    return null;
+  }
+
+  if (!isSquare) {
+    return (
+      <img
+        src={logo}
+        alt={alt}
+        loading="lazy"
+        className={className}
+        style={style}
+      />
+    );
+  }
+
   return (
-    logo !== null && (
-      <img src={logo} alt={alt} loading={loading ?? 'lazy'} {...rest} />
-    )
+    <div className={clsx(s.frame, className)} style={style}>
+      <img src={logo} alt={alt} loading="lazy" className={s.image} />
+    </div>
   );
 };
