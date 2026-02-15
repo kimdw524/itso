@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 
 import { clsx } from 'clsx';
 
@@ -19,8 +19,8 @@ export const CompanyLogo = ({
   style,
   isSquare = false,
 }: CompanyLogoProps) => {
-  if (logo === null) {
-    return null;
+  if (logo === '' || logo === null) {
+    return <div className={clsx(s.empty, className)} style={style} />;
   }
 
   if (!isSquare) {
