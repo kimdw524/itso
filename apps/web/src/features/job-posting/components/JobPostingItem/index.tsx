@@ -7,12 +7,12 @@ import {
   Card,
   CardContent,
   CardInteraction,
-  CardThumbnail,
   Chip,
   Typography,
 } from '@kimdw-rtk/ui';
 
-import { OptimisticBookmarkButton } from '@/features/bookmark/components/OptimisticBookmarkButton';
+import { BookmarkButton } from '@/features/bookmark/components/BookmarkButton';
+import { CompanyLogo } from '@/features/company/components/CompanyLogo';
 import type { CompanySummary } from '@/features/company/models';
 
 import type { JobPostingSummary } from '../../models';
@@ -33,7 +33,7 @@ export const JobPostingItem = ({
 }: JobPostingItemProps) => {
   return (
     <Link href={`/post/${jobPosting.id}`} draggable={false}>
-      <Card className={s.container} variant="glass">
+      <Card className={s.container}>
         <CardInteraction sx={{ display: 'flex', flexDirection: 'column' }}>
           {/* 회사 로고 이미지 */}
           <Box
@@ -46,27 +46,25 @@ export const JobPostingItem = ({
               height: '8em',
             }}
           >
-            {company.logo !== '' && (
-              <CardThumbnail
-                src={company.logo}
-                alt="logo"
-                style={{
-                  maxWidth: '75%',
-                  maxHeight: '100%',
-                  width: 'auto',
-                  height: 'auto',
-                }}
-              />
-            )}
+            <CompanyLogo
+              logo={company.logo}
+              alt={company.name}
+              style={{
+                maxWidth: '75%',
+                maxHeight: '100%',
+                width: 'auto',
+                height: 'auto',
+              }}
+            />
             {/* 북마크 버튼 */}
-            <OptimisticBookmarkButton
+            <BookmarkButton
               size="icon-md"
               variant="ghost"
               color="secondary"
               className={s.bookmarkButton}
               bookmarkType="job-posting"
               targetId={jobPosting.id}
-              defaultValue={jobPosting.isBookmarked}
+              isBookmarked={jobPosting.isBookmarked}
               onClick={(e) => e.preventDefault()}
             />
           </Box>

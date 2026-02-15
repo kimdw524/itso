@@ -12,7 +12,12 @@ export const Section = ({ children, title, description }: SectionProps) => {
   return (
     <section>
       {title !== undefined && (
-        <Typography fontSize="2xl" fontWeight="semiBold" lineHeight="md">
+        <Typography
+          fontSize="xl"
+          fontWeight="semiBold"
+          lineHeight="md"
+          sx={description === undefined ? { marginY: 'lg' } : undefined}
+        >
           {title}
         </Typography>
       )}

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
+import { Spinner } from '@/shared/components/Spinner';
 import {
   parseQueryString,
   serializeQueryString,
@@ -28,5 +29,5 @@ export const LocalJobPostingFilter = () => {
     router.replace(`?${queryString}`);
   }, [router]);
 
-  return <></>;
+  return <Spinner fill />;
 };

@@ -6,6 +6,8 @@ import { Box, Typography } from '@kimdw-rtk/ui';
 import { useIsInViewport } from '@kimdw-rtk/utils';
 import { AnimatePresence } from 'motion/react';
 
+import { CompanyLogo } from '@/features/company/components/CompanyLogo';
+
 import type { JobPosting } from '../../../models';
 import { JobPostingDetailFooter } from '../JobPostingDetailFooter';
 import { JobDetail } from './JobDetail';
@@ -35,7 +37,11 @@ export const JobPostingDetailHeader = ({
         }}
       >
         <div>
-          <img src={jobPosting.company.logo} alt="logo" className={s.logo} />
+          <CompanyLogo
+            logo={jobPosting.company.logo}
+            alt={jobPosting.company.name}
+            className={s.logo}
+          />
           <Typography fontSize="2xl" fontWeight="semiBold" lineHeight="sm">
             {jobPosting.title}
           </Typography>
