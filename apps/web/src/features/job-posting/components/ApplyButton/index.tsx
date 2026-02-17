@@ -16,7 +16,7 @@ interface ApplyButtonProps
 
 export const ApplyButton = ({ jobPosting, ...rest }: ApplyButtonProps) => {
   return (
-    <LogOnClick type="apply" target={jobPosting.id}>
+    <LogOnClick target={jobPosting.id} type="apply">
       <Button {...rest} onClick={() => applyJob(jobPosting)}>
         지원하기
       </Button>

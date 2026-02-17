@@ -28,7 +28,7 @@ export const JobPostingContainer = ({ filter }: JobPostingContainerProps) => {
 
   return (
     <>
-      <SearchFilter queryParams={queryParams} isDisabled={isShowAll}>
+      <SearchFilter isDisabled={isShowAll} queryParams={queryParams}>
         <ShowAllButton isShowAll={isShowAll} onClick={handleShowAllClick} />
       </SearchFilter>
       <Box

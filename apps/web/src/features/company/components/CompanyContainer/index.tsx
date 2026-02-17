@@ -23,15 +23,15 @@ export const CompanyContainer = ({ filter }: CompanyContainerProps) => {
   return (
     <>
       <StickyHeader>
-        <Box flex justifyContent="flex-end" width="100%">
+        <Box justifyContent="flex-end" width="100%" flex>
           <SortFilter queryParams={queryParams} />
         </Box>
       </StickyHeader>
       <Box
-        flex
+        className={s.container}
         flexDirection="column"
         sx={{ fontSize: { mobile: 'sm', desktop: '1rem' } }}
-        className={s.container}
+        flex
       >
         <Suspense fallback={<CompanyListLoading />}>
           <CompanyList params={queryParams.rawParams} />

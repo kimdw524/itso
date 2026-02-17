@@ -14,8 +14,8 @@ export const SortFilter = ({ queryParams }: SortFilterProps) => {
   return (
     <Select
       defaultValue={getParam('orderBy')}
-      width="fit-content"
       variant="contained"
+      width="fit-content"
       onChange={(value) =>
         setParam('orderBy', value as 'createdAt' | 'recentViews')
       }

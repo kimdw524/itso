@@ -12,10 +12,10 @@ import type { JobPostingSummary } from '../../models';
 const Item = ({ icon, value }: { icon: ReactNode; value: ReactNode }) => {
   return (
     <Box
-      flex
-      gap="sm"
       alignItems="center"
+      gap="sm"
       sx={{ color: 'secondary-foreground' }}
+      flex
     >
       {icon}
       <Typography color="secondary-foreground" fontSize="xs" fontWeight="light">
@@ -33,13 +33,13 @@ export const JobPostingStatistics = ({
   jobPosting,
 }: JobPostingStatisticsProps) => {
   return (
-    <Box flex alignItems="center" justifyContent="space-between" gap="lg">
+    <Box alignItems="center" gap="lg" justifyContent="space-between" flex>
       <Typography fontSize="sm">
         {jobPosting.dueDate === null ? '상시채용' : getDday(jobPosting.dueDate)}
       </Typography>
       {/* 조회수 */}
       <Item
-        icon={<EyeIcon strokeWidth="1" width="1em" height="1em" />}
+        icon={<EyeIcon height="1em" strokeWidth="1" width="1em" />}
         value={<>{jobPosting.views}</>}
       />
     </Box>

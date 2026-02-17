@@ -26,8 +26,8 @@ export const JobPostingList = withSuspense(
         {data.map((jobPosting) => (
           <JobPostingItem
             key={jobPosting.id}
-            jobPosting={jobPosting}
             company={jobPosting.company}
+            jobPosting={jobPosting}
           />
         ))}
       </JobPostingHorizontalList>

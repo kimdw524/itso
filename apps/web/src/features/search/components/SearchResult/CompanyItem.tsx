@@ -14,10 +14,10 @@ interface CompanyItemProps {
 export const CompanyItem = ({ company }: CompanyItemProps) => {
   return (
     <Link href={`/company/${company.id}`}>
-      <Flex className={s.item} gap="md" alignItems="center">
+      <Flex alignItems="center" className={s.item} gap="md">
         <CompanyLogo
-          logo={company.logo}
           alt={company.name}
+          logo={company.logo}
           style={{ width: '2rem', height: '2rem' }}
           isSquare
         />

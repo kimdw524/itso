@@ -22,8 +22,8 @@ export const JobPostingList = ({ params }: JobPostingListProps) => {
           {page.data.map((jobPosting) => (
             <JobPostingItem
               key={jobPosting.id}
-              jobPosting={jobPosting}
               company={jobPosting.company}
+              jobPosting={jobPosting}
             />
           ))}
         </React.Fragment>

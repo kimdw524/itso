@@ -24,13 +24,13 @@ export const SearchField = () => {
           <div className={s.textContainer}>
             <input
               ref={textRef}
-              type="text"
-              value={value}
               className={s.textField}
               placeholder=""
+              type="text"
+              value={value}
               onChange={(e) => setValue(e.target.value)}
             />
-            <RollingText duration={500} className={s.placeholder}>
+            <RollingText className={s.placeholder} duration={500}>
               <Typography color="muted-foreground">
                 신입 Frontend 개발자
               </Typography>

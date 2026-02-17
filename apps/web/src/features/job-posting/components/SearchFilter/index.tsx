@@ -55,7 +55,7 @@ export const SearchFilter = ({
   return (
     <StickyHeader>
       <ScrollArea>
-        <Box flex gap="lg" alignItems="center">
+        <Box alignItems="center" gap="lg" flex>
           <DisableWrapper
             condition={isDisabled}
             sx={{ display: 'flex', gap: 'lg', alignItems: 'center' }}
@@ -66,9 +66,9 @@ export const SearchFilter = ({
               onClick={() =>
                 push(
                   <CheckboxModal
+                    defaultChecked={getParam('jobIds') ?? []}
                     header="직무 선택"
                     items={JOB_ID}
-                    defaultChecked={getParam('jobIds') ?? []}
                     renderChildren={(jobId) => JOB_POSTING.JOB_NAME[jobId]}
                     style={{ maxWidth: '512px' }}
                     onConfirm={(checked) => setParam('jobIds', checked)}
@@ -87,9 +87,9 @@ export const SearchFilter = ({
               onClick={() =>
                 push(
                   <CheckboxModal
+                    defaultChecked={getParam('employmentTypes') || []}
                     header="고용형태 선택"
                     items={EMPLOYMENT_TYPE_KEY}
-                    defaultChecked={getParam('employmentTypes') || []}
                     renderChildren={(type) => JOB_POSTING.EMPLOYMENT_TYPE[type]}
                     style={{ maxWidth: '512px' }}
                     onConfirm={(checked) =>
@@ -110,15 +110,15 @@ export const SearchFilter = ({
               onClick={() =>
                 push(
                   <RangeModal
-                    header="경력 선택"
-                    min={0}
-                    max={16}
-                    defaultMinValue={getParam('minExperience') || 0}
                     defaultMaxValue={
                       getParam('maxExperience') === 99
                         ? 16
                         : (getParam('maxExperience') ?? 16)
                     }
+                    defaultMinValue={getParam('minExperience') || 0}
+                    header="경력 선택"
+                    max={16}
+                    min={0}
                     renderDescription={(min, max) =>
                       formatExperienceRange(min, max == 16 ? 99 : max)
                     }

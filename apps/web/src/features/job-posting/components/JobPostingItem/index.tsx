@@ -32,12 +32,11 @@ export const JobPostingItem = ({
   company,
 }: JobPostingItemProps) => {
   return (
-    <Link href={`/post/${jobPosting.id}`} draggable={false}>
+    <Link draggable={false} href={`/post/${jobPosting.id}`}>
       <Card className={s.container}>
         <CardInteraction sx={{ display: 'flex', flexDirection: 'column' }}>
           {/* 회사 로고 이미지 */}
           <Box
-            flex
             alignItems="center"
             justifyContent="center"
             paddingX="2xl"
@@ -45,10 +44,11 @@ export const JobPostingItem = ({
             style={{
               height: '8em',
             }}
+            flex
           >
             <CompanyLogo
-              logo={company.logo}
               alt={company.name}
+              logo={company.logo}
               style={{
                 maxWidth: '75%',
                 maxHeight: '100%',
@@ -58,13 +58,13 @@ export const JobPostingItem = ({
             />
             {/* 북마크 버튼 */}
             <BookmarkButton
-              size="icon-md"
-              variant="ghost"
-              color="secondary"
-              className={s.bookmarkButton}
               bookmarkType="job-posting"
-              targetId={jobPosting.id}
+              className={s.bookmarkButton}
+              color="secondary"
               isBookmarked={jobPosting.isBookmarked}
+              size="icon-md"
+              targetId={jobPosting.id}
+              variant="ghost"
               onClick={(e) => e.preventDefault()}
             />
           </Box>
@@ -75,17 +75,17 @@ export const JobPostingItem = ({
             }}
           >
             <Box
-              flex
               flexDirection="column"
               justifyContent="space-between"
               sx={{ height: '100%' }}
+              flex
             >
               <Box>
                 {/* 회사 이름 */}
                 <Typography
+                  color="secondary-foreground"
                   fontSize="sm"
                   fontWeight="light"
-                  color="secondary-foreground"
                   sx={{ marginBottom: 'md' }}
                 >
                   {jobPosting.company.name}
@@ -101,14 +101,14 @@ export const JobPostingItem = ({
                 </Typography>
                 {/* 태그 */}
                 <Box
-                  flex
                   flexWrap="wrap"
                   gap="md"
                   sx={{ marginY: { desktop: '2xl', mobile: 'lg' } }}
+                  flex
                 >
                   <ExperienceRangeChip
-                    min={jobPosting.minExperience}
                     max={jobPosting.maxExperience}
+                    min={jobPosting.minExperience}
                   />
                   <EmploymentTypeChip type={jobPosting.employmentType} />
                   <Chip color="accent">{formatJobName(jobPosting.jobId)}</Chip>

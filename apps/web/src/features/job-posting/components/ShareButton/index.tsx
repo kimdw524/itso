@@ -14,10 +14,10 @@ interface ShareButtonProps {
 
 export const ShareButton = ({ jobPosting }: ShareButtonProps) => {
   return (
-    <LogOnClick type="share" target={jobPosting.id}>
+    <LogOnClick target={jobPosting.id} type="share">
       <Button
-        size="icon-lg"
         color="secondary"
+        size="icon-lg"
         onClick={() => shareJobPosting(jobPosting)}
       >
         <Share2Icon />

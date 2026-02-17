@@ -35,7 +35,7 @@ export const BookmarkButton = ({
   return (
     <Button {...rest} onClick={handleClick}>
       {isBookmarked ? (
-        <StarIcon strokeWidth="0" fill={`rgb(${theme.color.yellow[300]})`} />
+        <StarIcon fill={`rgb(${theme.color.yellow[300]})`} strokeWidth="0" />
       ) : (
         <StarIcon strokeWidth={1.5} />
       )}

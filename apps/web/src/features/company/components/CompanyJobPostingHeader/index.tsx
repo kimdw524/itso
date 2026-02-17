@@ -18,14 +18,14 @@ export const CompanyJobPostingHeader = async ({
 
   return (
     <StickyHeader>
-      <Box flex gap="lg" alignItems="center">
+      <Box alignItems="center" gap="lg" flex>
         <Link href="/company">
-          <Button variant="ghost" color="secondary" size="icon-md">
+          <Button color="secondary" size="icon-md" variant="ghost">
             <ArrowLeftIcon />
           </Button>
         </Link>
-        <Box flex gap="sm">
-          <Typography fontWeight="semiBold" fontSize="lg">
+        <Box gap="sm" flex>
+          <Typography fontSize="lg" fontWeight="semiBold">
             {data.name}
           </Typography>
           <Typography fontSize="lg">채용공고</Typography>

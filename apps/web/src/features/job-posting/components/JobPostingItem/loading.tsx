@@ -12,47 +12,47 @@ export const JobPostingItemLoading = () => {
       <CardInteraction sx={{ display: 'flex', flexDirection: 'column' }}>
         {/* 회사 로고 이미지 */}
         <Box
-          flex
           alignItems="center"
           justifyContent="center"
           paddingX="2xl"
           paddingY="3xl"
           style={{ height: '8rem' }}
+          flex
         >
-          <Skeleton width="100%" height="100%" />
+          <Skeleton height="100%" width="100%" />
         </Box>
         <CardContent sx={{ paddingX: '2xl', paddingY: '3xl' }}>
           <Box
-            flex
             flexDirection="column"
             justifyContent="space-between"
             sx={{ height: '100%' }}
+            flex
           >
             <Box>
               {/* 회사 이름 */}
               <Skeleton
-                width="5em"
                 height="1em"
                 sx={{ marginBottom: 'md', fontSize: 'sm' }}
+                width="5em"
               />
               {/* 공고 제목 */}
-              <Skeleton width="100%" height="3em" />
+              <Skeleton height="3em" width="100%" />
               {/* 태그 */}
-              <Box flex flexWrap="wrap" gap="md" marginY="2xl">
-                <Skeleton width="6em" height="1.75em" />
-                <Skeleton width="4em" height="1.75em" />
-                <Skeleton width="4em" height="1.75em" />
+              <Box flexWrap="wrap" gap="md" marginY="2xl" flex>
+                <Skeleton height="1.75em" width="6em" />
+                <Skeleton height="1.75em" width="4em" />
+                <Skeleton height="1.75em" width="4em" />
               </Box>
             </Box>
             <Box
-              flex
               alignItems="center"
-              justifyContent="space-between"
               gap="lg"
+              justifyContent="space-between"
+              flex
             >
-              <Skeleton width="4em" height="1em" sx={{ fontSize: 'sm' }} />
-              <Box flex gap="lg">
-                <Skeleton width="4em" height="1em" />
+              <Skeleton height="1em" sx={{ fontSize: 'sm' }} width="4em" />
+              <Box gap="lg" flex>
+                <Skeleton height="1em" width="4em" />
               </Box>
             </Box>
           </Box>

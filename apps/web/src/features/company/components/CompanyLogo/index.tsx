@@ -26,10 +26,10 @@ export const CompanyLogo = ({
   if (!isSquare) {
     return (
       <img
-        src={logo}
         alt={alt}
-        loading="lazy"
         className={className}
+        loading="lazy"
+        src={logo}
         style={style}
       />
     );
@@ -37,7 +37,7 @@ export const CompanyLogo = ({
 
   return (
     <div className={clsx(s.frame, className)} style={style}>
-      <img src={logo} alt={alt} loading="lazy" className={s.image} />
+      <img alt={alt} className={s.image} loading="lazy" src={logo} />
     </div>
   );
 };

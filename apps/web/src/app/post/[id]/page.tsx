@@ -11,8 +11,8 @@ export default async function JobPostingPage({
 
   return (
     <JobPostingDetail
-      jobPosting={response}
       description={response.description}
+      jobPosting={response}
     />
   );
 }

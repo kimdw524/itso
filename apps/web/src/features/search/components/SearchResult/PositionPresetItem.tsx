@@ -18,9 +18,9 @@ export const PositionPresetItem = ({
   return (
     <Link href={`/post?${serializeQueryString(positionPreset.preset, ',')}`}>
       <Flex
+        alignItems="center"
         className={s.item}
         gap="md"
-        alignItems="center"
         justifyContent="space-between"
       >
         <span>{positionPreset.name}</span>
