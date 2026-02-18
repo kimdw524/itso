@@ -8,10 +8,13 @@ import { SearchIcon } from 'lucide-react';
 
 import { RollingText } from '@/shared/components/RollingText';
 
+import { useRandomKeywords } from '../../hooks';
 import { SearchResult } from '../SearchResult';
 import * as s from './style.css';
 
 export const SearchField = () => {
+  const randomKeywords = useRandomKeywords(5);
+
   const [value, setValue] = useState<string>('');
   const textRef = useRef<HTMLInputElement>(null);
 
@@ -31,11 +34,11 @@ export const SearchField = () => {
               onChange={(e) => setValue(e.target.value)}
             />
             <RollingText className={s.placeholder} duration={500}>
-              <Typography color="muted-foreground">
-                신입 Frontend 개발자
-              </Typography>
-              <Typography color="muted-foreground">카카오페이</Typography>
-              <Typography color="muted-foreground">111퍼센트</Typography>
+              {randomKeywords.map((keyword) => (
+                <Typography key={keyword} color="muted-foreground">
+                  {keyword}
+                </Typography>
+              ))}
             </RollingText>
           </div>
         </div>

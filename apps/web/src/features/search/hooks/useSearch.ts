@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
-import { useFetchSearch } from '../services/SearchService/hooks';
+import { SearchService } from '../services';
 
 export const useSearch = (query: string) => {
-  const { company, positionPreset } = useFetchSearch();
+  const { company, positionPreset } = SearchService.useFetchSearch();
 
   const companies = useMemo(() => {
     if (query.length === 0) {

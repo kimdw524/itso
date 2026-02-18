@@ -1,1 +1,2 @@
-﻿export * from './useSearch';
+export * from './useRandomKeywords';
+export * from './useSearch';
