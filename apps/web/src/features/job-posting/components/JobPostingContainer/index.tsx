@@ -4,11 +4,11 @@ import { Suspense, useState } from 'react';
 
 import { Box } from '@kimdw-rtk/ui';
 
-import { useQueryParams } from '@/shared/hooks/useQueryParams';
+import { useQueryParams } from '@/shared/hooks';
 
 import type { JobPostingSearchFilter } from '../../models';
 import { JobPostingList } from '../JobPostingList';
-import { JobPostingListLoading } from '../JobPostingList/loading';
+import { JobPostingListLoading } from '../JobPostingList';
 import { SearchFilter } from '../SearchFilter';
 import { ShowAllButton } from './ShowAllButton';
 import * as s from './style.css';

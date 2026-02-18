@@ -4,8 +4,8 @@ import { Suspense } from 'react';
 
 import { Box } from '@kimdw-rtk/ui';
 
-import { StickyHeader } from '@/shared/components/StickyHeader';
-import { useQueryParams } from '@/shared/hooks/useQueryParams';
+import { StickyHeader } from '@/shared/components';
+import { useQueryParams } from '@/shared/hooks';
 
 import type { CompanyFilter } from '../../models';
 import { CompanyList } from '../CompanyList';

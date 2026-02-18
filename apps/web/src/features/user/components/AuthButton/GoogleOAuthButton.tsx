@@ -4,7 +4,7 @@ import { Button } from '@kimdw-rtk/ui';
 
 import GoogleLogo from '@/assets/images/google_logo.svg';
 
-import { USER } from '../../constants/user';
+import { USER } from '../../constants';
 
 export const GoogleOAuthButton = async () => {
   return (

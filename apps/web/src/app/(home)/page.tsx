@@ -1,10 +1,8 @@
 import { Box } from '@kimdw-rtk/ui';
 
-import { Section } from '@/shared/components/Section';
+import { Section } from '@/shared/components';
 
-import { FilterShortcut } from './_components/FilterShortcut';
-import { HomeHeader } from './_components/HomeHeader';
-import { JobPostingList } from './_components/JobPostingList';
+import { FilterShortcut, HomeHeader, JobPostingList } from './_components';
 
 export default async function HomePage() {
   return (

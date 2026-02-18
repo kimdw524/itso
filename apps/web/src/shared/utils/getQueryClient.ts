@@ -1,6 +1,6 @@
 import { QueryClient, isServer } from '@tanstack/react-query';
 
-import { QUERY_CLIENT_CONFIG } from '@/constants/queryClient';
+import { QUERY_CLIENT_CONFIG } from '@/shared/constants';
 
 function makeQueryClient() {
   return new QueryClient(QUERY_CLIENT_CONFIG);

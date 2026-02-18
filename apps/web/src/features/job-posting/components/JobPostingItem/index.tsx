@@ -11,8 +11,8 @@ import {
   Typography,
 } from '@kimdw-rtk/ui';
 
-import { BookmarkButton } from '@/features/bookmark/components/BookmarkButton';
-import { CompanyLogo } from '@/features/company/components/CompanyLogo';
+import { BookmarkButton } from '@/features/bookmark/components';
+import { CompanyLogo } from '@/features/company/components';
 import type { CompanySummary } from '@/features/company/models';
 
 import type { JobPostingSummary } from '../../models';

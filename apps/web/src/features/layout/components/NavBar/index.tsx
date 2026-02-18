@@ -8,7 +8,7 @@ import {
   NavigationLogo,
 } from '@kimdw-rtk/ui';
 
-import { AuthButton } from '@/features/user/components/AuthButton';
+import { AuthButton } from '@/features/user/components';
 import { STYLE_VARS } from '@/styles/vars.css';
 
 import { Logo } from '../Logo';

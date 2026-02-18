@@ -1,7 +1,7 @@
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
-import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
-import type { RequestType } from '@/shared/utils/http';
+import { useInfiniteScroll } from '@/shared/hooks';
+import type { RequestType } from '@/shared/utils';
 
 import { queryOptions } from '../queries';
 import type { service } from '../service';

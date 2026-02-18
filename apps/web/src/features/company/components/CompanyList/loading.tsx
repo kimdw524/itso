@@ -1,4 +1,4 @@
-import { COMPANY_LIST_LIMIT } from '../../constants/company';
+import { COMPANY_LIST_LIMIT } from '../../constants';
 import { CompanyItemLoading } from '../CompanyItem/loaindg';
 
 export const CompanyListLoading = () => {

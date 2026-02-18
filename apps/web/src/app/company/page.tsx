@@ -3,11 +3,11 @@ import type { SearchParams } from 'next/dist/server/request/search-params';
 import { Box } from '@kimdw-rtk/ui';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-import { CompanyContainer } from '@/features/company/components/CompanyContainer';
+import { CompanyContainer } from '@/features/company/components';
 import type { CompanyFilter } from '@/features/company/models';
-import { companyFilterSchema } from '@/features/company/schemas/companyFilter';
-import { CompanyService } from '@/features/company/services/CompanyService';
-import { getQueryClient } from '@/shared/utils/getQueryClient';
+import { companyFilterSchema } from '@/features/company/schemas';
+import { CompanyService } from '@/features/company/services';
+import { getQueryClient } from '@/shared/utils';
 
 export default async function CompanyPage({
   searchParams,

@@ -2,9 +2,11 @@ import { Suspense } from 'react';
 
 import { Box } from '@kimdw-rtk/ui';
 
+import {
+  JobPostingList,
+  JobPostingListLoading,
+} from '@/features/job-posting/components';
 import * as s from '@/features/job-posting/components/JobPostingContainer/style.css';
-import { JobPostingList } from '@/features/job-posting/components/JobPostingList';
-import { JobPostingListLoading } from '@/features/job-posting/components/JobPostingList/loading';
 import type { JobPostingSearchFilter } from '@/features/job-posting/models';
 
 interface CompanyJobPostingContainerProps {

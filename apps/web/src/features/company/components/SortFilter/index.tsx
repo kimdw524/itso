@@ -1,6 +1,6 @@
 import { Select, SelectOption } from '@kimdw-rtk/ui';
 
-import type { useQueryParams } from '@/shared/hooks/useQueryParams';
+import type { useQueryParams } from '@/shared/hooks';
 
 import type { CompanyFilter } from '../../models';
 

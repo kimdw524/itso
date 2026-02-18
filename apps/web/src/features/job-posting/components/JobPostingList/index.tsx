@@ -3,7 +3,7 @@
 import React from 'react';
 
 import type { JobPostingSearchFilter } from '../../models';
-import { JobPostingService } from '../../services/JobPostingService';
+import { JobPostingService } from '../../services';
 import { JobPostingItem } from '../JobPostingItem';
 import { JobPostingListLoading } from './loading';
 
@@ -33,3 +33,5 @@ export const JobPostingList = ({ params }: JobPostingListProps) => {
     </>
   );
 };
+
+export * from './loading';

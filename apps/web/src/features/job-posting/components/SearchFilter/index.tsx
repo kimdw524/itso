@@ -5,22 +5,23 @@ import { type ReactNode } from 'react';
 import { Box, ScrollArea } from '@kimdw-rtk/ui';
 import { useOverlay } from '@kimdw-rtk/utils';
 
-import { CheckboxModal } from '@/shared/components/CheckboxModal';
-import { DisableWrapper } from '@/shared/components/DisableWrapper';
-import { FilterButton } from '@/shared/components/FilterButton';
-import { RangeModal } from '@/shared/components/RangeModal';
-import { StickyHeader } from '@/shared/components/StickyHeader';
-import { useQueryParams } from '@/shared/hooks/useQueryParams';
-import type { RequestType } from '@/shared/utils/http';
-import { serializeQueryString } from '@/shared/utils/queryString';
+import {
+  CheckboxModal,
+  DisableWrapper,
+  FilterButton,
+  RangeModal,
+  StickyHeader,
+} from '@/shared/components';
+import type { useQueryParams } from '@/shared/hooks';
+import { serializeQueryString, type RequestType } from '@/shared/utils';
 
 import {
   EMPLOYMENT_TYPE_KEY,
   JOB_ID,
   JOB_POSTING,
   JOB_POSTING_FILTER_STORAGE,
-} from '../../constants/job-posting';
-import type { JobPostingService } from '../../services/JobPostingService';
+} from '../../constants';
+import type { JobPostingService } from '../../services';
 import { formatExperienceRange } from '../../utils';
 import { SortFilter } from './SortFilter';
 

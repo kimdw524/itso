@@ -1,5 +1,5 @@
-import { JobPostingDetail } from '@/features/job-posting/components/JobPostingDetail';
-import { JobPostingService } from '@/features/job-posting/services/JobPostingService';
+import { JobPostingDetail } from '@/features/job-posting/components';
+import { JobPostingService } from '@/features/job-posting/services';
 
 export default async function JobPostingPage({
   params,

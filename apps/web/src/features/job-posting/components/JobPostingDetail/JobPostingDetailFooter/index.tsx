@@ -1,7 +1,7 @@
 import { Box, Typography } from '@kimdw-rtk/ui';
 import { motion } from 'motion/react';
 
-import { CompanyLogo } from '@/features/company/components/CompanyLogo';
+import { CompanyLogo } from '@/features/company/components';
 import type { JobPosting } from '@/features/job-posting/models';
 
 import { ApplyButton } from '../../ApplyButton';

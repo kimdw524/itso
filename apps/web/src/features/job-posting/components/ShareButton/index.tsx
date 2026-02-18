@@ -3,7 +3,7 @@
 import { Button } from '@kimdw-rtk/ui';
 import { Share2Icon } from 'lucide-react';
 
-import { LogOnClick } from '@/shared/components/LogOnClick';
+import { LogOnClick } from '@/shared/components';
 
 import type { JobPosting } from '../../models';
 import { shareJobPosting } from '../../utils';

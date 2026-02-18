@@ -1,5 +1,5 @@
 import type { Company } from '@/features/company/models';
-import { http } from '@/shared/utils/http';
+import { http } from '@/shared/utils';
 
 import type { JobPositionPreset } from '../../models';
 

@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import { Box, Typography } from '@kimdw-rtk/ui';
 import { EyeIcon } from 'lucide-react';
 
-import { getDday } from '@/shared/utils/date';
+import { getDday } from '@/shared/utils';
 
 import type { JobPostingSummary } from '../../models';
 

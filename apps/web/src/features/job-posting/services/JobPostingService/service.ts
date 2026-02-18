@@ -1,5 +1,5 @@
 import type { CursorPaginatedResponse } from '@/api/types';
-import { http } from '@/shared/utils/http';
+import { http } from '@/shared/utils';
 
 import type {
   EmploymentType,

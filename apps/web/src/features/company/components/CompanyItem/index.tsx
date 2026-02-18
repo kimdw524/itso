@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { Box, Typography } from '@kimdw-rtk/ui';
 import { ChevronRight, StarIcon } from 'lucide-react';
 
-import { Separator } from '@/shared/components/Separator';
-import { getTimeSince } from '@/shared/utils/date';
+import { Separator } from '@/shared/components';
+import { getTimeSince } from '@/shared/utils';
 
 import type { Company } from '../../models';
 import { CompanyLogo } from '../CompanyLogo';

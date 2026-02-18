@@ -1,4 +1,4 @@
-import { JobPostingDetailLoading } from '@/features/job-posting/components/JobPostingDetail';
+import { JobPostingDetailLoading } from '@/features/job-posting/components';
 
 export default function JobPostingPageLoading() {
   return <JobPostingDetailLoading />;

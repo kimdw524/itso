@@ -3,8 +3,7 @@ import type { ComponentProps } from 'react';
 import { Chip } from '@kimdw-rtk/ui';
 
 import type { ExperienceType } from '../../models';
-import { formatExperienceRange } from '../../utils';
-import { getExperienceType } from '../../utils/getExperienceType';
+import { formatExperienceRange, getExperienceType } from '../../utils';
 
 interface ExperienceRangeChipProps {
   min: number;

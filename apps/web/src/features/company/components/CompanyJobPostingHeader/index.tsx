@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { Box, Button, Typography } from '@kimdw-rtk/ui';
 import { ArrowLeftIcon } from 'lucide-react';
 
-import { StickyHeader } from '@/shared/components/StickyHeader';
+import { StickyHeader } from '@/shared/components';
 
-import { CompanyService } from '../../services/CompanyService';
+import { CompanyService } from '../../services';
 
 interface CompanyJobPostingHeaderProps {
   id: number;

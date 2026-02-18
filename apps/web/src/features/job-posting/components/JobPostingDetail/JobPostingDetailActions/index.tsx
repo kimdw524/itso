@@ -2,8 +2,8 @@ import type React from 'react';
 
 import { Box, Card } from '@kimdw-rtk/ui';
 
-import { BookmarkButton } from '@/features/bookmark/components/BookmarkButton';
-import { BookmarkService } from '@/features/bookmark/services/BookmarkService';
+import { BookmarkButton } from '@/features/bookmark/components';
+import { BookmarkService } from '@/features/bookmark/services';
 
 import type { JobPosting } from '../../../models';
 import { ApplyButton } from '../../ApplyButton';
