@@ -15,3 +15,5 @@ export const AuthButton = async () => {
     </>
   );
 };
+
+export * from './GoogleOAuthButton';

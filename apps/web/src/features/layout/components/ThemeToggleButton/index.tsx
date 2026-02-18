@@ -16,11 +16,11 @@ export const ThemeToggleButton = () => {
 
   return (
     <Button
-      variant="ghost"
+      aria-label="Toggle Theme"
       color="secondary"
       size="icon-md"
+      variant="ghost"
       onClick={toggleTheme}
-      aria-label="Toggle Theme"
     >
       <div>
         <ThemeOnly theme="light">

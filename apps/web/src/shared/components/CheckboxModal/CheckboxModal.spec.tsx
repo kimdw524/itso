@@ -17,9 +17,9 @@ describe('CheckboxModal', () => {
   }) => {
     renderWithProviders(
       <CheckboxModal
+        defaultChecked={['1번', '3번']}
         header="header test"
         items={items}
-        defaultChecked={['1번', '3번']}
         renderChildren={(data) => `${data} 아이템`}
         onConfirm={onConfirm}
       />,

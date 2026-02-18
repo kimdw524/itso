@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-import { USER } from './src/features/user/constants/user';
+import { USER } from './src/features/user/constants';
 
 const protectedRoutes = ['/bookmark'];
 

@@ -1,4 +1,4 @@
-import { getKeys } from '@/shared/utils/getKeys';
+import { getKeys } from '@/shared/utils';
 
 import type { JobPostingSearchFilter } from '../models';
 

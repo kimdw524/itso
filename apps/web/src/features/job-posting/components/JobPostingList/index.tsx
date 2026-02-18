@@ -3,7 +3,7 @@
 import React from 'react';
 
 import type { JobPostingSearchFilter } from '../../models';
-import { JobPostingService } from '../../services/JobPostingService';
+import { JobPostingService } from '../../services';
 import { JobPostingItem } from '../JobPostingItem';
 import { JobPostingListLoading } from './loading';
 
@@ -22,8 +22,8 @@ export const JobPostingList = ({ params }: JobPostingListProps) => {
           {page.data.map((jobPosting) => (
             <JobPostingItem
               key={jobPosting.id}
-              jobPosting={jobPosting}
               company={jobPosting.company}
+              jobPosting={jobPosting}
             />
           ))}
         </React.Fragment>
@@ -33,3 +33,5 @@ export const JobPostingList = ({ params }: JobPostingListProps) => {
     </>
   );
 };
+
+export * from './loading';

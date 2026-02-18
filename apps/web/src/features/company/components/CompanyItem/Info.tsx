@@ -10,7 +10,7 @@ interface InfoProps {
 
 export const Info = ({ children, icon, text }: InfoProps) => {
   return (
-    <Box flex alignItems="center" gap="sm">
+    <Box alignItems="center" gap="sm" flex>
       {icon ? (
         <>
           {icon}

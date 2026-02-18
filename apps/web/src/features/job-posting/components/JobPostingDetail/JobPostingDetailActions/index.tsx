@@ -2,8 +2,8 @@ import type React from 'react';
 
 import { Box, Card } from '@kimdw-rtk/ui';
 
-import { BookmarkButton } from '@/features/bookmark/components/BookmarkButton';
-import { BookmarkService } from '@/features/bookmark/services/BookmarkService';
+import { BookmarkButton } from '@/features/bookmark/components';
+import { BookmarkService } from '@/features/bookmark/services';
 
 import type { JobPosting } from '../../../models';
 import { ApplyButton } from '../../ApplyButton';
@@ -22,13 +22,13 @@ export const JobPostingActions = async ({
   });
 
   return (
-    <Box flex alignItems="center" gap="md">
+    <Box alignItems="center" gap="md" flex>
       {/* 북마크 버튼 */}
       <BookmarkButton
-        size="icon-lg"
-        color="secondary"
         bookmarkType="job-posting"
+        color="secondary"
         isBookmarked={isBookmarked}
+        size="icon-lg"
         targetId={jobPosting.id}
       />
       <ShareButton jobPosting={jobPosting} />

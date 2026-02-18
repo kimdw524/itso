@@ -1,4 +1,4 @@
-import type { RequestType } from '@/shared/utils/http';
+import type { RequestType } from '@/shared/utils';
 
 import { service } from './service';
 

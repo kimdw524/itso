@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, type ComponentProps, type ReactNode } from 'react';
 
 import {
@@ -53,23 +55,23 @@ export const RangeModal = ({
         <Typography
           fontSize="lg"
           fontWeight="medium"
-          sx={{ marginY: 'md' }}
           style={{ textAlign: 'center' }}
+          sx={{ marginY: 'md' }}
         >
           {renderDescription(minValue, maxValue)}
         </Typography>
         <Box padding="xl">
           <Range
-            min={min}
-            max={max}
-            defaultMinValue={defaultMinValue}
             defaultMaxValue={defaultMaxValue}
+            defaultMinValue={defaultMinValue}
+            max={max}
+            min={min}
             onChange={handleChange}
           />
         </Box>
       </DialogContent>
       <DialogFooter sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Box flex gap="lg">
+        <Box gap="lg" flex>
           <Button color="secondary" onClick={close}>
             취소
           </Button>

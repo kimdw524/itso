@@ -4,7 +4,7 @@ import type { ComponentProps } from 'react';
 
 import { Button } from '@kimdw-rtk/ui';
 
-import { LogOnClick } from '@/shared/components/LogOnClick';
+import { LogOnClick } from '@/shared/components';
 
 import type { JobPosting } from '../../models';
 import { applyJob } from '../../utils';
@@ -16,7 +16,7 @@ interface ApplyButtonProps
 
 export const ApplyButton = ({ jobPosting, ...rest }: ApplyButtonProps) => {
   return (
-    <LogOnClick type="apply" target={jobPosting.id}>
+    <LogOnClick target={jobPosting.id} type="apply">
       <Button {...rest} onClick={() => applyJob(jobPosting)}>
         지원하기
       </Button>

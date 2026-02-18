@@ -36,9 +36,9 @@ export const FilterShortcutItem = ({
     <Link href={`/post?${queryString}`}>
       <Card
         color="transparent"
-        variant="outlined"
         size="xl"
         style={{ width: 'fit-content' }}
+        variant="outlined"
       >
         <CardInteraction>
           <CardContent>

@@ -16,11 +16,11 @@ export const Modal = ({ children }: ModalProps) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, translateY: '3%' }}
       animate={{ opacity: 1, translateY: 0 }}
-      exit={{ opacity: 0, translateY: '3%' }}
-      transition={{ duration: 0.2, ease: 'easeInOut' }}
       className={s.container}
+      exit={{ opacity: 0, translateY: '3%' }}
+      initial={{ opacity: 0, translateY: '3%' }}
+      transition={{ duration: 0.2, ease: 'easeInOut' }}
     >
       <div className={s.inner}>{children}</div>
     </motion.div>

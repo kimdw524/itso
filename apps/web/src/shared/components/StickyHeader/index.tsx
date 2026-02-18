@@ -19,14 +19,14 @@ export const StickyHeader = ({ children }: StickyHeaderProps) => {
   return (
     <Box
       ref={ref}
-      flex
       alignItems="center"
-      justifyContent="space-between"
-      gap="lg"
       className={s.container({ isStuck })}
+      gap="lg"
+      justifyContent="space-between"
       sx={{
         fontSize: { desktop: 'md', mobile: 'sm' },
       }}
+      flex
     >
       {children}
     </Box>

@@ -1,4 +1,4 @@
-import { http } from '@/shared/utils/http';
+import { http } from '@/shared/utils';
 
 export const service = {
   async getInfo(): Promise<{

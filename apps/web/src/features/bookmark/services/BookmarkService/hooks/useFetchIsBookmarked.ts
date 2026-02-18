@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import type { RequestType } from '@/shared/utils/http';
+import type { RequestType } from '@/shared/utils';
 
 import { queryOptions } from '../queries';
 import type { service } from '../service';

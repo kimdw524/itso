@@ -14,7 +14,7 @@ export const AnimatedModal = ({ children }: AnimatedModal) => {
   const pathname = usePathname() || '';
 
   return (
-    <AnimatePresence mode="sync" initial={false}>
+    <AnimatePresence initial={false} mode="sync">
       <FrozenRouter key={pathname}>
         {pathname.startsWith('/post/') ? children : null}
       </FrozenRouter>

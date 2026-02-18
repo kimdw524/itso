@@ -28,8 +28,8 @@ export const JobPostingDetailHeader = ({
   return (
     <>
       <Box
-        className={s.container}
         ref={ref}
+        className={s.container}
         sx={{
           flexDirection: { desktop: 'row', mobile: 'column' },
           alignItems: { desktop: 'center', mobile: 'flex-start' },
@@ -38,9 +38,9 @@ export const JobPostingDetailHeader = ({
       >
         <div>
           <CompanyLogo
-            logo={jobPosting.company.logo}
             alt={jobPosting.company.name}
             className={s.logo}
+            logo={jobPosting.company.logo}
           />
           <Typography fontSize="2xl" fontWeight="semiBold" lineHeight="sm">
             {jobPosting.title}

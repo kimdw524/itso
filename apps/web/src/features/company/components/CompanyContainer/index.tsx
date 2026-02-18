@@ -4,8 +4,8 @@ import { Suspense } from 'react';
 
 import { Box } from '@kimdw-rtk/ui';
 
-import { StickyHeader } from '@/shared/components/StickyHeader';
-import { useQueryParams } from '@/shared/hooks/useQueryParams';
+import { StickyHeader } from '@/shared/components';
+import { useQueryParams } from '@/shared/hooks';
 
 import type { CompanyFilter } from '../../models';
 import { CompanyList } from '../CompanyList';
@@ -23,15 +23,15 @@ export const CompanyContainer = ({ filter }: CompanyContainerProps) => {
   return (
     <>
       <StickyHeader>
-        <Box flex justifyContent="flex-end" width="100%">
+        <Box justifyContent="flex-end" width="100%" flex>
           <SortFilter queryParams={queryParams} />
         </Box>
       </StickyHeader>
       <Box
-        flex
+        className={s.container}
         flexDirection="column"
         sx={{ fontSize: { mobile: 'sm', desktop: '1rem' } }}
-        className={s.container}
+        flex
       >
         <Suspense fallback={<CompanyListLoading />}>
           <CompanyList params={queryParams.rawParams} />

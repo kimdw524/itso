@@ -19,10 +19,10 @@ export const SignOutButton = ({ profile }: SignOutButtonProps) => {
 
   return (
     <img
-      src={profile}
       alt="profile"
       className={s.profile}
       draggable={false}
+      src={profile}
       onClick={handleClick}
     />
   );

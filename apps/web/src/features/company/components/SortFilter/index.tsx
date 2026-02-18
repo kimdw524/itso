@@ -1,6 +1,6 @@
 import { Select, SelectOption } from '@kimdw-rtk/ui';
 
-import type { useQueryParams } from '@/shared/hooks/useQueryParams';
+import type { useQueryParams } from '@/shared/hooks';
 
 import type { CompanyFilter } from '../../models';
 
@@ -14,8 +14,8 @@ export const SortFilter = ({ queryParams }: SortFilterProps) => {
   return (
     <Select
       defaultValue={getParam('orderBy') ?? 'name'}
-      width="fit-content"
       variant="contained"
+      width="fit-content"
       onChange={(value) =>
         setParam('orderBy', value as keyof CompanyFilter['orderBy'])
       }

@@ -13,7 +13,7 @@ export const JobPostingHorizontalList = ({
 }: JobPostingHorizontalListProps) => {
   return (
     <ScrollArea>
-      <Box flex gap="lg" paddingTop="lg" className={s.container}>
+      <Box className={s.container} gap="lg" paddingTop="lg" flex>
         {children}
       </Box>
     </ScrollArea>

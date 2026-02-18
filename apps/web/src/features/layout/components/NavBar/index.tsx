@@ -8,7 +8,7 @@ import {
   NavigationLogo,
 } from '@kimdw-rtk/ui';
 
-import { AuthButton } from '@/features/user/components/AuthButton';
+import { AuthButton } from '@/features/user/components';
 import { STYLE_VARS } from '@/styles/vars.css';
 
 import { Logo } from '../Logo';
@@ -19,22 +19,22 @@ export const NavBar = () => {
   return (
     <NavigationBar size="md" style={{ height: STYLE_VARS.NAVBAR_HEIGHT }}>
       <NavigationContainer
-        sx={{ paddingX: { desktop: '2xl', mobile: 'xl' } }}
         style={{ maxWidth: STYLE_VARS.CONTAINER_WIDTH }}
+        sx={{ paddingX: { desktop: '2xl', mobile: 'xl' } }}
       >
         <NavigationLogo>
-          <Link href="/" aria-label="Navigate to Home">
+          <Link aria-label="Navigate to Home" href="/">
             <Logo height="1.25em" />
           </Link>
         </NavigationLogo>
         <NavigationDrawer
-          menu={<NavBarMenu />}
           aside={
             <NavigationAside>
               <ThemeToggleButton />
               <AuthButton />
             </NavigationAside>
           }
+          menu={<NavBarMenu />}
         />
       </NavigationContainer>
     </NavigationBar>

@@ -1,8 +1,8 @@
 import { useDialog } from '@kimdw-rtk/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { MESSAGE } from '@/constants/message';
-import type { RequestType, ResponseType } from '@/shared/utils/http';
+import { MESSAGE } from '@/shared/constants';
+import type { RequestType, ResponseType } from '@/shared/utils';
 
 import { queryKeys } from '../queries';
 import { service } from '../service';

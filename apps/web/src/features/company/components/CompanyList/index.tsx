@@ -3,7 +3,7 @@
 import React from 'react';
 
 import type { CompanyFilter } from '../../models';
-import { CompanyService } from '../../services/CompanyService';
+import { CompanyService } from '../../services';
 import { CompanyItem } from '../CompanyItem';
 import { CompanyListLoading } from './loading';
 

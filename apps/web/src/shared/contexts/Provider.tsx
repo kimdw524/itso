@@ -6,7 +6,7 @@ import { UIProvider } from '@kimdw-rtk/ui';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { Provider as JotaiProvider } from 'jotai';
 
-import { getQueryClient } from '@/shared/utils/getQueryClient';
+import { getQueryClient } from '@/shared/utils';
 
 import { ThemeProvider } from './ThemeProvider';
 

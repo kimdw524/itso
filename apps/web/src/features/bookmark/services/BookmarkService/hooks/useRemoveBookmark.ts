@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import type { RequestType, ResponseType } from '@/shared/utils/http';
+import type { RequestType, ResponseType } from '@/shared/utils';
 
 import { queryKeys } from '../queries';
 import { service } from '../service';

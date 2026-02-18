@@ -3,16 +3,13 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { Spinner } from '@/shared/components/Spinner';
-import {
-  parseQueryString,
-  serializeQueryString,
-} from '@/shared/utils/queryString';
+import { Spinner } from '@/shared/components';
+import { parseQueryString, serializeQueryString } from '@/shared/utils';
 
 import {
   JOB_POSTING_DEFAULT_FILTER,
   JOB_POSTING_FILTER_STORAGE,
-} from '../../constants/job-posting';
+} from '../../constants';
 
 export const LocalJobPostingFilter = () => {
   const router = useRouter();

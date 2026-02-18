@@ -1,7 +1,7 @@
 import 'server-only';
 
 import { UserService } from '@/features/user/services/UserService';
-import type { RequestType } from '@/shared/utils/http';
+import type { RequestType } from '@/shared/utils';
 
 import { BookmarkService } from '../services/BookmarkService';
 

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
-import { NavBar } from '@/features/layout/components/NavBar';
-import { AnimatedModal } from '@/shared/components/AnimatedModal';
-import { Provider } from '@/shared/contexts/Provider';
+import { NavBar } from '@/features/layout/components';
+import { AnimatedModal } from '@/shared/components';
+import { Provider } from '@/shared/contexts';
 import '@/styles/globalStyle.css';
 
 export const metadata: Metadata = {

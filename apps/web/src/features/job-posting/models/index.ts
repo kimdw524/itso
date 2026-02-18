@@ -1,8 +1,8 @@
 import type { CompanySummary } from '@/features/company/models';
-import type { RequestType } from '@/shared/utils/http';
+import type { RequestType } from '@/shared/utils';
 
-import type { JOB_POSTING } from '../constants/job-posting';
-import type { JobPostingService } from '../services/JobPostingService';
+import type { JOB_POSTING } from '../constants';
+import type { JobPostingService } from '../services';
 
 export type EmploymentType = keyof typeof JOB_POSTING.EMPLOYMENT_TYPE;
 

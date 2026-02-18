@@ -2,10 +2,10 @@
 
 import React from 'react';
 
-import { JOB_POSTING } from '../../constants/job-posting';
-import { JobPostingService } from '../../services/JobPostingService';
+import { JOB_POSTING } from '../../constants';
+import { JobPostingService } from '../../services';
 import { JobPostingItem } from '../JobPostingItem';
-import { JobPostingListLoading } from '../JobPostingList/loading';
+import { JobPostingListLoading } from '../JobPostingList';
 
 export const BookmarkedJobPostingList = () => {
   const { data, trigger, isFetchingNextPage } =
@@ -20,8 +20,8 @@ export const BookmarkedJobPostingList = () => {
           {page.data.map((jobPosting) => (
             <JobPostingItem
               key={jobPosting.id}
-              jobPosting={jobPosting}
               company={jobPosting.company}
+              jobPosting={jobPosting}
             />
           ))}
         </React.Fragment>

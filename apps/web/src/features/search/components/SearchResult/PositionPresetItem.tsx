@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Flex, Typography } from '@kimdw-rtk/ui';
 
 import { formatExperienceRange } from '@/features/job-posting/utils';
-import { serializeQueryString } from '@/shared/utils/queryString';
+import { serializeQueryString } from '@/shared/utils';
 
 import type { JobPositionPreset } from '../../models';
 import * as s from './style.css';
@@ -18,9 +18,9 @@ export const PositionPresetItem = ({
   return (
     <Link href={`/post?${serializeQueryString(positionPreset.preset, ',')}`}>
       <Flex
+        alignItems="center"
         className={s.item}
         gap="md"
-        alignItems="center"
         justifyContent="space-between"
       >
         <span>{positionPreset.name}</span>

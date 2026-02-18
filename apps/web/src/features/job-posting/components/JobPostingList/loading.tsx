@@ -1,4 +1,4 @@
-import { JOB_POSTING } from '../../constants/job-posting';
+import { JOB_POSTING } from '../../constants';
 import { JobPostingItemLoading } from '../JobPostingItem/loading';
 
 export const JobPostingListLoading = () => {

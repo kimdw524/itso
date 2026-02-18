@@ -1,7 +1,7 @@
 import type { CursorPaginatedResponse } from '@/api/types';
-import { http } from '@/shared/utils/http';
+import { http } from '@/shared/utils';
 
-import { COMPANY_LIST_LIMIT } from '../../constants/company';
+import { COMPANY_LIST_LIMIT } from '../../constants';
 import type { Company } from '../../models';
 
 export const service = {

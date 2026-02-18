@@ -1,3 +1,5 @@
+'use client';
+
 import type { ComponentProps, ReactNode } from 'react';
 
 import {
@@ -48,15 +50,15 @@ export const CheckboxModal = <T extends number | string>({
     <Dialog {...rest}>
       <DialogHeader onCloseClick={close}>{header}</DialogHeader>
       <DialogContent>
-        <Box flex flexWrap="wrap" gap="lg" padding="lg" rounded>
+        <Box flexWrap="wrap" gap="lg" padding="lg" flex rounded>
           {items.map((name) => {
             const isChecked = checked.includes(name);
 
             return (
               <Button
                 key={name}
-                variant={isChecked ? 'contained' : 'outlined'}
                 color={isChecked ? 'primary' : 'secondary'}
+                variant={isChecked ? 'contained' : 'outlined'}
                 onClick={() => toggle(name)}
               >
                 {renderChildren(name)}
@@ -77,11 +79,11 @@ export const CheckboxModal = <T extends number | string>({
             </Button>
           )}
         </span>
-        <Box flex gap="lg">
+        <Box gap="lg" flex>
           <Button color="secondary" onClick={close}>
             취소
           </Button>
-          <Button onClick={handleConfirmClick} disabled={isAllUnchecked}>
+          <Button disabled={isAllUnchecked} onClick={handleConfirmClick}>
             적용
           </Button>
         </Box>

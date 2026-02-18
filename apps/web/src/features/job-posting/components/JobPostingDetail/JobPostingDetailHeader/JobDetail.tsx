@@ -13,7 +13,7 @@ interface JobDetailProps {
 
 export const JobDetail = ({ jobPosting }: JobDetailProps) => {
   return (
-    <Box flex gap="lg" flexWrap="wrap">
+    <Box flexWrap="wrap" gap="lg" flex>
       <Separator separator={<span className={s.separator} />}>
         <InfoItem>
           {formatExperienceRange(

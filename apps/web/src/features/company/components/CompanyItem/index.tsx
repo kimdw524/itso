@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { Box, Typography } from '@kimdw-rtk/ui';
 import { ChevronRight, StarIcon } from 'lucide-react';
 
-import { Separator } from '@/shared/components/Separator';
-import { getTimeSince } from '@/shared/utils/date';
+import { Separator } from '@/shared/components';
+import { getTimeSince } from '@/shared/utils';
 
 import type { Company } from '../../models';
 import { CompanyLogo } from '../CompanyLogo';
@@ -17,22 +17,22 @@ interface CompanyItemProps {
 
 export const CompanyItem = ({ company }: CompanyItemProps) => {
   return (
-    <Link href={`/company/${company.id}`} draggable={false}>
+    <Link draggable={false} href={`/company/${company.id}`}>
       <Box
-        flex
         alignItems={{ desktop: 'center', mobile: 'flex-start' }}
-        justifyContent="space-between"
+        className={s.container}
+        flexDirection={{ desktop: 'row', mobile: 'column' }}
         gap="lg"
+        justifyContent="space-between"
         paddingX="xl"
         paddingY="2xl"
-        flexDirection={{ desktop: 'row', mobile: 'column' }}
-        className={s.container}
+        flex
       >
         <div>
           <Box className={s.imageContainer}>
             <CompanyLogo
-              logo={company.logo}
               alt={company.name}
+              logo={company.logo}
               style={{ maxHeight: '1.5rem' }}
             />
           </Box>
@@ -43,7 +43,7 @@ export const CompanyItem = ({ company }: CompanyItemProps) => {
           >
             {company.name}
           </Typography>
-          <Box flex alignItems="center" gap="md" color="secondary-foreground">
+          <Box alignItems="center" color="secondary-foreground" gap="md" flex>
             <Separator separator={<span className={s.separator} />}>
               <Info icon={<StarIcon size="1rem" />}>{company.bookmarks}</Info>
               <Info text="마지막 공고">
@@ -54,9 +54,9 @@ export const CompanyItem = ({ company }: CompanyItemProps) => {
             </Separator>
           </Box>
         </div>
-        <Box flex alignItems="center">
+        <Box alignItems="center" flex>
           <span>{company.postings}개 공고 확인하기</span>
-          <ChevronRight strokeWidth={1} className={s.navigation} />
+          <ChevronRight className={s.navigation} strokeWidth={1} />
         </Box>
       </Box>
     </Link>
