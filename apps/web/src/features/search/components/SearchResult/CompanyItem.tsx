@@ -13,7 +13,7 @@ interface CompanyItemProps {
 
 export const CompanyItem = ({ company }: CompanyItemProps) => {
   return (
-    <Link href={`/company/${company.id}`}>
+    <Link href={`/post?companyId=${company.id}`}>
       <Flex alignItems="center" className={s.item} gap="md">
         <CompanyLogo
           alt={company.name}

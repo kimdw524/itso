@@ -48,6 +48,11 @@ export const SearchFilter = ({
   const setParam = (...params: Parameters<typeof setParamOrigin>) => {
     setParamOrigin(...params);
 
+    // Company 필터가 적용된 경우 필터를 저장하지 않는다.
+    if (getParam('companyId') ?? 0 > 0) {
+      return;
+    }
+
     localStorage.setItem(
       JOB_POSTING_FILTER_STORAGE,
       serializeQueryString({ ...rawParams, [params[0]]: params[1] }, ','),
