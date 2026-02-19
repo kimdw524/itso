@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { Flex } from '@kimdw-rtk/ui';
 
-import { CompanyLogo } from '@/features/company/components/CompanyLogo';
+import { CompanyLogo } from '@/features/company/components';
 import type { Company } from '@/features/company/models';
 
 import * as s from './style.css';

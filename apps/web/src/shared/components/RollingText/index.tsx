@@ -9,7 +9,7 @@ import {
 
 import clsx from 'clsx';
 
-import { useCounter } from '@/shared/hooks/useCounter';
+import { useCounter } from '@/shared/hooks';
 
 import * as s from './style.css';
 import { useRollingText } from './useRollingText';
