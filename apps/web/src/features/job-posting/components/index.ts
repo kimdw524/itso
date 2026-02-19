@@ -5,6 +5,7 @@ export * from './JobPostingDetail';
 export * from './JobPostingHorizontalList';
 export * from './JobPostingItem';
 export * from './JobPostingList';
+export * from './JobPostingList/loading';
 export * from './LocalJobPostingFilter';
 export * from './SearchFilter';
 export * from './ShareButton';

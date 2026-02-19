@@ -5,7 +5,7 @@ import React from 'react';
 import { JOB_POSTING } from '../../constants';
 import { JobPostingService } from '../../services';
 import { JobPostingItem } from '../JobPostingItem';
-import { JobPostingListLoading } from '../JobPostingList';
+import { JobPostingListLoading } from '../JobPostingList/loading';
 
 export const BookmarkedJobPostingList = () => {
   const { data, trigger, isFetchingNextPage } =

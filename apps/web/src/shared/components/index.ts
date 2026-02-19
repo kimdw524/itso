@@ -2,6 +2,7 @@
 export * from './CheckboxModal';
 export * from './DisableWrapper';
 export * from './FilterButton';
+export * from './FilterChip';
 export * from './FrozenRouter';
 export * from './LogOnClick';
 export * from './Modal';

@@ -8,7 +8,7 @@ import { useQueryParams } from '@/shared/hooks';
 
 import type { JobPostingSearchFilter } from '../../models';
 import { JobPostingList } from '../JobPostingList';
-import { JobPostingListLoading } from '../JobPostingList';
+import { JobPostingListLoading } from '../JobPostingList/loading';
 import { SearchFilter } from '../SearchFilter';
 import { ShowAllButton } from './ShowAllButton';
 import * as s from './style.css';
