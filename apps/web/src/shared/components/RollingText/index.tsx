@@ -16,11 +16,13 @@ import { useRollingText } from './useRollingText';
 
 interface RollingTextProps extends ComponentProps<'div'> {
   children: ReactElement | ReactElement[];
+  interval?: number;
   duration: number;
 }
 
 export const RollingText = ({
   children,
+  interval = 3000,
   duration,
   className,
   ...rest
@@ -31,7 +33,7 @@ export const RollingText = ({
   const prevCountRef = useRef<number>(0);
   const nextRef = useRef<HTMLDivElement>(null),
     currentRef = useRef<HTMLDivElement>(null);
-  const { count } = useCounter({ interval: 3000, max: childCount - 1 });
+  const { count } = useCounter({ interval, max: childCount - 1 });
   const { roll } = useRollingText({
     current: currentRef,
     next: nextRef,
