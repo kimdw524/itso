@@ -10,7 +10,10 @@ import { StickyHeader } from '@/shared/components';
 
 export default async function Bookmark() {
   return (
-    <Box paddingX="lg" paddingY="2xl">
+    <Box
+      padding={{ desktop: '2xl', mobile: 'xl' }}
+      style={{ isolation: 'isolate' }}
+    >
       <Tabs defaultValue={1}>
         <StickyHeader>
           <TabsList>
