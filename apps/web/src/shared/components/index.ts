@@ -1,6 +1,7 @@
 ﻿export * from './AnimatedModal';
 export * from './CheckboxModal';
 export * from './DisableWrapper';
+export * from './FaceIcon';
 export * from './FilterButton';
 export * from './FilterChip';
 export * from './FrozenRouter';

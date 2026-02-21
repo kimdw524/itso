@@ -3,6 +3,7 @@ import { Box, Flex, Typography } from '@kimdw-rtk/ui';
 import { MehIcon } from 'lucide-react';
 
 import { HomeButton, SignInButton } from '@/features/user/components';
+import { FaceIcon } from '@/shared/components';
 
 import * as s from './page.css';
 
@@ -14,9 +15,9 @@ export default async function SignInPage() {
       initial={{ opacity: '0', transform: 'scale(0.85)' }}
     >
       <Box className={s.container} padding="lg">
-        <div className={s.icon}>
+        <FaceIcon>
           <MehIcon size="4rem" />
-        </div>
+        </FaceIcon>
 
         <Typography
           fontSize="xl"
