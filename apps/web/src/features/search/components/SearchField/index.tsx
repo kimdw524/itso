@@ -6,7 +6,7 @@ import { Typography } from '@kimdw-rtk/ui';
 import { theme } from '@kimdw-rtk/ui/theme';
 import { SearchIcon } from 'lucide-react';
 
-import { RollingText } from '@/shared/components/RollingText';
+import { RollingText } from '@/shared/components';
 
 import { useRandomKeywords } from '../../hooks';
 import { SearchResult } from '../SearchResult';

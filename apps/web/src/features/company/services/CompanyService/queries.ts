@@ -8,6 +8,7 @@ export const queryKeys = {
     'list',
     params,
   ],
+  data: (id: number) => ['company', 'data', id],
 };
 
 export const queryOptions = {
@@ -19,5 +20,10 @@ export const queryOptions = {
       service.getCompanyList({ ...params, cursor: pageParam }),
     getNextPageParam: (lastPage: ResponseType<typeof service.getCompanyList>) =>
       lastPage.nextCursor,
+  }),
+  data: (params: RequestType<typeof service.getCompany>) => ({
+    queryKey: queryKeys.data(params.id),
+    gcTime: 0,
+    queryFn: () => service.getCompany({ id: params.id }),
   }),
 };

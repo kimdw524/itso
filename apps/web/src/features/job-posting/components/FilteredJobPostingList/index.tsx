@@ -1,21 +1,23 @@
-'use client';
-
-import { JOB_POSTING } from '../../constants';
+import type { JobPostingSearchFilter } from '../../models';
 import { JobPostingService } from '../../services';
 import { EmptyJobPostingList } from '../EmptyJobPostingList';
 import { JobPostingList } from '../JobPostingList/JobPostingList';
 
-export const BookmarkedJobPostingList = () => {
+interface FilteredJobPostingListProps {
+  params: JobPostingSearchFilter;
+}
+
+export const FilteredJobPostingList = ({
+  params,
+}: FilteredJobPostingListProps) => {
   const { data, trigger, isFetchingNextPage } =
-    JobPostingService.useFetchBookmarkedListSuspense({
-      limit: JOB_POSTING.LIST_LIMIT,
-    });
+    JobPostingService.useFetchListSuspense(params);
 
   if (!data.pages[0]?.data.length) {
     return (
       <EmptyJobPostingList
-        description="별 모양 버튼으로 원하는 공고를 북마크할 수 있어요."
-        title="북마크한 공고가 없어요."
+        description="다른 조건으로 다시 검색해 보세요."
+        title="검색 결과가 없어요."
       />
     );
   }

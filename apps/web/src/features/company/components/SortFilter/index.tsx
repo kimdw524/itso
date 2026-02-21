@@ -15,7 +15,7 @@ export const SortFilter = ({ queryParams }: SortFilterProps) => {
     <Select
       defaultValue={getParam('orderBy') ?? 'name'}
       variant="contained"
-      width="fit-content"
+      width="160px"
       onChange={(value) =>
         setParam('orderBy', value as keyof CompanyFilter['orderBy'])
       }

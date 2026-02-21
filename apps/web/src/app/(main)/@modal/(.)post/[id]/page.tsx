@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import JobPostingPage from '@/app/post/[id]/page';
+import JobPostingPage from '@/app/(main)/post/[id]/page';
 import { JobPostingDetailLoading } from '@/features/job-posting/components';
 import { Modal } from '@/shared/components';
 

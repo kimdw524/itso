@@ -6,9 +6,11 @@ import {
   Skeleton,
 } from '@kimdw-rtk/ui';
 
+import * as s from './style.css';
+
 export const JobPostingItemLoading = () => {
   return (
-    <Card variant="glass">
+    <Card className={s.container}>
       <CardInteraction sx={{ display: 'flex', flexDirection: 'column' }}>
         {/* 회사 로고 이미지 */}
         <Box

@@ -305,8 +305,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@kimdw-rtk/ui':
-        specifier: ^0.1.13
-        version: 0.1.13(@kimdw-rtk/animation@0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@testing-library/dom@10.4.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^0.1.15
+        version: 0.1.15(@kimdw-rtk/animation@0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@testing-library/dom@10.4.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@kimdw-rtk/utils':
         specifier: ^0.1.6
         version: 0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1553,8 +1553,8 @@ packages:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
 
-  '@kimdw-rtk/ui@0.1.13':
-    resolution: {integrity: sha512-16shHeYFJhFOebfGQ4GrNwCETXwyxsv+NEB5eyx7KSJeKrj+DGNtIYYMyoq0LiawTEyPSIKIfASbH9PUEWY4jQ==}
+  '@kimdw-rtk/ui@0.1.15':
+    resolution: {integrity: sha512-T/oqdfHYP39xY5ViNxTWUj1/Xk10rB0b9N0pMDaKTHFR/qRnEWNF7+vIM8UioXMIyia3PEseWLoF2UoGiLa98w==}
     peerDependencies:
       '@kimdw-rtk/animation': ^0.1.5
       '@kimdw-rtk/utils': 0.1.6
@@ -7185,7 +7185,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@kimdw-rtk/ui@0.1.13(@kimdw-rtk/animation@0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@testing-library/dom@10.4.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@kimdw-rtk/ui@0.1.15(@kimdw-rtk/animation@0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@testing-library/dom@10.4.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@kimdw-rtk/animation': 0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@kimdw-rtk/utils': 0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)

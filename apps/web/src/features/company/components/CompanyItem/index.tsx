@@ -17,7 +17,7 @@ interface CompanyItemProps {
 
 export const CompanyItem = ({ company }: CompanyItemProps) => {
   return (
-    <Link draggable={false} href={`/company/${company.id}`}>
+    <Link draggable={false} href={`/post?companyId=${company.id}`}>
       <Box
         alignItems={{ desktop: 'center', mobile: 'flex-start' }}
         className={s.container}

@@ -8,7 +8,7 @@ export const container = style({
   alignItems: 'center',
   justifyContent: 'center',
   width: '100%',
-  minHeight: '100vh',
+  minHeight: '50vh',
 
   animation: `${fadeIn} 0.5s ease`,
 });
