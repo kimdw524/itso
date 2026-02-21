@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import { useQueryParams } from '@/shared/hooks';
 
@@ -24,6 +24,10 @@ export const FilteredJobPostingContainer = ({
   const handleShowAllClick = () => {
     setShowAll((prev) => !prev);
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [queryParams]);
 
   return (
     <>
