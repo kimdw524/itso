@@ -11,6 +11,9 @@ const withVanillaExtract = createVanillaExtractPlugin();
 const nextConfig = {
   output: 'standalone',
   outputFileTracingRoot: path.join(__dirname, '../../'),
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
 };
 
 export default withVanillaExtract(nextConfig);
