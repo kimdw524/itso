@@ -2,22 +2,21 @@
 
 import { Suspense, useState } from 'react';
 
-import { Box } from '@kimdw-rtk/ui';
-
 import { useQueryParams } from '@/shared/hooks';
 
 import type { JobPostingSearchFilter } from '../../models';
-import { JobPostingList } from '../JobPostingList';
+import { FilteredJobPostingList } from '../FilteredJobPostingList';
 import { JobPostingListLoading } from '../JobPostingList/loading';
 import { SearchFilter } from '../SearchFilter';
 import { ShowAllButton } from './ShowAllButton';
-import * as s from './style.css';
 
-interface JobPostingContainerProps {
+interface FilteredJobPostingContainerProps {
   filter: JobPostingSearchFilter;
 }
 
-export const JobPostingContainer = ({ filter }: JobPostingContainerProps) => {
+export const FilteredJobPostingContainer = ({
+  filter,
+}: FilteredJobPostingContainerProps) => {
   const [isShowAll, setShowAll] = useState<boolean>(false);
 
   const queryParams = useQueryParams<JobPostingSearchFilter>(filter, ',');
@@ -31,20 +30,16 @@ export const JobPostingContainer = ({ filter }: JobPostingContainerProps) => {
       <SearchFilter isDisabled={isShowAll} queryParams={queryParams}>
         <ShowAllButton isShowAll={isShowAll} onClick={handleShowAllClick} />
       </SearchFilter>
-      <Box
-        className={s.container}
-        sx={{ fontSize: { mobile: 'sm', desktop: '1rem' } }}
-      >
-        <Suspense fallback={<JobPostingListLoading />}>
-          <JobPostingList
-            params={
-              isShowAll
-                ? { orderBy: queryParams.getParam('orderBy') }
-                : queryParams.rawParams
-            }
-          />
-        </Suspense>
-      </Box>
+
+      <Suspense fallback={<JobPostingListLoading />}>
+        <FilteredJobPostingList
+          params={
+            isShowAll
+              ? { orderBy: queryParams.getParam('orderBy') }
+              : queryParams.rawParams
+          }
+        />
+      </Suspense>
     </>
   );
 };

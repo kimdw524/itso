@@ -1,14 +1,16 @@
-'use client';
-
-import { JOB_POSTING } from '../../constants';
+import type { JobPostingSearchFilter } from '../../models';
 import { JobPostingService } from '../../services';
 import { JobPostingList } from '../JobPostingList/JobPostingList';
 
-export const BookmarkedJobPostingList = () => {
+interface FilteredJobPostingListProps {
+  params: JobPostingSearchFilter;
+}
+
+export const FilteredJobPostingList = ({
+  params,
+}: FilteredJobPostingListProps) => {
   const { data, trigger, isFetchingNextPage } =
-    JobPostingService.useFetchBookmarkedListSuspense({
-      limit: JOB_POSTING.LIST_LIMIT,
-    });
+    JobPostingService.useFetchListSuspense(params);
 
   return (
     <JobPostingList

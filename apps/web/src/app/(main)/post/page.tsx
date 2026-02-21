@@ -4,7 +4,7 @@ import { Box } from '@kimdw-rtk/ui';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 import {
-  JobPostingContainer,
+  FilteredJobPostingContainer,
   LocalJobPostingFilter,
 } from '@/features/job-posting/components';
 import { JOB_POSTING_DEFAULT_FILTER } from '@/features/job-posting/constants';
@@ -46,7 +46,7 @@ export default async function PostPage({
       style={{ isolation: 'isolate' }}
     >
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <JobPostingContainer filter={filter} />
+        <FilteredJobPostingContainer filter={filter} />
       </HydrationBoundary>
     </Box>
   );

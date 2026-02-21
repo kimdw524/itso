@@ -6,7 +6,7 @@ import {
   JobPostingList,
   JobPostingListLoading,
 } from '@/features/job-posting/components';
-import * as s from '@/features/job-posting/components/JobPostingContainer/style.css';
+import * as s from '@/features/job-posting/components/JobPostingList/style.css';
 import type { JobPostingSearchFilter } from '@/features/job-posting/models';
 
 interface CompanyJobPostingContainerProps {
