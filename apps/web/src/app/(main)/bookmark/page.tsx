@@ -1,25 +1,28 @@
 import { Suspense } from 'react';
 
-import { Box, Typography } from '@kimdw-rtk/ui';
+import { Box, Tabs, TabsContent, TabsList, TabsTrigger } from '@kimdw-rtk/ui';
 
 import {
   BookmarkedJobPostingList,
   JobPostingListLoading,
 } from '@/features/job-posting/components';
-
-import * as s from './page.css';
+import { StickyHeader } from '@/shared/components';
 
 export default async function Bookmark() {
   return (
     <Box paddingX="lg" paddingY="2xl">
-      <Typography fontSize="lg" sx={{ marginY: 'xl' }}>
-        북마크한 채용공고
-      </Typography>
-      <div className={s.postContainer}>
-        <Suspense fallback={<JobPostingListLoading />}>
-          <BookmarkedJobPostingList />
-        </Suspense>
-      </div>
+      <Tabs defaultValue={1}>
+        <StickyHeader>
+          <TabsList>
+            <TabsTrigger value={1}>북마크한 채용공고</TabsTrigger>
+          </TabsList>
+        </StickyHeader>
+        <TabsContent value={1}>
+          <Suspense fallback={<JobPostingListLoading />}>
+            <BookmarkedJobPostingList />
+          </Suspense>
+        </TabsContent>
+      </Tabs>
     </Box>
   );
 }
