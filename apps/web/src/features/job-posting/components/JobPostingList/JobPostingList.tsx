@@ -7,9 +7,10 @@ import type { InfiniteData } from '@tanstack/react-query';
 
 import type { CursorPaginatedResponse } from '@/api/types';
 
+import { JOB_POSTING } from '../../constants';
 import type { JobPostingSummary } from '../../models';
 import { JobPostingItem } from '../JobPostingItem';
-import { JobPostingListLoading } from './loading';
+import { JobPostingItemLoading } from '../JobPostingItem/loading';
 import * as s from './style.css';
 
 interface JobPostingListProps {
@@ -39,7 +40,10 @@ export const JobPostingList = ({
           ))}
         </React.Fragment>
       ))}
-      {isFetchingNextPage && <JobPostingListLoading />}
+      {isFetchingNextPage &&
+        new Array(JOB_POSTING.LIST_LIMIT)
+          .fill(0)
+          .map((_, index) => <JobPostingItemLoading key={index} />)}
       {trigger}
     </Box>
   );

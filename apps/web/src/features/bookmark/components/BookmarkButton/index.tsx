@@ -21,7 +21,7 @@ export const BookmarkButton = ({
   isBookmarked,
   ...rest
 }: BookmarkButtonProps) => {
-  const { toggle } = BookmarkService.useToggleBookmark({
+  const { toggle, current } = BookmarkService.useToggleBookmark({
     type: bookmarkType,
     id: targetId,
     isBookmarked,
@@ -34,7 +34,7 @@ export const BookmarkButton = ({
   };
   return (
     <Button {...rest} onClick={handleClick}>
-      {isBookmarked ? (
+      {current ? (
         <StarIcon fill={`rgb(${theme.color.yellow[300]})`} strokeWidth="0" />
       ) : (
         <StarIcon strokeWidth={1.5} />
