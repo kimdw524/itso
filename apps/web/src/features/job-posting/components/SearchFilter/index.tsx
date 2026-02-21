@@ -153,7 +153,9 @@ export const SearchFilter = ({
         <SortFilter queryParams={queryParams} />
       </Flex>
       <Flex alignItems="center" gap="lg">
-        <CompanyFilter queryParams={queryParams} />
+        {queryParams.getParam('companyId') && (
+          <CompanyFilter queryParams={queryParams} />
+        )}
       </Flex>
     </StickyHeader>
   );
