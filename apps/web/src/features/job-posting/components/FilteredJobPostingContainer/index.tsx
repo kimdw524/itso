@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 
 import { useQueryParams } from '@/shared/hooks';
 
@@ -21,13 +21,21 @@ export const FilteredJobPostingContainer = ({
 
   const queryParams = useQueryParams<JobPostingSearchFilter>(filter, ',');
 
-  const handleShowAllClick = () => {
-    setShowAll((prev) => !prev);
-  };
+  const currentFilter = useMemo(
+    () =>
+      isShowAll
+        ? { orderBy: queryParams.getParam('orderBy') }
+        : queryParams.rawParams,
+    [queryParams, isShowAll],
+  );
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [queryParams]);
+  }, [currentFilter]);
+
+  const handleShowAllClick = () => {
+    setShowAll((prev) => !prev);
+  };
 
   return (
     <>
@@ -36,13 +44,7 @@ export const FilteredJobPostingContainer = ({
       </SearchFilter>
 
       <Suspense fallback={<JobPostingListLoading />}>
-        <FilteredJobPostingList
-          params={
-            isShowAll
-              ? { orderBy: queryParams.getParam('orderBy') }
-              : queryParams.rawParams
-          }
-        />
+        <FilteredJobPostingList params={currentFilter} />
       </Suspense>
     </>
   );
