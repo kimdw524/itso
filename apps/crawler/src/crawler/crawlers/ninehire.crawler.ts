@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
-import { EMPLOYMENT_TYPE } from '@/constats/job';
 import { removeHTMLAttributes, stripHTML } from '@/utils/parser';
 
-import { JobPosting, JobPostingDetail } from '../crawler.interface';
+import {
+  EmploymentType,
+  JobPosting,
+  JobPostingDetail,
+} from '../crawler.interface';
 
 const headers = {
   accept:
@@ -63,42 +66,47 @@ export class NinehireCrawler {
 
     const postings = json.results;
 
-    return postings.map((posting) => ({
-      postingId: posting.recruitmentId,
-      title: posting.title,
-      openDate: posting.createdAt,
-      dueDate: posting.deadlineValue,
-      link: `${url}/job_posting/${posting.addressKey}`,
-      company,
-      site: 'ninehire',
-    }));
+    return postings.map((posting) => {
+      const { career, employmentType } = posting;
+
+      return {
+        postingId: posting.recruitmentId,
+        title: posting.title,
+        openDate: posting.createdAt,
+        dueDate: posting.deadlineValue,
+        link: `${url}/job_posting/${posting.addressKey}`,
+        company,
+        site: 'ninehire',
+        ...NinehireCrawler.getExperience(
+          career?.range?.over ?? 0,
+          career?.range?.below ?? 99,
+          career?.type,
+        ),
+        employmentType: NinehireCrawler.getEmploymentType(employmentType),
+      };
+    });
   }
 
-  private getEmploymentType(
-    type?: [string],
-  ): (typeof EMPLOYMENT_TYPE)[keyof typeof EMPLOYMENT_TYPE] {
+  private static getEmploymentType(type?: [string]): EmploymentType {
     const employmentType = {
-      full_time: 1,
-      contractor: 2,
-      freelancer: 2,
-      intern: 3,
-    } satisfies Record<
-      string,
-      (typeof EMPLOYMENT_TYPE)[keyof typeof EMPLOYMENT_TYPE]
-    >;
+      full_time: EmploymentType.FULL_TIME,
+      contractor: EmploymentType.CONTRACT,
+      freelancer: EmploymentType.FREE_LANCER,
+      intern: EmploymentType.INTERN,
+    } satisfies Record<string, EmploymentType>;
 
     if (type === undefined) {
-      return 1;
+      return EmploymentType.FULL_TIME;
     }
 
     if (Object.hasOwn(employmentType, type[0])) {
       return employmentType[type[0] as keyof typeof employmentType];
     }
 
-    return 2;
+    return EmploymentType.CONTRACT;
   }
 
-  private getExperience(
+  private static getExperience(
     over: number,
     below: number,
     careerType?: NinehirePosting['career']['type'],
@@ -150,13 +158,11 @@ export class NinehireCrawler {
     return {
       html: removeHTMLAttributes(body),
       textForLLM: stripHTML(body),
-      ...this.getExperience(
+      ...NinehireCrawler.getExperience(
         recruitment.career?.range?.over ?? 0,
         recruitment.career?.range?.below ?? 99,
         recruitment.career?.type,
       ),
-
-      employmentType: this.getEmploymentType(recruitment.employmentType),
     };
   }
 

@@ -7,6 +7,7 @@ const EMPLOYMENT_TYPE = {
   2: '계약직',
   3: '인턴',
   4: '병역 특례',
+  5: '프리랜서',
 } as const;
 
 const JOB_NAME = {

@@ -103,6 +103,7 @@ export const JOB_KEYWORD = {
     'client',
     'tech',
     'cto',
+    'web',
     '프로덕트매니저',
     '프로덕트오너',
     '프로젝트오너',
@@ -111,6 +112,7 @@ export const JOB_KEYWORD = {
     '개발',
     '클라이언트',
     '테크',
+    '웹',
   ],
 } satisfies Record<keyof typeof JOB_ID, string[]>;
 
@@ -135,10 +137,3 @@ export const JOB_KEYWORD_EXACT = {
   DBA: [],
   Others: ['IT', 'PO', 'PM', 'AI'],
 } satisfies Record<keyof typeof JOB_ID, string[]>;
-
-export const EMPLOYMENT_TYPE = {
-  FULL_TIME: 1,
-  CONTRACT: 2,
-  INTERN: 3,
-  MILITARY_ALTERNATIVE: 4,
-} as const;

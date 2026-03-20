@@ -25,7 +25,6 @@ export const NINEHIRE_LIST = [
     url: 'https://wesangcareer.ninehire.site',
     companyId: '26d5ed90-dc2c-11ee-9cd7-4dd53ffe9fec',
   },
-
   {
     name: '카카오헬스케어',
     url: 'https://recruit.kakaohealthcare.com',
@@ -99,7 +98,11 @@ export const NINEHIRE_LIST = [
   {
     name: '라포랩스',
     url: 'https://www.rapportlabs.kr',
-    companyId:
-      'https://image.ninehire.com/brand/4e1cfd70-6de0-11f0-9567-477c783608ca/3a9099e0-87b9-11f0-8b6f-cf0306163900.png',
+    companyId: '4e1cfd70-6de0-11f0-9567-477c783608ca',
+  },
+  {
+    name: 'AB180',
+    url: 'https://recruit.ab180.co',
+    companyId: 'dab31690-f51a-11f0-82d7-69b90bd91b4e',
   },
 ] satisfies Ninehire[];

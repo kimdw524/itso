@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 import { GREETING_LIST } from 'src/constats/greeting';
 
@@ -15,9 +15,10 @@ export class CrawlerService {
     private readonly ninehireCrawler: NinehireCrawler,
   ) {}
 
-  private async getGreetingJobPostings(): Promise<JobPosting[]> {
+  private async getJobPostings(): Promise<JobPosting[]> {
     const result: JobPosting[] = [];
 
+    // 그리팅 공고 조회
     await Promise.all(
       GREETING_LIST.map(async (company) => {
         try {
@@ -28,11 +29,12 @@ export class CrawlerService {
             )),
           );
         } catch (error) {
-          console.error(`${company.name} 공고 조회 실패`, error);
+          Logger.error(`${company.name} 공고 조회 실패`, error);
         }
       }),
     );
 
+    // 나인하이어 공고 조회
     await Promise.all(
       NINEHIRE_LIST.map(async (company) => {
         try {
@@ -44,7 +46,7 @@ export class CrawlerService {
             )),
           );
         } catch (error) {
-          console.error(`${company.name} 공고 조회 실패`, error);
+          Logger.error(`${company.name} 공고 조회 실패`, error);
         }
       }),
     );
@@ -53,11 +55,7 @@ export class CrawlerService {
   }
 
   async getAllJobPostings(): Promise<JobPosting[]> {
-    const result: JobPosting[] = [];
-
-    result.push(...(await this.getGreetingJobPostings()));
-
-    return result;
+    return await this.getJobPostings();
   }
 
   async getJobPostingDetail(post: JobPosting): Promise<JobPostingDetail> {
