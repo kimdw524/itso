@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 import { GREETING_LIST } from 'src/constats/greeting';
 
@@ -29,7 +29,7 @@ export class CrawlerService {
             )),
           );
         } catch (error) {
-          console.error(`${company.name} 공고 조회 실패`, error);
+          Logger.error(`${company.name} 공고 조회 실패`, error);
         }
       }),
     );
@@ -46,7 +46,7 @@ export class CrawlerService {
             )),
           );
         } catch (error) {
-          console.error(`${company.name} 공고 조회 실패`, error);
+          Logger.error(`${company.name} 공고 조회 실패`, error);
         }
       }),
     );

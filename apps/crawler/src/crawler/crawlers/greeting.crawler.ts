@@ -35,10 +35,10 @@ interface GreetingPosting {
           careerFrom: number | null;
           careerTo: number | null;
           careerType: GreetingCareerType;
-        };
+        } | null;
         jobPositionEmployment: {
           employmentType: GreetingEmploymentType;
-        };
+        } | null;
       },
     ];
   };
@@ -62,7 +62,7 @@ interface GreetingPostingsResponse {
 @Injectable()
 export class GreetingCrawler {
   private static getEmploymentType(
-    type: GreetingEmploymentType,
+    type: GreetingEmploymentType | undefined,
   ): EmploymentType {
     switch (type) {
       case 'CONTRACT_WORKER':
@@ -95,41 +95,52 @@ export class GreetingCrawler {
       (query) => (JSON.parse(query.queryHash) as string[])[0] === 'openings',
     )!.state.data;
 
-    return postings.map((posting) => {
-      const { jobPositionCareer, jobPositionEmployment } =
-        posting.openingJobPosition.openingJobPositions[0];
-      const employmentType = GreetingCrawler.getEmploymentType(
-        jobPositionEmployment.employmentType,
-      );
-      let minExperience = jobPositionCareer.careerFrom ?? 0,
-        maxExperience = jobPositionCareer.careerTo ?? 99;
+    return postings
+      .map((posting) => {
+        try {
+          const { jobPositionCareer, jobPositionEmployment } =
+            posting.openingJobPosition.openingJobPositions[0];
+          const employmentType = GreetingCrawler.getEmploymentType(
+            jobPositionEmployment?.employmentType,
+          );
 
-      switch (jobPositionCareer.careerType) {
-        case 'NOT_MATTER': {
-          minExperience = 0;
-          maxExperience = 99;
-          break;
-        }
-        case 'NEW_COMER': {
-          minExperience = 0;
-          maxExperience = 0;
-          break;
-        }
-      }
+          let minExperience = jobPositionCareer?.careerFrom ?? 0,
+            maxExperience = jobPositionCareer?.careerTo ?? 99;
 
-      return {
-        postingId: String(posting.openingId),
-        title: posting.title,
-        openDate: posting.openDate,
-        dueDate: posting.dueDate,
-        link: `https://${url.split('/')[2]}/ko/o/${posting.openingId}`,
-        company,
-        site: 'greeting',
-        minExperience,
-        maxExperience,
-        employmentType,
-      } satisfies JobPosting;
-    });
+          switch (jobPositionCareer?.careerType) {
+            case 'NOT_MATTER': {
+              minExperience = 0;
+              maxExperience = 99;
+              break;
+            }
+            case 'NEW_COMER': {
+              minExperience = 0;
+              maxExperience = 0;
+              break;
+            }
+            default: {
+              minExperience = jobPositionCareer?.careerFrom ?? 0;
+              maxExperience = jobPositionCareer?.careerTo ?? 99;
+            }
+          }
+
+          return {
+            postingId: String(posting.openingId),
+            title: posting.title,
+            openDate: posting.openDate,
+            dueDate: posting.dueDate,
+            link: `https://${url.split('/')[2]}/ko/o/${posting.openingId}`,
+            company,
+            site: 'greeting',
+            minExperience,
+            maxExperience,
+            employmentType,
+          } satisfies JobPosting;
+        } catch {
+          return null;
+        }
+      })
+      .filter((value) => value !== null);
   }
 
   async getJobPostingDetail(url: string): Promise<JobPostingDetail> {
