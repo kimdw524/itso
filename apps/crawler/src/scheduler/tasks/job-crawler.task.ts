@@ -62,15 +62,14 @@ export class JobCrawlerTask {
         previousJobPostings[companyId] ?? {},
         post.postingId,
       );
-
       // 이미 공고가 DB에 존재하는 경우
       if (isExists) {
         const previous = previousJobPostings[companyId][post.postingId];
 
-        const serializedPrevious = `${previous.title}-${previous.dueDate?.toISOString?.() ?? 'null'}`;
-        const serializedCurrent = `${post.title}-${post.dueDate ? new Date(post.dueDate).toISOString() : 'null'}`;
+        const serializedPrevious = `${previous.title}-${previous.dueDate?.toISOString?.() ?? 'null'} ${previous.employmentType} ${previous.minExperience}-${previous.maxExperience}`;
+        const serializedCurrent = `${post.title}-${post.dueDate ? new Date(post.dueDate).toISOString() : 'null'} ${post.employmentType} ${post.minExperience}-${post.maxExperience}`;
 
-        // 공고의 제목과 마감일이 바뀌지 않았으면 업데이트 하지 않는다.
+        // 자격요건, 공고의 제목과 마감일이 바뀌지 않았으면 업데이트 하지 않는다.
         if (serializedCurrent === serializedPrevious) {
           delete previousJobPostings[companyId]?.[post.postingId];
           return false;
@@ -88,9 +87,9 @@ export class JobCrawlerTask {
           openDate: new Date(post.openDate),
           dueDate: post.dueDate === null ? undefined : new Date(post.dueDate),
           description: detail.html,
-          employmentType: detail.employmentType,
-          minExperience: detail.minExperience,
-          maxExperience: detail.maxExperience,
+          employmentType: post.employmentType,
+          minExperience: post.minExperience,
+          maxExperience: post.maxExperience,
         });
 
         Logger.log(
@@ -117,9 +116,9 @@ export class JobCrawlerTask {
         openDate: new Date(post.openDate),
         dueDate: post.dueDate === null ? undefined : new Date(post.dueDate),
         description: detail.html,
-        employmentType: detail.employmentType,
-        minExperience: detail.minExperience,
-        maxExperience: detail.maxExperience,
+        employmentType: post.employmentType,
+        minExperience: post.minExperience,
+        maxExperience: post.maxExperience,
       });
       return true;
     } catch (error) {

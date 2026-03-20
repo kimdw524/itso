@@ -15,9 +15,10 @@ export class CrawlerService {
     private readonly ninehireCrawler: NinehireCrawler,
   ) {}
 
-  private async getGreetingJobPostings(): Promise<JobPosting[]> {
+  private async getJobPostings(): Promise<JobPosting[]> {
     const result: JobPosting[] = [];
 
+    // 그리팅 공고 조회
     await Promise.all(
       GREETING_LIST.map(async (company) => {
         try {
@@ -33,6 +34,7 @@ export class CrawlerService {
       }),
     );
 
+    // 나인하이어 공고 조회
     await Promise.all(
       NINEHIRE_LIST.map(async (company) => {
         try {
@@ -53,11 +55,7 @@ export class CrawlerService {
   }
 
   async getAllJobPostings(): Promise<JobPosting[]> {
-    const result: JobPosting[] = [];
-
-    result.push(...(await this.getGreetingJobPostings()));
-
-    return result;
+    return await this.getJobPostings();
   }
 
   async getJobPostingDetail(post: JobPosting): Promise<JobPostingDetail> {
