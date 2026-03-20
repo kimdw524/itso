@@ -15,6 +15,7 @@ export const EmploymentTypeChip = ({ type }: EmploymentTypeChipProps) => {
     '2': 'lime',
     '3': 'emerald',
     '4': 'rose',
+    '5': 'teal',
   };
 
   return <Chip color={color[type]}>{formatEmploymentType(type)}</Chip>;
