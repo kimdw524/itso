@@ -84,4 +84,36 @@ export const GREETING_LIST = [
   },
   { name: '화이트큐브', url: 'https://recruit.whitecube.co.kr/ko/recruit' },
   { name: '모두싸인', url: 'https://recruit.modusign.co.kr/ko/apply' },
+  {
+    name: '인터엑스',
+    url: 'https://interxlab.career.greetinghr.com/ko/interxlab',
+  },
+  { name: '백패커', url: 'https://team.backpac.kr/ko/career' },
+  { name: '놀유니버스', url: 'https://careers.nol-universe.com/ko/jobs' },
+  { name: '핀다', url: 'https://finda.career.greetinghr.com/ko/career' },
+  { name: '엑셈', url: 'https://ex-em.career.greetinghr.com/ko/guide' },
+  {
+    name: '디케이테크인',
+    url: 'https://dktechin.career.greetinghr.com/ko/guide',
+  },
+  { name: '헥토', url: 'https://www.hectocareers.co.kr/ko/join' },
+  {
+    name: '리벨리온',
+    url: 'https://rebellions.career.greetinghr.com/ko/accelerate-your-career',
+  },
+  { name: '데이터라이즈', url: 'https://team.datarize.ai/ko/apply' },
+  { name: '팀스파르타', url: 'https://career.spartaclub.kr/ko/careers' },
+  { name: '코드잇', url: 'https://careers.codeit.com/ko/recruit' },
+  {
+    name: '삼쩜삼(자비스앤빌런즈)',
+    url: 'https://team.career.greetinghr.com/ko/home',
+  },
+  {
+    name: '넥스트증권',
+    url: 'https://nextsecurities.career.greetinghr.com/ko/apply',
+  },
+  {
+    name: '코리아포트원',
+    url: 'https://portone.career.greetinghr.com/ko/jobs',
+  },
 ] satisfies Greething[];
