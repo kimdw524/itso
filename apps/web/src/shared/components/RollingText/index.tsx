@@ -41,6 +41,10 @@ export const RollingText = ({
   });
 
   useLayoutEffect(() => {
+    if (nextRef.current !== null) {
+      nextRef.current.style.removeProperty('display');
+    }
+
     if (count === prevCountRef.current) {
       return;
     }
@@ -54,7 +58,7 @@ export const RollingText = ({
       <div ref={currentRef} className={s.item}>
         {childArray[count]}
       </div>
-      <div ref={nextRef} className={s.item}>
+      <div ref={nextRef} className={s.item} style={{ display: 'none' }}>
         {childArray[(count - 1 + childCount) % childCount]}
       </div>
     </div>

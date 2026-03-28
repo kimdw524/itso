@@ -8,13 +8,14 @@ import { SearchIcon } from 'lucide-react';
 
 import { RollingText } from '@/shared/components';
 
-import { useRandomKeywords } from '../../hooks';
 import { SearchResult } from '../SearchResult';
 import * as s from './style.css';
 
-export const SearchField = () => {
-  const randomKeywords = useRandomKeywords(5);
+interface SearchFieldProps {
+  keywords: string[];
+}
 
+export const SearchField = ({ keywords }: SearchFieldProps) => {
   const [value, setValue] = useState<string>('');
   const textRef = useRef<HTMLInputElement>(null);
 
@@ -34,7 +35,7 @@ export const SearchField = () => {
               onChange={(e) => setValue(e.target.value)}
             />
             <RollingText className={s.placeholder} duration={500}>
-              {randomKeywords.map((keyword) => (
+              {keywords.map((keyword) => (
                 <Typography key={keyword} color="muted-foreground">
                   {keyword}
                 </Typography>

@@ -108,6 +108,8 @@ export const placeholder = style({
 
   fontSize: '1rem',
 
+  pointerEvents: 'none',
+
   selectors: {
     [`${container}:has(${textField}:not(:placeholder-shown)) &`]: {
       display: 'none',
