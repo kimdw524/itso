@@ -304,9 +304,12 @@ importers:
       '@kimdw-rtk/animation':
         specifier: ^0.1.5
         version: 0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@kimdw-rtk/react-search-params':
+        specifier: ^0.1.4
+        version: 0.1.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@kimdw-rtk/ui':
-        specifier: ^0.1.15
-        version: 0.1.15(@kimdw-rtk/animation@0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@testing-library/dom@10.4.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^0.1.16
+        version: 0.1.16(@kimdw-rtk/animation@0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@testing-library/dom@10.4.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@kimdw-rtk/utils':
         specifier: ^0.1.6
         version: 0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1553,8 +1556,14 @@ packages:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
 
-  '@kimdw-rtk/ui@0.1.15':
-    resolution: {integrity: sha512-T/oqdfHYP39xY5ViNxTWUj1/Xk10rB0b9N0pMDaKTHFR/qRnEWNF7+vIM8UioXMIyia3PEseWLoF2UoGiLa98w==}
+  '@kimdw-rtk/react-search-params@0.1.4':
+    resolution: {integrity: sha512-E4hdPj30BhphyAKb4qbk8EU9hYIlvevtpZHsyEr4TB9mmFD3qpNbrHS9L0mDo0I5WQVXlwu2ni/MldcBXtn0NQ==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+
+  '@kimdw-rtk/ui@0.1.16':
+    resolution: {integrity: sha512-7Ff4YqXssZ73rfYPyYT7hAf6AZHw5draItsDDpGQY1ihc85vZUPuJ+z4EHTf8uIWwJfo2BJjljYWkQXRaAgKqQ==}
     peerDependencies:
       '@kimdw-rtk/animation': ^0.1.5
       '@kimdw-rtk/utils': 0.1.6
@@ -5851,6 +5860,11 @@ packages:
   url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
 
+  use-sync-external-store@1.6.0:
+    resolution: {integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -7185,7 +7199,13 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@kimdw-rtk/ui@0.1.15(@kimdw-rtk/animation@0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@testing-library/dom@10.4.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@kimdw-rtk/react-search-params@0.1.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      use-sync-external-store: 1.6.0(react@19.1.0)
+
+  '@kimdw-rtk/ui@0.1.16(@kimdw-rtk/animation@0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@testing-library/dom@10.4.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@kimdw-rtk/animation': 0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@kimdw-rtk/utils': 0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -12024,6 +12044,10 @@ snapshots:
     dependencies:
       querystringify: 2.2.0
       requires-port: 1.0.0
+
+  use-sync-external-store@1.6.0(react@19.1.0):
+    dependencies:
+      react: 19.1.0
 
   util-deprecate@1.0.2: {}
 
