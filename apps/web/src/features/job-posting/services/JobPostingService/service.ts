@@ -1,12 +1,7 @@
 import type { CursorPaginatedResponse } from '@/api/types';
 import { http } from '@/shared/utils';
 
-import type {
-  EmploymentType,
-  JobId,
-  JobPosting,
-  JobPostingSummary,
-} from '../../models';
+import type { JobPosting, JobPostingSummary } from '../../models';
 
 export const service = {
   async getJobPosting(params: { id: number }) {
@@ -16,10 +11,10 @@ export const service = {
   async getJobPostingList(params: {
     companyId?: number;
     title?: string;
-    jobIds?: JobId[];
+    jobIds?: number[];
     minExperience?: number;
     maxExperience?: number;
-    employmentTypes?: EmploymentType[];
+    employmentTypes?: number[];
     orderBy?: 'createdAt' | 'recentViews';
     cursor?: string;
     limit?: number;

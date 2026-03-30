@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import { Card, CardContent, CardInteraction, Typography } from '@kimdw-rtk/ui';
 
 import type { JobPostingSearchFilter } from '@/features/job-posting/models';
@@ -33,7 +31,7 @@ export const FilterShortcutItem = ({
   );
 
   return (
-    <Link href={`/post?${queryString}`}>
+    <a href={`/post?${queryString}`}>
       <Card
         color="transparent"
         size="xl"
@@ -57,6 +55,6 @@ export const FilterShortcutItem = ({
           </CardContent>
         </CardInteraction>
       </Card>
-    </Link>
+    </a>
   );
 };

@@ -40,7 +40,6 @@ export const CheckboxModal = <T extends number | string>({
     checkAll,
     uncheckAll,
   } = useCheckboxes<T>(items, defaultChecked);
-
   const handleConfirmClick = () => {
     onConfirm(checked);
     close();

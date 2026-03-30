@@ -8,7 +8,7 @@ const EMPLOYMENT_TYPE = {
   3: '인턴',
   4: '병역 특례',
   5: '프리랜서',
-} as const;
+} as Record<number, string>;
 
 const JOB_NAME = {
   1: 'Frontend',
@@ -29,7 +29,7 @@ const JOB_NAME = {
   16: 'Mobile',
   17: 'DBA',
   99: '기타',
-} as const;
+} as Record<number, string>;
 
 // 한 번에 조회할 공고의 개수
 const LIST_LIMIT = 20;
@@ -40,9 +40,9 @@ export const JOB_POSTING = {
   LIST_LIMIT,
 };
 
-export const JOB_ID = getKeys(JOB_POSTING.JOB_NAME).map((jobId) => jobId);
+export const JOB_ID = getKeys(JOB_POSTING.JOB_NAME).map(Number);
 export const EMPLOYMENT_TYPE_KEY = getKeys(JOB_POSTING.EMPLOYMENT_TYPE).map(
-  (type) => type,
+  Number,
 );
 
 export const JOB_POSTING_DEFAULT_FILTER = {

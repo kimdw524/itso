@@ -1,20 +1,23 @@
 import { Box } from '@kimdw-rtk/ui';
 
+import { SearchService } from '@/features/search/services';
 import { Section } from '@/shared/components';
 
 import { FilterShortcut, HomeHeader, JobPostingList } from './_components';
 
 export default async function HomePage() {
+  const searchKeywords = await SearchService.getRandomSearchKeywords(5);
+
   return (
     <Box
       flexDirection="column"
       fontSize={{ desktop: 'md', mobile: 'sm' }}
       gap="4xl"
-      padding={{ desktop: '2xl', mobile: 'xl' }}
+      paddingY={{ desktop: '2xl', mobile: 'xl' }}
       style={{ isolation: 'isolate' }}
       flex
     >
-      <HomeHeader />
+      <HomeHeader searchKeywords={searchKeywords} />
       <Section title="인기 포지션">
         <FilterShortcut />
       </Section>
