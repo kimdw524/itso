@@ -1,6 +1,6 @@
 import type { SearchParams } from 'next/dist/server/request/search-params';
 
-import { SearchParamsProvider } from '@kimdw-rtk/react-search-params';
+import { InitialSearchParamsProvider } from '@kimdw-rtk/react-search-params';
 import { Box } from '@kimdw-rtk/ui';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
@@ -43,11 +43,11 @@ export default async function PostPage({
       padding={{ desktop: '2xl', mobile: 'xl' }}
       style={{ isolation: 'isolate' }}
     >
-      <SearchParamsProvider value={search}>
+      <InitialSearchParamsProvider value={search}>
         <HydrationBoundary state={dehydrate(queryClient)}>
           <FilteredJobPostingContainer />
         </HydrationBoundary>
-      </SearchParamsProvider>
+      </InitialSearchParamsProvider>
     </Box>
   );
 }

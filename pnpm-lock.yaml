@@ -305,8 +305,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@kimdw-rtk/react-search-params':
-        specifier: ^0.1.6
-        version: 0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: 0.1.10
+        version: 0.1.10(next@15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@kimdw-rtk/ui':
         specifier: ^0.1.17
         version: 0.1.17(@kimdw-rtk/animation@0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@testing-library/dom@10.4.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1556,11 +1556,15 @@ packages:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
 
-  '@kimdw-rtk/react-search-params@0.1.6':
-    resolution: {integrity: sha512-Tyg1V2b5etS7X3INztD+Y3s3nZWWdg3xqftbaanFHL8BbE+rJguFzsxcdOhU22Fo2vVcn2NHQtWQlTFV5M6TEw==}
+  '@kimdw-rtk/react-search-params@0.1.10':
+    resolution: {integrity: sha512-JUDfTYdoN+I9Rfa+GsrcLAiEFio7teYW7NHZ9XJtZYudI4bvKaSfqOCuiUAPhZEYOVWfHdL8IcLfulNi0Y+Yzg==}
     peerDependencies:
+      next: '>=13.4.0'
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      next:
+        optional: true
 
   '@kimdw-rtk/ui@0.1.17':
     resolution: {integrity: sha512-FGLi9lRd10+SuJPbioGz9HOKZJoqUVN0TjA2ayWp8Jq5LLtsgYoW2t7hPo07iyQ3cFwG+9FlCSwlnVeqbnzVgw==}
@@ -7199,11 +7203,13 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@kimdw-rtk/react-search-params@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@kimdw-rtk/react-search-params@0.1.10(next@15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       use-sync-external-store: 1.6.0(react@19.1.0)
+    optionalDependencies:
+      next: 15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
   '@kimdw-rtk/ui@0.1.17(@kimdw-rtk/animation@0.1.5(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@kimdw-rtk/utils@0.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@testing-library/dom@10.4.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
