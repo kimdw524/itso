@@ -1,5 +1,6 @@
 import type { SearchParams } from 'next/dist/server/request/search-params';
 
+import { InitialSearchParamsProvider } from '@kimdw-rtk/react-search-params';
 import { Box } from '@kimdw-rtk/ui';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
@@ -8,10 +9,9 @@ import {
   LocalJobPostingFilter,
 } from '@/features/job-posting/components';
 import { JOB_POSTING_DEFAULT_FILTER } from '@/features/job-posting/constants';
-import type { JobPostingSearchFilter } from '@/features/job-posting/models';
-import { jobPostingFilterSchema } from '@/features/job-posting/schemas';
+import { jobPostingSearchParamsSchema } from '@/features/job-posting/schemas';
 import { JobPostingService } from '@/features/job-posting/services';
-import { getQueryClient } from '@/shared/utils';
+import { getQueryClient, validateParams } from '@/shared/utils';
 
 export default async function PostPage({
   searchParams,
@@ -27,12 +27,10 @@ export default async function PostPage({
 
   const queryClient = getQueryClient();
 
-  const result = jobPostingFilterSchema.safeParse(search);
-  const filter = (
-    result.success
-      ? { ...JOB_POSTING_DEFAULT_FILTER, ...result.data }
-      : JOB_POSTING_DEFAULT_FILTER
-  ) as JobPostingSearchFilter;
+  const filter = {
+    ...JOB_POSTING_DEFAULT_FILTER,
+    ...validateParams(jobPostingSearchParamsSchema, search),
+  };
 
   await queryClient.prefetchInfiniteQuery({
     initialPageParam: undefined,
@@ -45,9 +43,11 @@ export default async function PostPage({
       padding={{ desktop: '2xl', mobile: 'xl' }}
       style={{ isolation: 'isolate' }}
     >
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <FilteredJobPostingContainer filter={filter} />
-      </HydrationBoundary>
+      <InitialSearchParamsProvider value={search}>
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <FilteredJobPostingContainer />
+        </HydrationBoundary>
+      </InitialSearchParamsProvider>
     </Box>
   );
 }

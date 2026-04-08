@@ -4,5 +4,5 @@ import type { EmploymentType } from '../models';
 export const formatEmploymentType = (
   employmentType: EmploymentType,
 ): string => {
-  return JOB_POSTING.EMPLOYMENT_TYPE[employmentType];
+  return JOB_POSTING.EMPLOYMENT_TYPE[employmentType] ?? '';
 };

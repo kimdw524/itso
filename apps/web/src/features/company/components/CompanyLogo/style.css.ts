@@ -17,8 +17,8 @@ export const image = style({
 });
 
 export const empty = style({
-  width: '3rem !important',
-  height: '3rem !important',
+  width: '3rem',
+  height: '3rem',
 
   borderRadius: theme.borderRadius,
   backgroundColor: `rgb(${theme.color.muted})`,

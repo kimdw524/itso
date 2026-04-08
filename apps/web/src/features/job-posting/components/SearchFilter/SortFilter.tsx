@@ -1,23 +1,17 @@
-import type { ComponentProps } from 'react';
-
 import { Select, SelectOption } from '@kimdw-rtk/ui';
 
-import type { SearchFilter } from '.';
+import { useJobPostingFilter } from '../../hooks';
 
-interface SortFilterProps {
-  queryParams: ComponentProps<typeof SearchFilter>['queryParams'];
-}
-
-export const SortFilter = ({ queryParams }: SortFilterProps) => {
-  const { setParam, getParam } = queryParams;
+export const SortFilter = () => {
+  const [filter, setFilter] = useJobPostingFilter();
 
   return (
     <Select
-      defaultValue={getParam('orderBy')}
+      defaultValue={filter.orderBy}
       variant="contained"
       width="100px"
       onChange={(value) =>
-        setParam('orderBy', value as 'createdAt' | 'recentViews')
+        setFilter({ orderBy: value as 'createdAt' | 'recentViews' })
       }
     >
       <SelectOption value="createdAt">최신순</SelectOption>
