@@ -19,11 +19,7 @@ export const CompanyLogo = ({
   style,
   isSquare = false,
 }: CompanyLogoProps) => {
-  if (logo === '' || logo === null) {
-    return <div className={clsx(s.empty, className)} style={style} />;
-  }
-
-  if (!isSquare) {
+  if (!isSquare && logo) {
     return (
       <img
         alt={alt}
@@ -37,7 +33,11 @@ export const CompanyLogo = ({
 
   return (
     <div className={clsx(s.frame, className)} style={style}>
-      <img alt={alt} className={s.image} loading="lazy" src={logo} />
+      {logo === '' || logo === null ? (
+        <div className={s.empty} />
+      ) : (
+        <img alt={alt} className={s.image} loading="lazy" src={logo} />
+      )}
     </div>
   );
 };
