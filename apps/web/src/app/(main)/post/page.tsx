@@ -13,6 +13,8 @@ import { jobPostingSearchParamsSchema } from '@/features/job-posting/schemas';
 import { JobPostingService } from '@/features/job-posting/services';
 import { getQueryClient, validateParams } from '@/shared/utils';
 
+import { Provider } from '../_components/Provider';
+
 export default async function PostPage({
   searchParams,
 }: {
@@ -39,15 +41,17 @@ export default async function PostPage({
   });
 
   return (
-    <Box
-      padding={{ desktop: '2xl', mobile: 'xl' }}
-      style={{ isolation: 'isolate' }}
-    >
-      <InitialSearchParamsProvider value={search}>
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <FilteredJobPostingContainer />
-        </HydrationBoundary>
-      </InitialSearchParamsProvider>
-    </Box>
+    <Provider>
+      <Box
+        padding={{ desktop: '2xl', mobile: 'xl' }}
+        style={{ isolation: 'isolate' }}
+      >
+        <InitialSearchParamsProvider value={search}>
+          <HydrationBoundary state={dehydrate(queryClient)}>
+            <FilteredJobPostingContainer />
+          </HydrationBoundary>
+        </InitialSearchParamsProvider>
+      </Box>
+    </Provider>
   );
 }
