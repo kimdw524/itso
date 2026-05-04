@@ -1,5 +1,4 @@
-import { JOB_ID, JOB_KEYWORD, JOB_KEYWORD_EXACT } from 'src/constats/job';
-
+import { JOB_ID, JOB_KEYWORD, JOB_KEYWORD_EXACT } from '@/constats/job';
 import { JobPosting } from '@/modules/job-posting/job-posting.entity';
 
 import { sanitizeText } from './parser';

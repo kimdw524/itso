@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 
-import { GREETING_LIST } from 'src/constats/greeting';
-
+import { GREETING_LIST } from '@/constats/greeting';
 import { NINEHIRE_LIST } from '@/constats/ninehire';
 
 import { JobPosting, JobPostingDetail } from './crawler.interface';
