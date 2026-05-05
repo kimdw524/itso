@@ -101,6 +101,7 @@ export class NinehireCrawler {
 
     return EmploymentType.CONTRACT;
   }
+
   async getJobPostings(
     company: string,
     companyId: string,
