@@ -35,6 +35,25 @@ export const downloadFile = async (url: string, fileName: string) => {
   return fileName;
 };
 
+/**
+ * 로컬 파일이 존재하면 삭제합니다.
+ *
+ * @param filePath 삭제할 로컬 파일 경로
+ * @returns 파일 삭제 여부
+ */
+export const removeFile = async (filePath: string): Promise<boolean> => {
+  try {
+    await fs.promises.unlink(filePath);
+    return true;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      return false;
+    }
+
+    throw error;
+  }
+};
+
 export const storeStaticImage = async (
   url: string,
   defaultExtension: string = 'png',
