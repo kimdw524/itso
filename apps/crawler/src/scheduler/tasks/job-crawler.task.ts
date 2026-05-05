@@ -21,7 +21,7 @@ export class JobCrawlerTask {
   ) {}
 
   async onModuleInit() {
-    await this.companyService.syncCompany();
+    await this.companyService.syncAllCompany();
     void this.handleCron();
   }
 

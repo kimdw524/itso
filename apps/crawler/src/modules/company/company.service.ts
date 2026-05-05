@@ -52,63 +52,54 @@ export class CompanyService {
   /**
    * 채용 플랫폼의 회사 정보를 동기화하고 로컬에 저장한 로고 이미지를 R2에 업로드합니다.
    */
-  async syncCompany(): Promise<void> {
+  async syncAllCompany(): Promise<void> {
     const greetingCrawler = new GreetingCrawler();
     const ninehireCrawler = new NinehireCrawler();
 
     await Promise.all([
-      ...GREETING_LIST.map(async (company) => {
-        const companyEntity = await this.find({ name: company.name });
-        if (companyEntity === null) {
-          try {
-            const image = await greetingCrawler.getLogoImageURL(company.url);
-            let logo = '';
+      ...GREETING_LIST.map((company) =>
+        this.syncCompany(company, greetingCrawler),
+      ),
 
-            if (image) {
-              const url = new URL(image, company.url).href;
-              logo = await this.uploadLogoImage(url);
-            }
-
-            await this.create({
-              name: company.name,
-              logo,
-            });
-          } catch (error) {
-            Logger.error(
-              `${company.name} 회사를 DB에 등록하지 못했습니다.`,
-              error,
-            );
-          }
-        }
-      }),
-
-      ...NINEHIRE_LIST.map(async (company) => {
-        const companyEntity = await this.find({ name: company.name });
-        if (companyEntity === null) {
-          try {
-            const image = await ninehireCrawler.getLogoImageURL(company.url);
-            let logo = '';
-
-            if (image) {
-              const url = new URL(image, company.url).href;
-              logo = await this.uploadLogoImage(url);
-            }
-
-            await this.create({
-              name: company.name,
-              logo,
-            });
-          } catch (error) {
-            Logger.error(
-              `${company.name} 회사를 DB에 등록하지 못했습니다.`,
-              error,
-            );
-          }
-        }
-      }),
+      ...NINEHIRE_LIST.map((company) =>
+        this.syncCompany(company, ninehireCrawler),
+      ),
     ]);
 
     return;
+  }
+
+  /**
+   * 회사가 DB에 없으면 로고 이미지를 업로드한 뒤 회사 정보를 등록합니다.
+   *
+   * @param company 동기화할 회사 정보
+   * @param crawler 회사 로고 이미지 URL을 가져올 크롤러
+   */
+  async syncCompany(
+    company: { name: string; url: string },
+    crawler: { getLogoImageURL: (url: string) => Promise<string> },
+  ): Promise<void> {
+    const companyEntity = await this.find({ name: company.name });
+    if (companyEntity !== null) {
+      return;
+    }
+
+    try {
+      const image = await crawler.getLogoImageURL(company.url);
+      let logo = '';
+
+      if (image) {
+        const url = new URL(image, company.url).href;
+        logo = await this.uploadLogoImage(url);
+      }
+
+      await this.create({
+        name: company.name,
+        logo,
+      });
+    } catch (error) {
+      Logger.error(`${company.name} 회사를 DB에 등록하지 못했습니다.`, error);
+    }
   }
 
   /**
