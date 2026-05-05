@@ -37,6 +37,20 @@ export default tseslint.config(
         'error',
         { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
       ],
+      'lines-between-class-members': ['error', 'always'],
+      'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
+      'padding-line-between-statements': [
+        'error',
+        { blankLine: 'always', prev: 'function', next: 'function' },
+      ],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'PropertyDefinition[value.type="ArrowFunctionExpression"]',
+          message:
+            'Class methods must use method shorthand syntax (`methodName() {}`) instead of arrow function class properties.',
+        },
+      ],
       'sort-class-members/sort-class-members': [
         'error',
         {
