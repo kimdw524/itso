@@ -14,6 +14,19 @@ export class CrawlerService {
     private readonly ninehireCrawler: NinehireCrawler,
   ) {}
 
+  async getAllJobPostings(): Promise<JobPosting[]> {
+    return await this.getJobPostings();
+  }
+
+  async getJobPostingDetail(post: JobPosting): Promise<JobPostingDetail> {
+    switch (post.site) {
+      case 'greeting':
+        return await this.greetingCrawler.getJobPostingDetail(post.link);
+      case 'ninehire':
+        return await this.ninehireCrawler.getJobPostingDetail(post.link);
+    }
+  }
+
   private async getJobPostings(): Promise<JobPosting[]> {
     const result: JobPosting[] = [];
 
@@ -51,18 +64,5 @@ export class CrawlerService {
     );
 
     return result;
-  }
-
-  async getAllJobPostings(): Promise<JobPosting[]> {
-    return await this.getJobPostings();
-  }
-
-  async getJobPostingDetail(post: JobPosting): Promise<JobPostingDetail> {
-    switch (post.site) {
-      case 'greeting':
-        return await this.greetingCrawler.getJobPostingDetail(post.link);
-      case 'ninehire':
-        return await this.ninehireCrawler.getJobPostingDetail(post.link);
-    }
   }
 }
