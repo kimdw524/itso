@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import * as path from 'path';
 import { FindOptionsWhere, Repository, UpdateResult } from 'typeorm';
 
 import { GREETING_LIST } from '@/constats/greeting';
@@ -109,15 +108,15 @@ export class CompanyService {
    * @returns R2에 업로드된 로고 이미지 공개 URL
    */
   private async uploadLogoImage(url: string): Promise<string> {
-    const fileName = await FileUtil.storeStaticImage(url);
-    const filePath = path.resolve(process.env.STATIC_DIR ?? 'static', fileName);
-    await FileUtil.resizeImage(filePath, 360, 240);
+    const file = await FileUtil.storeStaticImage(url);
 
-    const result = await this.r2Service.uploadLocalImage(filePath, {
-      key: `company/logo/${fileName}`,
+    await FileUtil.resizeImage(file.path, 360, 240);
+
+    const result = await this.r2Service.uploadLocalImage(file.path, {
+      key: `company/logo/${file.name}`,
     });
 
-    await removeFile(filePath);
+    await removeFile(file.path);
 
     return result.url ?? '';
   }
