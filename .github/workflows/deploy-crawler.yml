@@ -79,6 +79,11 @@ jobs:
             PNPM_HOME="$HOME/.local/share/pnpm" \
             NODE_ENV=production pnpm install --prod --no-optional --ignore-scripts=false --prefer-offline=false --no-frozen-lockfile
 
+            sudo tee .env >/dev/null <<'CRAWLER_ENV_EOF'
+            ${{ secrets.CRAWLER_ENV }}
+            CRAWLER_ENV_EOF
+            sudo chmod 600 .env
+
             if sudo forever list | grep -q "$APP_NAME"; then
               sudo forever restart "$APP_NAME"
             else

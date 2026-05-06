@@ -11,6 +11,5 @@ declare namespace NodeJS {
     R2_PUBLIC_URL?: string;
     R2_SECRET_ACCESS_KEY: string;
     STATIC_DIR: string;
-    STATIC_URL: string;
   }
 }
