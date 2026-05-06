@@ -116,4 +116,5 @@ export const GREETING_LIST = [
     name: '코리아포트원',
     url: 'https://portone.career.greetinghr.com/ko/jobs',
   },
+  { name: '업스테이지', url: 'https://careers.upstage.ai/ko/upstage' },
 ] satisfies Greething[];
