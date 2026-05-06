@@ -1,0 +1,4 @@
+interface:
+  display_name: "PR"
+  short_description: "Draft a PR body from this project's changes."
+  default_prompt: "Use $pr to draft a clear pull request description from my changes."
