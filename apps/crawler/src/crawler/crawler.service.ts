@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 
-import { GREETING_LIST } from 'src/constats/greeting';
-
+import { GREETING_LIST } from '@/constats/greeting';
 import { NINEHIRE_LIST } from '@/constats/ninehire';
 
 import { JobPosting, JobPostingDetail } from './crawler.interface';
@@ -14,6 +13,19 @@ export class CrawlerService {
     private readonly greetingCrawler: GreetingCrawler,
     private readonly ninehireCrawler: NinehireCrawler,
   ) {}
+
+  async getAllJobPostings(): Promise<JobPosting[]> {
+    return await this.getJobPostings();
+  }
+
+  async getJobPostingDetail(post: JobPosting): Promise<JobPostingDetail> {
+    switch (post.site) {
+      case 'greeting':
+        return await this.greetingCrawler.getJobPostingDetail(post.link);
+      case 'ninehire':
+        return await this.ninehireCrawler.getJobPostingDetail(post.link);
+    }
+  }
 
   private async getJobPostings(): Promise<JobPosting[]> {
     const result: JobPosting[] = [];
@@ -52,18 +64,5 @@ export class CrawlerService {
     );
 
     return result;
-  }
-
-  async getAllJobPostings(): Promise<JobPosting[]> {
-    return await this.getJobPostings();
-  }
-
-  async getJobPostingDetail(post: JobPosting): Promise<JobPostingDetail> {
-    switch (post.site) {
-      case 'greeting':
-        return await this.greetingCrawler.getJobPostingDetail(post.link);
-      case 'ninehire':
-        return await this.ninehireCrawler.getJobPostingDetail(post.link);
-    }
   }
 }

@@ -1,13 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 
-import { JobPosting } from 'src/crawler/crawler.interface';
-import { CrawlerService } from 'src/crawler/crawler.service';
-import { Company } from 'src/modules/company/company.entity';
-import { CompanyService } from 'src/modules/company/company.service';
-import { JobPostingService } from 'src/modules/job-posting/job-posting.service';
-import { getJobIdByKeyword, mapJobPosting } from 'src/utils/job';
 import { IsNull } from 'typeorm';
+
+import { JobPosting } from '@/crawler/crawler.interface';
+import { CrawlerService } from '@/crawler/crawler.service';
+import { Company } from '@/modules/company/company.entity';
+import { CompanyService } from '@/modules/company/company.service';
+import { JobPostingService } from '@/modules/job-posting/job-posting.service';
+import { getJobIdByKeyword, mapJobPosting } from '@/utils/job';
 
 @Injectable()
 export class JobCrawlerTask {
@@ -20,7 +21,7 @@ export class JobCrawlerTask {
   ) {}
 
   async onModuleInit() {
-    await this.companyService.syncCompany();
+    await this.companyService.syncAllCompany();
     void this.handleCron();
   }
 

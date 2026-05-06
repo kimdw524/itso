@@ -50,6 +50,58 @@ interface NinehireJobPosting {
 
 @Injectable()
 export class NinehireCrawler {
+  private static getExperience(
+    over: number,
+    below: number,
+    careerType?: NinehirePosting['career']['type'],
+  ): { minExperience: number; maxExperience: number } {
+    let minExperience = 0,
+      maxExperience = 0;
+
+    if (careerType === null) {
+      minExperience = 0;
+    } else if (careerType === 'experienced') {
+      minExperience = over;
+    } else {
+      minExperience = 0;
+    }
+
+    if (careerType === null) {
+      maxExperience = 99;
+    } else if (careerType === 'irrelevant') {
+      maxExperience = 99;
+    } else if (careerType === 'newcomer') {
+      maxExperience = 0;
+    } else {
+      maxExperience = below || 99;
+    }
+
+    if (minExperience > 0 && minExperience === maxExperience) {
+      maxExperience = 99;
+    }
+
+    return { minExperience, maxExperience };
+  }
+
+  private static getEmploymentType(type?: [string]): EmploymentType {
+    const employmentType = {
+      full_time: EmploymentType.FULL_TIME,
+      contractor: EmploymentType.CONTRACT,
+      freelancer: EmploymentType.FREE_LANCER,
+      intern: EmploymentType.INTERN,
+    } satisfies Record<string, EmploymentType>;
+
+    if (type === undefined) {
+      return EmploymentType.FULL_TIME;
+    }
+
+    if (Object.hasOwn(employmentType, type[0])) {
+      return employmentType[type[0] as keyof typeof employmentType];
+    }
+
+    return EmploymentType.CONTRACT;
+  }
+
   async getJobPostings(
     company: string,
     companyId: string,
@@ -85,58 +137,6 @@ export class NinehireCrawler {
         employmentType: NinehireCrawler.getEmploymentType(employmentType),
       };
     });
-  }
-
-  private static getEmploymentType(type?: [string]): EmploymentType {
-    const employmentType = {
-      full_time: EmploymentType.FULL_TIME,
-      contractor: EmploymentType.CONTRACT,
-      freelancer: EmploymentType.FREE_LANCER,
-      intern: EmploymentType.INTERN,
-    } satisfies Record<string, EmploymentType>;
-
-    if (type === undefined) {
-      return EmploymentType.FULL_TIME;
-    }
-
-    if (Object.hasOwn(employmentType, type[0])) {
-      return employmentType[type[0] as keyof typeof employmentType];
-    }
-
-    return EmploymentType.CONTRACT;
-  }
-
-  private static getExperience(
-    over: number,
-    below: number,
-    careerType?: NinehirePosting['career']['type'],
-  ): { minExperience: number; maxExperience: number } {
-    let minExperience = 0,
-      maxExperience = 0;
-
-    if (careerType === null) {
-      minExperience = 0;
-    } else if (careerType === 'experienced') {
-      minExperience = over;
-    } else {
-      minExperience = 0;
-    }
-
-    if (careerType === null) {
-      maxExperience = 99;
-    } else if (careerType === 'irrelevant') {
-      maxExperience = 99;
-    } else if (careerType === 'newcomer') {
-      maxExperience = 0;
-    } else {
-      maxExperience = below || 99;
-    }
-
-    if (minExperience > 0 && minExperience === maxExperience) {
-      maxExperience = 99;
-    }
-
-    return { minExperience, maxExperience };
   }
 
   async getJobPostingDetail(url: string): Promise<JobPostingDetail> {
