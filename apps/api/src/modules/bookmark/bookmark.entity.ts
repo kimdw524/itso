@@ -6,14 +6,14 @@ import { BookmarkType } from './bookmark.types';
 @Index(['userId', 'targetType'])
 export class Bookmark {
   @PrimaryColumn({ name: 'user_id' })
-  userId: number;
+  userId!: number;
 
   @PrimaryColumn({ name: 'target_id' })
-  targetId: number;
+  targetId!: number;
 
   @PrimaryColumn({ name: 'target_type', type: 'varchar', length: 16 })
-  targetType: BookmarkType;
+  targetType!: BookmarkType;
 
   @CreateDateColumn({ name: 'created_at', type: 'datetime' })
-  createdAt: Date;
+  createdAt!: Date;
 }

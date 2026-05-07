@@ -20,5 +20,5 @@ export class JobPostingSummaryDto extends JobPosting {
   @Type(() => CompanySummaryDto)
   declare company: CompanySummaryDto;
 
-  isBookmakred: boolean;
+  isBookmakred!: boolean;
 }

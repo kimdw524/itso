@@ -1,20 +1,20 @@
 import { Exclude } from 'class-transformer';
 
 export class CompanySummaryDto {
-  id: number;
+  id!: number;
 
-  name: string;
+  name!: string;
 
-  logo: string | null;
+  logo!: string | null;
 
-  bookmarks: number;
-
-  @Exclude()
-  description: string | null;
+  bookmarks!: number;
 
   @Exclude()
-  postings: number;
+  description!: string | null;
 
   @Exclude()
-  lastPostedAt: Date | null;
+  postings!: number;
+
+  @Exclude()
+  lastPostedAt!: Date | null;
 }
