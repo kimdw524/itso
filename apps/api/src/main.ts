@@ -2,8 +2,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 
-import * as express from 'express';
-import * as session from 'express-session';
+import express from 'express';
+import session from 'express-session';
 
 import { AppModule } from './app.module';
 
@@ -38,4 +38,4 @@ async function bootstrap() {
 
   await app.listen(3001);
 }
-bootstrap();
+void bootstrap();
