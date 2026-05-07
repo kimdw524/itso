@@ -24,6 +24,8 @@ import { JobPosting } from './job-posting.entity';
 
 @Injectable()
 export class JobPostingService {
+  private viewBuffer = new Map<number, number>();
+
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @InjectRepository(JobPosting)
@@ -31,8 +33,6 @@ export class JobPostingService {
     @Inject(forwardRef(() => JobPostingRankingService))
     private readonly jobPostingRankingService: JobPostingRankingService,
   ) {}
-
-  private viewBuffer = new Map<number, number>();
 
   async onModuleDestroy() {
     await this.flushViews();
@@ -118,16 +118,6 @@ export class JobPostingService {
 
     this.viewBuffer.set(id, (this.viewBuffer.get(id) ?? 0) + 1);
     await this.cacheManager.set(cacheKey, true, 600 * 1000);
-  }
-
-  @Cron('*/1 * * * *')
-  private async flushViews() {
-    for (const [id, count] of this.viewBuffer.entries()) {
-      await this.jobPostingRepo.increment({ id }, 'views', count);
-      this.jobPostingRankingService.increaseView(id);
-    }
-
-    this.viewBuffer.clear();
   }
 
   async getBookmarkedPostings(
@@ -480,5 +470,15 @@ export class JobPostingService {
     }));
 
     return plainToInstance(JobPostingSummaryDto, transformedData);
+  }
+
+  @Cron('*/1 * * * *')
+  private async flushViews() {
+    for (const [id, count] of this.viewBuffer.entries()) {
+      await this.jobPostingRepo.increment({ id }, 'views', count);
+      this.jobPostingRankingService.increaseView(id);
+    }
+
+    this.viewBuffer.clear();
   }
 }

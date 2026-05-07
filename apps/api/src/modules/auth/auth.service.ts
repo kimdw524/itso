@@ -32,7 +32,9 @@ export interface GoogleUserInfoResponse {
 @Injectable()
 export class AuthService {
   private readonly GOOGLE_CLIENT_ID: string;
+
   private readonly GOOGLE_CLIENT_SECRET: string;
+
   private readonly GOOGLE_REDIRECT_URI: string;
 
   constructor(private readonly userService: UserService) {
@@ -49,6 +51,38 @@ export class AuthService {
     this.GOOGLE_CLIENT_ID = GOOGLE_CLIENT_ID;
     this.GOOGLE_CLIENT_SECRET = GOOGLE_CLIENT_SECRET;
     this.GOOGLE_REDIRECT_URI = GOOGLE_REDIRECT_URI;
+  }
+
+  async signIn(userInfo: GoogleUserInfoResponse): Promise<User> {
+    const user = await this.userService.find({
+      email: userInfo.email,
+      type: 'google',
+    });
+    if (user !== null) {
+      return user;
+    }
+    const newUser = await this.userService.create({
+      email: userInfo.email,
+      profile: userInfo.picture,
+      type: 'google',
+    });
+
+    if (newUser === null) {
+      throw new InternalServerErrorException('sign up failed');
+    }
+
+    return newUser;
+  }
+
+  async authorizeWithGoogle(code: string): Promise<GoogleUserInfoResponse> {
+    try {
+      const accessToken = await this.getGoogleAccessToken(code);
+      const userInfo = await this.getGoogleUserInfo(accessToken);
+
+      return userInfo;
+    } catch {
+      throw new UnauthorizedException('Google authentication failed');
+    }
   }
 
   private async getGoogleUserInfo(
@@ -90,37 +124,5 @@ export class AuthService {
     const data = (await res.json()) as GoogleTokenResponse;
 
     return data.access_token;
-  }
-
-  async signIn(userInfo: GoogleUserInfoResponse): Promise<User> {
-    const user = await this.userService.find({
-      email: userInfo.email,
-      type: 'google',
-    });
-    if (user !== null) {
-      return user;
-    }
-    const newUser = await this.userService.create({
-      email: userInfo.email,
-      profile: userInfo.picture,
-      type: 'google',
-    });
-
-    if (newUser === null) {
-      throw new InternalServerErrorException('sign up failed');
-    }
-
-    return newUser;
-  }
-
-  async authorizeWithGoogle(code: string): Promise<GoogleUserInfoResponse> {
-    try {
-      const accessToken = await this.getGoogleAccessToken(code);
-      const userInfo = await this.getGoogleUserInfo(accessToken);
-
-      return userInfo;
-    } catch {
-      throw new UnauthorizedException('Google authentication failed');
-    }
   }
 }
