@@ -13,6 +13,7 @@ import { plainToInstance } from 'class-transformer';
 import { Repository } from 'typeorm';
 
 import { CursorPaginatedResponse } from '@/types/pagination';
+import { Pagination } from '@/utils';
 
 import { Bookmark } from '../bookmark/bookmark.entity';
 import { JOB_POSTING_RANKING } from '../job-posting-ranking/job-posting-ranking.constants';
@@ -21,6 +22,23 @@ import { JobPostingFilterDto, JobPostingSummaryDto } from './dto';
 import { BookmarkedJobPostingFilterDto } from './dto/bookmarked-job-posting-filter.dto';
 import { JobPostingDto } from './dto/job-posting.dto';
 import { JobPosting } from './job-posting.entity';
+
+const JOB_POSTING_SUMMARY_SELECT_COLUMNS = [
+  'company.id',
+  'company.name',
+  'company.logo',
+  'posting.id',
+  'posting.title',
+  'posting.openDate',
+  'posting.dueDate',
+  'posting.jobId',
+  'posting.views',
+  'posting.recentViews',
+  'posting.bookmarks',
+  'posting.minExperience',
+  'posting.maxExperience',
+  'posting.employmentType',
+];
 
 @Injectable()
 export class JobPostingService {
@@ -135,23 +153,7 @@ export class JobPostingService {
         { userId },
       )
       .leftJoin('posting.company', 'company')
-      .select([
-        'company.id',
-        'company.name',
-        'company.logo',
-        'posting.id',
-        'posting.title',
-        'posting.openDate',
-        'posting.dueDate',
-        'posting.jobId',
-        'posting.views',
-        'posting.recentViews',
-        'posting.bookmarks',
-        'posting.minExperience',
-        'posting.maxExperience',
-        'posting.employmentType',
-        'bookmark.createdAt',
-      ])
+      .select([...JOB_POSTING_SUMMARY_SELECT_COLUMNS, 'bookmark.createdAt'])
       .orderBy('bookmark.createdAt', 'DESC')
       .limit(limit + 1)
       .addSelect('true as isBookmarked')
@@ -203,18 +205,16 @@ export class JobPostingService {
       isBookmarked: i.isBookmarked == 1,
     }));
 
-    const hasNext = transformedData.length > limit;
-    const slicedData = hasNext
-      ? transformedData.slice(0, limit)
-      : transformedData;
-    const nextCursor = hasNext
-      ? slicedData[slicedData.length - 1].bookmark.createdAt
-      : null;
+    const cursorPage = Pagination.createCursorPage(
+      transformedData,
+      limit,
+      (lastItem) => lastItem.bookmark.createdAt,
+    );
 
     return {
-      data: plainToInstance(JobPostingSummaryDto, slicedData),
-      nextCursor,
-      hasNext,
+      data: plainToInstance(JobPostingSummaryDto, cursorPage.data),
+      hasNext: cursorPage.hasNext,
+      nextCursor: cursorPage.nextCursor,
     };
   }
 
@@ -233,29 +233,13 @@ export class JobPostingService {
       orderBy,
     } = filter;
 
-    const cursor = filter.cursor?.split(',')[0],
-      cursorId = Number(filter.cursor?.split(',')[1]);
+    const { cursor, cursorId } = Pagination.parseCompositeCursor(filter.cursor);
     let cursorKey: keyof JobPosting;
 
     const qb = this.jobPostingRepo
       .createQueryBuilder('posting')
       .leftJoin('posting.company', 'company')
-      .select([
-        'company.id',
-        'company.name',
-        'company.logo',
-        'posting.id',
-        'posting.title',
-        'posting.openDate',
-        'posting.dueDate',
-        'posting.jobId',
-        'posting.views',
-        'posting.recentViews',
-        'posting.bookmarks',
-        'posting.minExperience',
-        'posting.maxExperience',
-        'posting.employmentType',
-      ])
+      .select(JOB_POSTING_SUMMARY_SELECT_COLUMNS)
       .limit(limit + 1)
       .distinct(true);
 
@@ -264,14 +248,14 @@ export class JobPostingService {
         qb.orderBy('posting.recentViews', 'DESC');
         if (cursor === undefined) {
           qb.andWhere('posting.id > :cursorId', {
-            cursorId: isFinite(cursorId) ? cursorId : 0,
+            cursorId,
           });
         } else {
           qb.andWhere(
             'posting.recentViews < :cursor OR (posting.recentViews = :cursor AND posting.id > :cursorId)',
             {
               cursor: Number(cursor),
-              cursorId: isFinite(cursorId) ? cursorId : 0,
+              cursorId,
             },
           );
         }
@@ -370,17 +354,16 @@ export class JobPostingService {
       isBookmarked: i.isBookmarked == 1,
     }));
 
-    const hasNext = transformedData.length > limit;
-    const slicedData = hasNext
-      ? transformedData.slice(0, limit)
-      : transformedData;
-    const nextCursor = hasNext
-      ? `${slicedData[slicedData.length - 1][cursorKey]},${slicedData[slicedData.length - 1].id}`
-      : null;
+    const cursorPage = Pagination.createCursorPage(
+      transformedData,
+      limit,
+      (lastItem) => `${lastItem[cursorKey]},${lastItem.id}`,
+    );
+
     return {
-      data: plainToInstance(JobPostingSummaryDto, slicedData),
-      hasNext,
-      nextCursor,
+      data: plainToInstance(JobPostingSummaryDto, cursorPage.data),
+      hasNext: cursorPage.hasNext,
+      nextCursor: cursorPage.nextCursor,
     };
   }
 
@@ -395,22 +378,7 @@ export class JobPostingService {
     const qb = this.jobPostingRepo
       .createQueryBuilder('posting')
       .leftJoin('posting.company', 'company')
-      .select([
-        'company.id',
-        'company.name',
-        'company.logo',
-        'posting.id',
-        'posting.title',
-        'posting.openDate',
-        'posting.dueDate',
-        'posting.jobId',
-        'posting.views',
-        'posting.recentViews',
-        'posting.bookmarks',
-        'posting.minExperience',
-        'posting.maxExperience',
-        'posting.employmentType',
-      ])
+      .select(JOB_POSTING_SUMMARY_SELECT_COLUMNS)
       .orderBy('posting.id', 'DESC')
       .distinct(true);
 
