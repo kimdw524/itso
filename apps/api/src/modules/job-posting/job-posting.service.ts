@@ -40,8 +40,57 @@ const JOB_POSTING_SUMMARY_SELECT_COLUMNS = [
   'posting.employmentType',
 ];
 
+interface RawJobPostingSummary {
+  posting_id: number;
+  posting_title: string;
+  posting_open_date: string;
+  posting_due_date: string | null;
+  posting_job_id: number;
+  posting_views: number;
+  posting_recent_views: number;
+  posting_bookmarks: number;
+  posting_min_experience: number;
+  posting_max_experience: number;
+  posting_employment_type: number;
+  company_id: number;
+  company_name: string;
+  company_logo: string;
+  isBookmarked: 0 | 1;
+}
+
 @Injectable()
 export class JobPostingService {
+  /**
+   * 채용 공고 raw row 리스트를 Dto에 맞는 형태로 변환합니다.
+   */
+  private static mapPostings<
+    T extends RawJobPostingSummary,
+    U extends Record<string, unknown> = Record<string, never>,
+  >(data: T[], mapper?: (item: T) => U) {
+    const mappedData = data.map((i) => ({
+      id: i.posting_id,
+      title: i.posting_title,
+      openDate: i.posting_open_date,
+      dueDate: i.posting_due_date,
+      jobId: i.posting_job_id,
+      views: i.posting_views,
+      recentViews: i.posting_recent_views,
+      bookmarks: i.posting_bookmarks,
+      minExperience: i.posting_min_experience,
+      maxExperience: i.posting_max_experience,
+      employmentType: i.posting_employment_type,
+      company: {
+        id: i.company_id,
+        name: i.company_name,
+        logo: i.company_logo,
+      },
+      isBookmarked: i.isBookmarked == 1,
+      ...(mapper?.(i) ?? ({} as U)),
+    }));
+
+    return mappedData;
+  }
+
   private viewBuffer = new Map<number, number>();
 
   constructor(
@@ -163,50 +212,19 @@ export class JobPostingService {
       qb.andWhere('bookmark.createdAt < :cursor', { cursor });
     }
 
-    const data: {
-      posting_id: number;
-      posting_title: string;
-      posting_open_date: string;
-      posting_due_date: string | null;
-      posting_job_id: number;
-      posting_views: number;
-      posting_recent_views: number;
-      posting_bookmarks: number;
-      posting_min_experience: number;
-      posting_max_experience: number;
-      posting_employment_type: number;
-      company_id: number;
-      company_name: string;
-      company_logo: string;
-      bookmark_created_at: string;
-      isBookmarked: 0 | 1;
-    }[] = await qb.getRawMany();
-
-    const transformedData = data.map((i) => ({
-      id: i.posting_id,
-      title: i.posting_title,
-      openDate: i.posting_open_date,
-      dueDate: i.posting_due_date,
-      jobId: i.posting_job_id,
-      views: i.posting_views,
-      recentViews: i.posting_recent_views,
-      bookmarks: i.posting_bookmarks,
-      minExperience: i.posting_min_experience,
-      maxExperience: i.posting_max_experience,
-      employmentType: i.posting_employment_type,
-      company: {
-        id: i.company_id,
-        name: i.company_name,
-        logo: i.company_logo,
-      },
+    const rawData = await qb.getRawMany<
+      RawJobPostingSummary & {
+        bookmark_created_at: string;
+      }
+    >();
+    const data = JobPostingService.mapPostings(rawData, (item) => ({
       bookmark: {
-        createdAt: i.bookmark_created_at,
+        createdAt: item.bookmark_created_at,
       },
-      isBookmarked: i.isBookmarked == 1,
     }));
 
     const cursorPage = Pagination.createCursorPage(
-      transformedData,
+      data,
       limit,
       (lastItem) => lastItem.bookmark.createdAt,
     );
@@ -316,46 +334,11 @@ export class JobPostingService {
       );
     }
 
-    const data: {
-      posting_id: number;
-      posting_title: string;
-      posting_open_date: string;
-      posting_due_date: string | null;
-      posting_job_id: number;
-      posting_views: number;
-      posting_recent_views: number;
-      posting_bookmarks: number;
-      posting_min_experience: number;
-      posting_max_experience: number;
-      posting_employment_type: number;
-      company_id: number;
-      company_name: string;
-      company_logo: string;
-      isBookmarked: 0 | 1;
-    }[] = await qb.getRawMany();
-
-    const transformedData = data.map((i) => ({
-      id: i.posting_id,
-      title: i.posting_title,
-      openDate: i.posting_open_date,
-      dueDate: i.posting_due_date,
-      jobId: i.posting_job_id,
-      views: i.posting_views,
-      recentViews: i.posting_recent_views,
-      bookmarks: i.posting_bookmarks,
-      minExperience: i.posting_min_experience,
-      maxExperience: i.posting_max_experience,
-      employmentType: i.posting_employment_type,
-      company: {
-        id: i.company_id,
-        name: i.company_name,
-        logo: i.company_logo,
-      },
-      isBookmarked: i.isBookmarked == 1,
-    }));
-
+    const data = JobPostingService.mapPostings(
+      await qb.getRawMany<RawJobPostingSummary>(),
+    );
     const cursorPage = Pagination.createCursorPage(
-      transformedData,
+      data,
       limit,
       (lastItem) => `${lastItem[cursorKey]},${lastItem.id}`,
     );
@@ -399,45 +382,11 @@ export class JobPostingService {
       );
     }
 
-    const data: {
-      posting_id: number;
-      posting_title: string;
-      posting_open_date: string;
-      posting_due_date: string | null;
-      posting_job_id: number;
-      posting_views: number;
-      posting_recent_views: number;
-      posting_bookmarks: number;
-      posting_min_experience: number;
-      posting_max_experience: number;
-      posting_employment_type: number;
-      company_id: number;
-      company_name: string;
-      company_logo: string;
-      isBookmarked: 0 | 1;
-    }[] = await qb.getRawMany();
+    const data = JobPostingService.mapPostings(
+      await qb.getRawMany<RawJobPostingSummary>(),
+    );
 
-    const transformedData = data.map((i) => ({
-      id: i.posting_id,
-      title: i.posting_title,
-      openDate: i.posting_open_date,
-      dueDate: i.posting_due_date,
-      jobId: i.posting_job_id,
-      views: i.posting_views,
-      recentViews: i.posting_recent_views,
-      bookmarks: i.posting_bookmarks,
-      minExperience: i.posting_min_experience,
-      maxExperience: i.posting_max_experience,
-      employmentType: i.posting_employment_type,
-      company: {
-        id: i.company_id,
-        name: i.company_name,
-        logo: i.company_logo,
-      },
-      isBookmarked: i.isBookmarked == 1,
-    }));
-
-    return plainToInstance(JobPostingSummaryDto, transformedData);
+    return plainToInstance(JobPostingSummaryDto, data);
   }
 
   @Cron('*/1 * * * *')
