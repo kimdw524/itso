@@ -9,6 +9,10 @@ import { Log } from './log.entity';
 
 @Injectable()
 export class LogService {
+  private readonly LIMIT = 30;
+
+  private readonly INTERVAL = 1000 * 60;
+
   constructor(
     @InjectRepository(Log)
     private readonly logRepo: Repository<Log>,
@@ -16,9 +20,6 @@ export class LogService {
     @Inject(CACHE_MANAGER)
     private cacheManager: Cache,
   ) {}
-
-  private readonly LIMIT = 30;
-  private readonly INTERVAL = 1000 * 60;
 
   async createLog(type: string, target: string, userId?: number, ip?: string) {
     const cacheKey = `${ip}`;

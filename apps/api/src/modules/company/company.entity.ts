@@ -3,25 +3,25 @@ import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('company')
 export class Company {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Index()
   @Column({ length: 40, unique: true })
-  name: string;
+  name!: string;
 
   @Column({ type: 'varchar', nullable: true })
-  description: string | null;
+  description!: string | null;
 
   @Column({ type: 'varchar', length: 512, nullable: true })
-  logo: string | null;
+  logo!: string | null;
 
   @Index()
   @Column({ default: 0 })
-  bookmarks: number;
+  bookmarks!: number;
 
   @Index()
   @Column({ default: 0 })
-  postings: number;
+  postings!: number;
 
   @Index()
   @Column({
@@ -29,5 +29,5 @@ export class Company {
     type: 'datetime',
     nullable: true,
   })
-  lastPostedAt: Date | null;
+  lastPostedAt!: Date | null;
 }

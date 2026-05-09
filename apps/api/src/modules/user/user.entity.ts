@@ -10,24 +10,24 @@ import { UserType } from './user.types';
 @Entity('user')
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ type: 'varchar', length: 128 })
-  email: string;
+  email!: string;
 
   @Column({ type: 'varchar', length: 16 })
-  type: UserType;
+  type!: UserType;
 
   @Column({ type: 'varchar', length: 256, nullable: true })
-  profile: string;
+  profile!: string;
 
   @Column({
     name: 'last_signed_in_at',
     type: 'datetime',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  lastSignedInAt: Date;
+  lastSignedInAt!: Date;
 
   @CreateDateColumn({ name: 'created_at', type: 'datetime' })
-  createdAt: Date;
+  createdAt!: Date;
 }

@@ -10,14 +10,14 @@ import { JobPostingRanking } from './job-posting.-ranking.entity';
 
 @Injectable()
 export class JobPostingRankingService {
+  private viewBuffer = new Map<number, number>();
+
   constructor(
     @InjectRepository(JobPostingRanking)
     private readonly jobPostingRankingRepo: Repository<JobPostingRanking>,
     @Inject(forwardRef(() => JobPostingService))
     private readonly jobPostingService: JobPostingService,
   ) {}
-
-  private viewBuffer = new Map<number, number>();
 
   increaseView(id: number) {
     this.viewBuffer.set(id, (this.viewBuffer.get(id) ?? 0) + 1);

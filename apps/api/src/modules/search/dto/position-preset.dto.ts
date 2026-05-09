@@ -2,7 +2,7 @@ import { Transform, Type } from 'class-transformer';
 import { IsArray, IsOptional } from 'class-validator';
 
 export class PositionPresetDto {
-  name: string;
+  name!: string;
 
   @IsOptional()
   @Transform(({ value }) => ([] as unknown[]).concat(value))

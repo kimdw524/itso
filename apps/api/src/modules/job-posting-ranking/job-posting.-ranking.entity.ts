@@ -12,18 +12,18 @@ import { JobPosting } from '../job-posting/job-posting.entity';
 @Entity('job_posting_ranking')
 export class JobPostingRanking {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ name: 'posting_id' })
-  postingId: number;
+  postingId!: number;
 
   @ManyToOne(() => JobPosting)
   @JoinColumn({ name: 'posting_id' })
-  posting: JobPosting;
+  posting!: JobPosting;
 
   @Column()
-  views: number;
+  views!: number;
 
   @CreateDateColumn({ name: 'created_at', type: 'datetime' })
-  createdAt: Date;
+  createdAt!: Date;
 }

@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
 
 import { CursorPaginatedResponse } from '@/types/pagination';
+import { Pagination } from '@/utils';
 
 import { Company } from './company.entity';
 import { CompanyFilterDto } from './dto';
@@ -45,13 +46,15 @@ export class CompanyService {
     await this.companyRepo.decrement(data, 'bookmarks', 1);
   }
 
+  /**
+   * 회사 목록을 정렬 조건에 맞춰 커서 기반으로 조회합니다.
+   */
   async search(
     filter: CompanyFilterDto,
   ): Promise<CursorPaginatedResponse<Company>> {
     const { orderBy, limit = 20 } = filter;
 
-    const cursor = filter.cursor?.split(',')[0],
-      cursorId = Number(filter.cursor?.split(',')[1]);
+    const { cursor, cursorId } = Pagination.parseCompositeCursor(filter.cursor);
 
     let cursorKey: keyof Company;
     const qb = this.companyRepo.createQueryBuilder('company');
@@ -74,14 +77,14 @@ export class CompanyService {
 
         if (cursor === undefined) {
           qb.andWhere('company.id > :cursorId', {
-            cursorId: isFinite(cursorId) ? cursorId : 0,
+            cursorId,
           });
         } else {
           qb.andWhere(
             `(company.${orderBy} < :cursor) OR (company.${orderBy} = :cursor AND company.id > :cursorId)`,
             {
               cursor,
-              cursorId: isFinite(cursorId) ? cursorId : 0,
+              cursorId,
             },
           );
         }
@@ -91,21 +94,21 @@ export class CompanyService {
 
     qb.limit(limit + 1);
 
-    const data = await qb.getMany();
+    return Pagination.createCursorPage(
+      await qb.getMany(),
+      limit,
+      (lastItem) => {
+        const cursorValue = lastItem[cursorKey];
+        const cursor =
+          cursorValue instanceof Date
+            ? cursorValue.toISOString()
+            : String(cursorValue);
 
-    const hasNext = data.length > limit;
-    const slicedData = data.slice(0, limit);
-    let nextCursor: string | null = null;
-    if (hasNext) {
-      const cursor: unknown = slicedData.at(-1)![cursorKey as string];
-
-      if (cursorKey === 'lastPostedAt') {
-        nextCursor = `${(cursor as Date).toISOString()},${slicedData.at(-1)!.id}`;
-      } else {
-        nextCursor = `${cursor as string},${slicedData.at(-1)!.id}`;
-      }
-    }
-
-    return { data: slicedData, hasNext, nextCursor };
+        return Pagination.stringifyCompositeCursor({
+          cursor,
+          cursorId: lastItem.id,
+        });
+      },
+    );
   }
 }
