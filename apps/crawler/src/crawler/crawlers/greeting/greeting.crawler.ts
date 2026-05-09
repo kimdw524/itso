@@ -6,7 +6,7 @@ import {
   EmploymentType,
   JobPosting,
   JobPostingDetail,
-} from '../crawler.interface';
+} from '../../crawler.interface';
 
 const headers = {
   accept:

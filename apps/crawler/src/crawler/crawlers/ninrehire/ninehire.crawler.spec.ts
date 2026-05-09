@@ -1,5 +1,4 @@
-import { NINEHIRE_LIST } from '@/constats/ninehire';
-
+import { NINEHIRE_LIST } from './ninehire.constants';
 import { NinehireCrawler } from './ninehire.crawler';
 
 describe('나인하이어 크롤러', () => {

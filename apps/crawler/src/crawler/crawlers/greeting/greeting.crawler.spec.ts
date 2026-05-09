@@ -1,5 +1,4 @@
-import { GREETING_LIST } from '@/constats/greeting';
-
+import { GREETING_LIST } from './greeting.constants';
 import { GreetingCrawler } from './greeting.crawler';
 
 describe('그리팅 크롤러', () => {

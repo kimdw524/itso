@@ -1,11 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 
-import { GREETING_LIST } from '@/constats/greeting';
-import { NINEHIRE_LIST } from '@/constats/ninehire';
-
 import { JobPosting, JobPostingDetail } from './crawler.interface';
-import { GreetingCrawler } from './crawlers/greeting.crawler';
-import { NinehireCrawler } from './crawlers/ninehire.crawler';
+import { GREETING_LIST } from './crawlers/greeting/greeting.constants';
+import { GreetingCrawler } from './crawlers/greeting/greeting.crawler';
+import { NINEHIRE_LIST } from './crawlers/ninrehire/ninehire.constants';
+import { NinehireCrawler } from './crawlers/ninrehire/ninehire.crawler';
 
 @Injectable()
 export class CrawlerService {

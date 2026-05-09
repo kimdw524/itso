@@ -4,13 +4,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository, UpdateResult } from 'typeorm';
 
 import { GREETING_LIST } from '@/constats/greeting';
-import { NINEHIRE_LIST } from '@/constats/ninehire';
-import { GreetingCrawler } from '@/crawler/crawlers/greeting.crawler';
+import { GreetingCrawler } from '@/crawler/crawlers/greeting/greeting.crawler';
+import { NINEHIRE_LIST } from '@/crawler/crawlers/ninrehire/ninehire.constants';
 import { FileUtil } from '@/utils';
 import { removeFile } from '@/utils/file';
 
+import { NinehireCrawler } from '../../crawler/crawlers/ninrehire/ninehire.crawler';
 import { R2Service } from '../r2/r2.service';
-import { NinehireCrawler } from './../../crawler/crawlers/ninehire.crawler';
 import { Company } from './company.entity';
 
 @Injectable()
