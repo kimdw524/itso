@@ -149,8 +149,9 @@ export class NinehireCrawler extends ATSCrawler<{
         method: 'GET',
       });
       const text = await result.text();
+      const image = text.split('"image":{"fileUrl":"')[1].split('"')[0];
 
-      return text.split('"image":{"fileUrl":"')[1].split('"')[0];
+      return new URL(image, this.company.url).href;
     } catch {
       return '';
     }

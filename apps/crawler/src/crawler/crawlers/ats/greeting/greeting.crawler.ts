@@ -103,12 +103,16 @@ export class GreetingCrawler extends ATSCrawler<{ name: string; url: string }> {
       method: 'GET',
     });
     const text = await result.text();
-
-    return (
+    const image =
       text.split('logoUrl="')?.[1]?.split('"')?.[0] ||
       text.split('alt="logo"')?.[1]?.split('src="')?.[1]?.split('"')?.[0] ||
-      ''
-    );
+      '';
+
+    if (image === '') {
+      return image;
+    }
+
+    return new URL(image, this.company.url).href;
   }
 
   async getJobPostingDescription(url: string): Promise<string> {
