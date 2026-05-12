@@ -1,4 +1,4 @@
-export interface JobPosting {
+export interface CrawledJobPosting {
   title: string;
   postingId: string;
   openDate: string;

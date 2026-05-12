@@ -1,4 +1,4 @@
-import { JobPosting } from './crawler.interface';
+import { CrawledJobPosting } from './crawler.interface';
 
 export abstract class Crawler {
   /**
@@ -6,7 +6,7 @@ export abstract class Crawler {
    *
    * @returns 채용 공고 목록
    */
-  abstract getJobPostings(): Promise<JobPosting[]>;
+  abstract getJobPostings(): Promise<CrawledJobPosting[]>;
 
   /**
    * 채용 공고 본문 내용을 조회합니다.

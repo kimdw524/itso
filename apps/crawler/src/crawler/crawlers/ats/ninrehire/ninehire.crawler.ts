@@ -1,5 +1,5 @@
 import { Crawler } from '@/crawler/crawler.abstract';
-import { EmploymentType, JobPosting } from '@/crawler/crawler.interface';
+import { CrawledJobPosting, EmploymentType } from '@/crawler/crawler.interface';
 import { removeHTMLAttributes } from '@/utils/parser';
 
 import { ATSCrawler } from '../ats-crawler.abstract';
@@ -157,7 +157,7 @@ export class NinehireCrawler extends ATSCrawler<{
     }
   }
 
-  async getJobPostings(): Promise<JobPosting[]> {
+  async getJobPostings(): Promise<CrawledJobPosting[]> {
     const result = await fetch(
       `https://api.ninehire.com/identity-access/homepage/recruitments?companyId=${this.company.companyId}&page=1&countPerPage=1000&externalTitle=&order=created_at_desc`,
       {

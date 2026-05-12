@@ -1,5 +1,5 @@
 import { Crawler } from '@/crawler/crawler.abstract';
-import { EmploymentType, JobPosting } from '@/crawler/crawler.interface';
+import { CrawledJobPosting, EmploymentType } from '@/crawler/crawler.interface';
 import { removeHTMLAttributes } from '@/utils/parser';
 
 import { ATSCrawler } from '../ats-crawler.abstract';
@@ -129,7 +129,7 @@ export class GreetingCrawler extends ATSCrawler<{ name: string; url: string }> {
     return removeHTMLAttributes(body);
   }
 
-  async getJobPostings(): Promise<JobPosting[]> {
+  async getJobPostings(): Promise<CrawledJobPosting[]> {
     const result = await fetch(this.company.url, {
       headers,
       method: 'GET',
@@ -189,7 +189,7 @@ export class GreetingCrawler extends ATSCrawler<{ name: string; url: string }> {
             getDescription: async () => {
               return this.getJobPostingDescription(link);
             },
-          } satisfies JobPosting;
+          } satisfies CrawledJobPosting;
         } catch {
           return null;
         }
