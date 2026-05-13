@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
 import { Crawler } from './crawler.abstract';
-import { JobPosting } from './crawler.interface';
 import { GreetingCrawler } from './crawlers/ats/greeting/greeting.crawler';
 import { NinehireCrawler } from './crawlers/ats/ninrehire/ninehire.crawler';
 
@@ -13,8 +12,13 @@ export class CrawlerService {
     this.initCrawlers();
   }
 
-  async getJobPostingDetail(post: JobPosting): Promise<string> {
-    return await post.getDescription();
+  /**
+   * 등록된 모든 크롤러를 조회합니다.
+   *
+   * @returns 등록된 모든 크롤러
+   */
+  getCrawlers(): Crawler[] {
+    return this.crawlers;
   }
 
   private initCrawlers() {
