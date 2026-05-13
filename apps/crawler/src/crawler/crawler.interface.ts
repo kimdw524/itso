@@ -1,19 +1,15 @@
-export interface JobPosting {
+export interface CrawledJobPosting {
   title: string;
   postingId: string;
   openDate: string;
   dueDate: string | null;
   link: string;
   company: string;
-  site: 'greeting' | 'ninehire';
+  /** 신입: 0-0, 경력 무관: 0-99 */
   minExperience: number;
   maxExperience: number;
   employmentType: EmploymentType;
-}
-
-export interface JobPostingDetail {
-  html: string;
-  textForLLM: string;
+  getDescription: () => Promise<string>;
 }
 
 export enum EmploymentType {

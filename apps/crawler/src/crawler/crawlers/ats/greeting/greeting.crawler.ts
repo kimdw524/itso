@@ -1,12 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Crawler } from '@/crawler/crawler.abstract';
+import { CrawledJobPosting, EmploymentType } from '@/crawler/crawler.interface';
+import { removeHTMLAttributes } from '@/utils/parser';
 
-import { removeHTMLAttributes, stripHTML } from '@/utils/parser';
-
-import {
-  EmploymentType,
-  JobPosting,
-  JobPostingDetail,
-} from '../crawler.interface';
+import { ATSCrawler } from '../ats-crawler.abstract';
+import { GREETING_LIST } from './greeting.constants';
 
 const headers = {
   accept:
@@ -59,8 +56,29 @@ interface GreetingPostingsResponse {
   };
 }
 
-@Injectable()
-export class GreetingCrawler {
+export class GreetingCrawler extends ATSCrawler<{ name: string; url: string }> {
+  /**
+   * Greeting ATS를 사용하는 모든 회사 이름을 조회합니다.
+   *
+   * @returns 회사 이름 목록
+   */
+  static getAllCompanyNames(): string[] {
+    return GREETING_LIST.map((company) => company.name);
+  }
+
+  /**
+   * Greeting ATS 회사 목록을 기반으로 크롤러 인스턴스를 생성합니다.
+   *
+   * @returns Greeting ATS 회사별 크롤러 목록
+   */
+  static createAllCrawlers(): Crawler[] {
+    const crawlers: Crawler[] = GREETING_LIST.map(({ name, url }) => {
+      return new GreetingCrawler({ name, url });
+    });
+
+    return crawlers;
+  }
+
   private static getEmploymentType(
     type: GreetingEmploymentType | undefined,
   ): EmploymentType {
@@ -79,8 +97,40 @@ export class GreetingCrawler {
     }
   }
 
-  async getJobPostings(company: string, url: string): Promise<JobPosting[]> {
+  async getLogoUrl(): Promise<string> {
+    const result = await fetch(this.company.url, {
+      headers,
+      method: 'GET',
+    });
+    const text = await result.text();
+    const image =
+      text.split('logoUrl="')?.[1]?.split('"')?.[0] ||
+      text.split('alt="logo"')?.[1]?.split('src="')?.[1]?.split('"')?.[0] ||
+      '';
+
+    if (image === '') {
+      return image;
+    }
+
+    return new URL(image, this.company.url).href;
+  }
+
+  async getJobPostingDescription(url: string): Promise<string> {
     const result = await fetch(url, {
+      headers,
+      method: 'GET',
+    });
+    const text = await result.text();
+    const body =
+      text
+        .split('<div class="ql-editor">')?.[1]
+        ?.split('</div></div></div></div>')?.[0] ?? '';
+
+    return removeHTMLAttributes(body);
+  }
+
+  async getJobPostings(): Promise<CrawledJobPosting[]> {
+    const result = await fetch(this.company.url, {
       headers,
       method: 'GET',
     });
@@ -124,62 +174,26 @@ export class GreetingCrawler {
             }
           }
 
+          const link = `https://${this.company.url.split('/')[2]}/ko/o/${posting.openingId}`;
+
           return {
             postingId: String(posting.openingId),
             title: posting.title,
             openDate: posting.openDate,
             dueDate: posting.dueDate,
-            link: `https://${url.split('/')[2]}/ko/o/${posting.openingId}`,
-            company,
-            site: 'greeting',
+            link,
+            company: this.company.name,
             minExperience,
             maxExperience,
             employmentType,
-          } satisfies JobPosting;
+            getDescription: async () => {
+              return this.getJobPostingDescription(link);
+            },
+          } satisfies CrawledJobPosting;
         } catch {
           return null;
         }
       })
       .filter((value) => value !== null);
-  }
-
-  async getJobPostingDetail(url: string): Promise<JobPostingDetail> {
-    const result = await fetch(url, {
-      headers,
-      method: 'GET',
-    });
-    const text = await result.text();
-
-    const title =
-      text
-        .split('style="word-wrap:break-word"')?.[1]
-        ?.split('">')?.[1]
-        ?.split('</span>')?.[0] ?? '';
-    const description = stripHTML(
-      text.split('sc-e2120ba8-2 zbjlJ">')?.[1]?.split('<iframe')?.[0] ?? '',
-    );
-    const body =
-      text
-        .split('<div class="ql-editor">')?.[1]
-        ?.split('</div></div></div></div>')?.[0] ?? '';
-
-    return {
-      html: removeHTMLAttributes(body),
-      textForLLM: `${title}\n${description}\n${stripHTML(body)}`,
-    };
-  }
-
-  async getLogoImageURL(url: string): Promise<string> {
-    const result = await fetch(url, {
-      headers,
-      method: 'GET',
-    });
-    const text = await result.text();
-
-    return (
-      text.split('logoUrl="')?.[1]?.split('"')?.[0] ||
-      text.split('alt="logo"')?.[1]?.split('src="')?.[1]?.split('"')?.[0] ||
-      ''
-    );
   }
 }

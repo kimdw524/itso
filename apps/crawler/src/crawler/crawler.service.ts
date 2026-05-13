@@ -1,68 +1,32 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
-import { GREETING_LIST } from '@/constats/greeting';
-import { NINEHIRE_LIST } from '@/constats/ninehire';
-
-import { JobPosting, JobPostingDetail } from './crawler.interface';
-import { GreetingCrawler } from './crawlers/greeting.crawler';
-import { NinehireCrawler } from './crawlers/ninehire.crawler';
+import { Crawler } from './crawler.abstract';
+import { GreetingCrawler } from './crawlers/ats/greeting/greeting.crawler';
+import { NinehireCrawler } from './crawlers/ats/ninrehire/ninehire.crawler';
 
 @Injectable()
 export class CrawlerService {
-  constructor(
-    private readonly greetingCrawler: GreetingCrawler,
-    private readonly ninehireCrawler: NinehireCrawler,
-  ) {}
+  private crawlers: Crawler[] = [];
 
-  async getAllJobPostings(): Promise<JobPosting[]> {
-    return await this.getJobPostings();
+  constructor() {
+    this.initCrawlers();
   }
 
-  async getJobPostingDetail(post: JobPosting): Promise<JobPostingDetail> {
-    switch (post.site) {
-      case 'greeting':
-        return await this.greetingCrawler.getJobPostingDetail(post.link);
-      case 'ninehire':
-        return await this.ninehireCrawler.getJobPostingDetail(post.link);
-    }
+  /**
+   * 등록된 모든 크롤러를 조회합니다.
+   *
+   * @returns 등록된 모든 크롤러
+   */
+  getCrawlers(): Crawler[] {
+    return this.crawlers;
   }
 
-  private async getJobPostings(): Promise<JobPosting[]> {
-    const result: JobPosting[] = [];
+  private initCrawlers() {
+    const crawlers: Crawler[] = [];
 
-    // 그리팅 공고 조회
-    await Promise.all(
-      GREETING_LIST.map(async (company) => {
-        try {
-          result.push(
-            ...(await this.greetingCrawler.getJobPostings(
-              company.name,
-              company.url,
-            )),
-          );
-        } catch (error) {
-          Logger.error(`${company.name} 공고 조회 실패`, error);
-        }
-      }),
-    );
+    crawlers.push(...GreetingCrawler.createAllCrawlers());
+    crawlers.push(...NinehireCrawler.createAllCrawlers());
 
-    // 나인하이어 공고 조회
-    await Promise.all(
-      NINEHIRE_LIST.map(async (company) => {
-        try {
-          result.push(
-            ...(await this.ninehireCrawler.getJobPostings(
-              company.name,
-              company.companyId,
-              company.url,
-            )),
-          );
-        } catch (error) {
-          Logger.error(`${company.name} 공고 조회 실패`, error);
-        }
-      }),
-    );
-
-    return result;
+    this.crawlers = crawlers;
   }
 }

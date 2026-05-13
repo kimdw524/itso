@@ -9,7 +9,6 @@ import {
   UpdateResult,
 } from 'typeorm';
 
-import { JobPostingDto } from './dto/job-posting.dto';
 import { JobPosting } from './job-posting.entity';
 
 @Injectable()
@@ -36,7 +35,13 @@ export class JobPostingService {
     return result;
   }
 
-  async getLastPosted(companyId: number): Promise<Date | null> {
+  /**
+   * 회사의 가장 최근 공고 등록일을 조회합니다.
+   *
+   * @param companyId 조회할 회사 ID
+   * @returns 가장 최근 공고 등록일 또는 등록된 공고가 없을 때 null
+   */
+  async findLatestOpenDate(companyId: number): Promise<Date | null> {
     const jobPosting = await this.jobPostingRepo.findOne({
       where: { companyId },
       order: { openDate: 'DESC' },
@@ -58,29 +63,30 @@ export class JobPostingService {
     return { ...jobPosting, description: jobPosting.description };
   }
 
-  async getPosting(id: number): Promise<JobPostingDto | null> {
-    const jobPosting = await this.jobPostingRepo.findOne({
-      where: { id },
-      relations: ['company'],
-    });
-    if (!jobPosting) {
-      throw new NotFoundException(`posting ${id} not found`);
-    }
-    return { ...jobPosting, description: jobPosting.description };
-  }
-
   async isExists(data: FindOptionsWhere<JobPosting>): Promise<boolean> {
     return await this.jobPostingRepo.existsBy(data);
   }
 
-  async getAllOpenPostings(): Promise<JobPosting[]> {
+  /**
+   * 마감되지 않은 채용 공고를 조회합니다.
+   *
+   * @param companyId 조회할 회사 ID
+   * @returns 마감되지 않은 채용 공고 목록
+   */
+  async findOpenPostings(companyId: number): Promise<JobPosting[]> {
     const jobPostings = await this.jobPostingRepo.find({
-      where: { closeDate: IsNull() },
+      where: { companyId, closeDate: IsNull() },
     });
     return jobPostings;
   }
 
-  async closePostings(
+  /**
+   * 채용 공고를 마감 처리합니다.
+   *
+   * @param companyId 마감 처리할 공고의 회사 ID
+   * @param postingId 마감 처리할 외부 공고 ID
+   */
+  async closePosting(
     companyId: number,
     postingId: string,
   ): Promise<UpdateResult> {

@@ -1,12 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Crawler } from '@/crawler/crawler.abstract';
+import { CrawledJobPosting, EmploymentType } from '@/crawler/crawler.interface';
+import { removeHTMLAttributes } from '@/utils/parser';
 
-import { removeHTMLAttributes, stripHTML } from '@/utils/parser';
-
-import {
-  EmploymentType,
-  JobPosting,
-  JobPostingDetail,
-} from '../crawler.interface';
+import { ATSCrawler } from '../ats-crawler.abstract';
+import { NINEHIRE_LIST } from './ninehire.constants';
 
 const headers = {
   accept:
@@ -48,8 +45,35 @@ interface NinehireJobPosting {
   };
 }
 
-@Injectable()
-export class NinehireCrawler {
+export class NinehireCrawler extends ATSCrawler<{
+  name: string;
+  url: string;
+  companyId: string;
+}> {
+  /**
+   * Ninehire ATS를 사용하는 모든 회사 이름을 조회합니다.
+   *
+   * @returns 회사 이름 목록
+   */
+  static getAllCompanyNames(): string[] {
+    return NINEHIRE_LIST.map((company) => company.name);
+  }
+
+  /**
+   * Ninehire ATS 회사 목록을 기반으로 크롤러 인스턴스를 생성합니다.
+   *
+   * @returns Ninehire ATS 회사별 크롤러 목록
+   */
+  static createAllCrawlers(): Crawler[] {
+    const crawlers: Crawler[] = NINEHIRE_LIST.map(
+      ({ name, companyId, url }) => {
+        return new NinehireCrawler({ name, companyId, url });
+      },
+    );
+
+    return crawlers;
+  }
+
   private static getExperience(
     over: number,
     below: number,
@@ -102,44 +126,7 @@ export class NinehireCrawler {
     return EmploymentType.CONTRACT;
   }
 
-  async getJobPostings(
-    company: string,
-    companyId: string,
-    url: string,
-  ): Promise<JobPosting[]> {
-    const result = await fetch(
-      `https://api.ninehire.com/identity-access/homepage/recruitments?companyId=${companyId}&page=1&countPerPage=1000&externalTitle=&order=created_at_desc`,
-      {
-        headers,
-        method: 'GET',
-      },
-    );
-    const json = (await result.json()) as NinehirePostingsResponse;
-
-    const postings = json.results;
-
-    return postings.map((posting) => {
-      const { career, employmentType } = posting;
-
-      return {
-        postingId: posting.recruitmentId,
-        title: posting.title,
-        openDate: posting.createdAt,
-        dueDate: posting.deadlineValue,
-        link: `${url}/job_posting/${posting.addressKey}`,
-        company,
-        site: 'ninehire',
-        ...NinehireCrawler.getExperience(
-          career?.range?.over ?? 0,
-          career?.range?.below ?? 99,
-          career?.type,
-        ),
-        employmentType: NinehireCrawler.getEmploymentType(employmentType),
-      };
-    });
-  }
-
-  async getJobPostingDetail(url: string): Promise<JobPostingDetail> {
+  async getJobPostingDescription(url: string): Promise<string> {
     const result = await fetch(url, {
       headers,
       method: 'GET',
@@ -151,32 +138,59 @@ export class NinehireCrawler {
         .split('</script>')[0],
     ) as NinehireJobPosting;
 
-    const recruitment = json.props.pageProps.recruitment;
-
     const body = json.props.pageProps.jobPosting.content;
-
-    return {
-      html: removeHTMLAttributes(body),
-      textForLLM: stripHTML(body),
-      ...NinehireCrawler.getExperience(
-        recruitment.career?.range?.over ?? 0,
-        recruitment.career?.range?.below ?? 99,
-        recruitment.career?.type,
-      ),
-    };
+    return removeHTMLAttributes(body);
   }
 
-  async getLogoImageURL(url: string): Promise<string> {
+  async getLogoUrl(): Promise<string> {
     try {
-      const result = await fetch(`${url}/job_posting`, {
+      const result = await fetch(`${this.company.url}/job_posting`, {
         headers,
         method: 'GET',
       });
       const text = await result.text();
+      const image = text.split('"image":{"fileUrl":"')[1].split('"')[0];
 
-      return text.split('"image":{"fileUrl":"')[1].split('"')[0];
+      return new URL(image, this.company.url).href;
     } catch {
       return '';
     }
+  }
+
+  async getJobPostings(): Promise<CrawledJobPosting[]> {
+    const result = await fetch(
+      `https://api.ninehire.com/identity-access/homepage/recruitments?companyId=${this.company.companyId}&page=1&countPerPage=1000&externalTitle=&order=created_at_desc`,
+      {
+        headers,
+        method: 'GET',
+      },
+    );
+    const json = (await result.json()) as NinehirePostingsResponse;
+
+    const postings = json.results;
+
+    return postings.map((posting) => {
+      const { career, employmentType } = posting;
+      const link = `${this.company.url}/job_posting/${posting.addressKey}`;
+
+      return {
+        postingId: posting.recruitmentId,
+        title: posting.title,
+        openDate: posting.createdAt,
+        dueDate: posting.deadlineValue,
+        link,
+        company: this.company.name,
+        site: 'ninehire',
+        ...NinehireCrawler.getExperience(
+          career?.range?.over ?? 0,
+          career?.range?.below ?? 99,
+          career?.type,
+        ),
+        employmentType: NinehireCrawler.getEmploymentType(employmentType),
+        getDescription: async () => {
+          return this.getJobPostingDescription(link);
+        },
+      };
+    });
   }
 }

@@ -1,16 +1,12 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { FindOptionsWhere, Repository, UpdateResult } from 'typeorm';
 
-import { GREETING_LIST } from '@/constats/greeting';
-import { NINEHIRE_LIST } from '@/constats/ninehire';
-import { GreetingCrawler } from '@/crawler/crawlers/greeting.crawler';
 import { FileUtil } from '@/utils';
 import { removeFile } from '@/utils/file';
 
 import { R2Service } from '../r2/r2.service';
-import { NinehireCrawler } from './../../crawler/crawlers/ninehire.crawler';
 import { Company } from './company.entity';
 
 @Injectable()
@@ -42,72 +38,23 @@ export class CompanyService {
 
   async update(
     companyId: number,
-    params: { lastPostedAt: Date | null; postings: number },
+    params: Partial<Company>,
   ): Promise<UpdateResult> {
     const result = await this.companyRepo.update({ id: companyId }, params);
     return result;
   }
 
   /**
-   * 채용 플랫폼의 회사 정보를 동기화하고 로컬에 저장한 로고 이미지를 R2에 업로드합니다.
-   */
-  async syncAllCompany(): Promise<void> {
-    const greetingCrawler = new GreetingCrawler();
-    const ninehireCrawler = new NinehireCrawler();
-
-    await Promise.all([
-      ...GREETING_LIST.map((company) =>
-        this.syncCompany(company, greetingCrawler),
-      ),
-
-      ...NINEHIRE_LIST.map((company) =>
-        this.syncCompany(company, ninehireCrawler),
-      ),
-    ]);
-
-    return;
-  }
-
-  /**
-   * 회사가 DB에 없으면 로고 이미지를 업로드한 뒤 회사 정보를 등록합니다.
+   * 로고 이미지를 R2에 업로드하고 이미지 URL을 반환합니다.
    *
-   * @param company 동기화할 회사 정보
-   * @param crawler 회사 로고 이미지 URL을 가져올 크롤러
+   * @param url 로고 이미지 URL
+   * @returns R2에 업로드된 로고 이미지 URL
    */
-  async syncCompany(
-    company: { name: string; url: string },
-    crawler: { getLogoImageURL: (url: string) => Promise<string> },
-  ): Promise<void> {
-    const companyEntity = await this.find({ name: company.name });
-    if (companyEntity !== null) {
-      return;
+  async uploadLogoImage(url: string): Promise<string> {
+    if (url === '') {
+      return '';
     }
 
-    try {
-      const image = await crawler.getLogoImageURL(company.url);
-      let logo = '';
-
-      if (image) {
-        const url = new URL(image, company.url).href;
-        logo = await this.uploadLogoImage(url);
-      }
-
-      await this.create({
-        name: company.name,
-        logo,
-      });
-    } catch (error) {
-      Logger.error(`${company.name} 회사를 DB에 등록하지 못했습니다.`, error);
-    }
-  }
-
-  /**
-   * 원격 로고 이미지를 로컬에 저장한 뒤 R2에 업로드하고 공개 URL을 반환합니다.
-   *
-   * @param url 다운로드할 원격 로고 이미지 URL
-   * @returns R2에 업로드된 로고 이미지 공개 URL
-   */
-  private async uploadLogoImage(url: string): Promise<string> {
     const file = await FileUtil.storeStaticImage(url);
 
     await FileUtil.resizeImage(file.path, 360, 240);
