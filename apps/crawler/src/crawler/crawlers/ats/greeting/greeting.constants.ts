@@ -6,7 +6,7 @@ interface Greething {
 export const GREETING_LIST = [
   { name: '현대오토에버', url: 'https://career.hyundai-autoever.com/ko/apply' },
   { name: '와드', url: 'https://career.catchtable.co.kr/ko/jobs' },
-  { name: '리디', url: 'https://ridi.career.greetinghr.com/ko/home' },
+  // { name: '리디', url: 'https://ridi.career.greetinghr.com/ko/home' },
   { name: '카카오페이', url: 'https://kakaopay.career.greetinghr.com/ko/main' },
   {
     name: '카카오모빌리티',
@@ -22,7 +22,7 @@ export const GREETING_LIST = [
   },
   { name: '야놀자', url: 'https://careers.yanolja.co/ko/home ' },
   { name: '피알앤디컴퍼니(헤이딜러)', url: 'https://www.prnd.co.kr/ko/apply' },
-  { name: '브레이브모바일(숨고)', url: 'https://www.soomgo.team/career' },
+  // { name: '브레이브모바일(숨고)', url: 'https://www.soomgo.team/career' },
   { name: '데브시스터즈', url: 'https://careers.devsisters.com/ko/position' },
   { name: '카카오게임즈', url: 'https://recruit.kakaogames.com/ko/joinjuskr' },
   { name: '베이글코드', url: 'https://career.bagelcode.com/ko/career' },
@@ -117,4 +117,14 @@ export const GREETING_LIST = [
     url: 'https://portone.career.greetinghr.com/ko/jobs',
   },
   { name: '업스테이지', url: 'https://careers.upstage.ai/ko/upstage' },
+  {
+    name: '드림어스컴퍼니',
+    url: 'https://dreamuscompany.career.greetinghr.com/ko/home',
+  },
+  {
+    name: '스트라드비젼',
+    url: 'https://stradvision.career.greetinghr.com/ko/guide',
+  },
+  { name: '빗썸', url: 'https://career.bithumbcorp.com/ko/apply' },
+  { name: '엔키화이트햇', url: 'https://enki.career.greetinghr.com/ko/guide' },
 ] satisfies Greething[];
