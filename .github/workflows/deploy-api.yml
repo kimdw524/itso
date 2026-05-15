@@ -3,16 +3,22 @@ name: Deploy API
 on:
   workflow_dispatch:
   push:
-    # 정식 배포 전까지 main 대신 develop 브랜치 사용
     branches: [develop]
     paths:
       - 'apps/api/**'
+      - 'packages/eslint-config/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+
+permissions:
+  contents: read
+  packages: write
 
 env:
   APP_NAME: itso-api
   APP_DIR: apps/api
-  NODE_VERSION: 22
-  PNPM_VERSION: 10.28.2
+  REGISTRY: ghcr.io
 
 jobs:
   deploy:
@@ -21,39 +27,39 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
-
-      - name: Install & Build
+      - name: Prepare image tags
+        id: image
         run: |
-          pnpm install --frozen-lockfile
-          pnpm -C ${{ env.APP_DIR }} run build
+          IMAGE_NAME="$(echo "${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.APP_NAME }}" | tr '[:upper:]' '[:lower:]')"
+          echo "image_name=$IMAGE_NAME" >> "$GITHUB_OUTPUT"
+          echo "image_tag=$IMAGE_NAME:${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+          echo "image_latest=$IMAGE_NAME:latest" >> "$GITHUB_OUTPUT"
 
-      - name: Pack runtime
-        run: |
-          set -e
-          mkdir -p .release
-          cp -r $APP_DIR/dist .release/dist
-          cp $APP_DIR/package.json .release/
-          tar -C .release -czf app.tgz .
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-      - name: Upload
-        uses: appleboy/scp-action@v0.1.7
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          source: 'app.tgz'
-          target: '/srv/${{ env.APP_NAME }}'
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ env.APP_DIR }}/Dockerfile
+          push: true
+          platforms: linux/arm64
+          tags: |
+            ${{ steps.image.outputs.image_tag }}
+            ${{ steps.image.outputs.image_latest }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Deploy
         uses: appleboy/ssh-action@v1.2.0
@@ -66,23 +72,23 @@ jobs:
             set -e
             APP_NAME="${{ env.APP_NAME }}"
             BASE="/srv/$APP_NAME"
+            IMAGE="${{ steps.image.outputs.image_tag }}"
 
-            sudo mkdir -p "$BASE/current"
-            sudo tar xzf "$BASE/app.tgz" -C "$BASE/current"
-            cd "$BASE/current"
+            sudo mkdir -p "$BASE"
+            sudo tee "$BASE/.env" >/dev/null <<'API_ENV_EOF'
+            ${{ secrets.API_ENV }}
+            API_ENV_EOF
+            sudo chmod 600 "$BASE/.env"
 
-            if ! command -v pnpm >/dev/null 2>&1; then
-              sudo corepack enable
-              sudo corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
-            fi
+            echo "${{ github.token }}" | sudo docker login "${{ env.REGISTRY }}" -u "${{ github.actor }}" --password-stdin
+            sudo docker pull "$IMAGE"
 
-            PNPM_HOME="$HOME/.local/share/pnpm" \
-            NODE_ENV=production pnpm install --prod --no-optional --ignore-scripts=false --prefer-offline=false --no-frozen-lockfile
+            sudo docker rm -f "$APP_NAME" >/dev/null 2>&1 || true
+            sudo docker run -d \
+              --name "$APP_NAME" \
+              --restart unless-stopped \
+              --network host \
+              --env-file "$BASE/.env" \
+              "$IMAGE"
 
-            if sudo forever list | grep -q "$APP_NAME"; then
-              sudo forever restart "$APP_NAME"
-            else
-              sudo forever start --uid "$APP_NAME" -a -l "/var/log/$APP_NAME.log" -n "$APP_NAME" dist/main.js
-            fi
-
-            sudo rm -f "$BASE/app.tgz"
+            sudo docker image prune -f
