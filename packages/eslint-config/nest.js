@@ -8,7 +8,7 @@ import tseslint from 'typescript-eslint';
 /**
  * A custom ESLint configuration for Nest.js applications.
  *
- * @type {import("eslint").Linter.Config[]}
+ * @type {import("typescript-eslint").ConfigArray}
  * */
 export const nestJsConfig = tseslint.config(
   {
