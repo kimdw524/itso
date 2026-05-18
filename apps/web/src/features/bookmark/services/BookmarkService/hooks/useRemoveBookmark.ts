@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import type { RequestType, ResponseType } from '@/shared/utils';
 
-import { queryKeys } from '../queries';
+import { queries } from '../queries';
 import { service } from '../service';
 
 export const useRemoveBookmark = ({
@@ -10,7 +10,7 @@ export const useRemoveBookmark = ({
   id,
 }: RequestType<typeof service.getIsBookmarked>) => {
   const queryClient = useQueryClient();
-  const queryKey = queryKeys.isBookmarked({ type, id });
+  const queryKey = queries.getIsBookmarked({ type, id }).queryKey;
 
   return useMutation({
     mutationFn: () => service.deleteBookmark({ type, id }),

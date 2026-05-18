@@ -34,11 +34,9 @@ export default async function PostPage({
     ...validateParams(jobPostingSearchParamsSchema, search),
   };
 
-  await queryClient.prefetchInfiniteQuery({
-    initialPageParam: undefined,
-    queryKey: JobPostingService.queryKeys.list(filter),
-    queryFn: () => JobPostingService.getJobPostingList(filter),
-  });
+  await queryClient.prefetchInfiniteQuery(
+    JobPostingService.queries.getJobPostingList(filter),
+  );
 
   return (
     <Provider>

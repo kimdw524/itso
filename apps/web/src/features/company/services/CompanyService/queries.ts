@@ -2,18 +2,18 @@ import type { RequestType, ResponseType } from '@/shared/utils';
 
 import { service } from './service';
 
-export const queryKeys = {
-  list: (params: RequestType<typeof service.getCompanyList>) => [
+const queryKeys = {
+  getCompanyList: (params: RequestType<typeof service.getCompanyList>) => [
     'company',
     'list',
     params,
   ],
-  data: (id: number) => ['company', 'data', id],
+  getCompany: (id: number) => ['company', 'data', id],
 };
 
-export const queryOptions = {
-  listInfinite: (params: RequestType<typeof service.getCompanyList>) => ({
-    queryKey: queryKeys.list(params),
+export const queries = {
+  getCompanyList: (params: RequestType<typeof service.getCompanyList>) => ({
+    queryKey: queryKeys.getCompanyList(params),
     initialPageParam: undefined,
     gcTime: 0,
     queryFn: ({ pageParam }: { pageParam?: string }) =>
@@ -21,8 +21,8 @@ export const queryOptions = {
     getNextPageParam: (lastPage: ResponseType<typeof service.getCompanyList>) =>
       lastPage.nextCursor,
   }),
-  data: (params: RequestType<typeof service.getCompany>) => ({
-    queryKey: queryKeys.data(params.id),
+  getCompany: (params: RequestType<typeof service.getCompany>) => ({
+    queryKey: queryKeys.getCompany(params.id),
     gcTime: 0,
     queryFn: () => service.getCompany({ id: params.id }),
   }),

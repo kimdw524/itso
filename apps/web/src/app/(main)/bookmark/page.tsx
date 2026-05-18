@@ -15,16 +15,11 @@ import { getQueryClient } from '@/shared/utils';
 export default async function BookmarkPage() {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchInfiniteQuery({
-    initialPageParam: undefined,
-    queryKey: JobPostingService.queryKeys.bookmarkedList({
+  await queryClient.prefetchInfiniteQuery(
+    JobPostingService.queries.getBookmarkedJobPostingList({
       limit: JOB_POSTING.LIST_LIMIT,
     }),
-    queryFn: () =>
-      JobPostingService.getBookmarkedJobPostingList({
-        limit: JOB_POSTING.LIST_LIMIT,
-      }),
-  });
+  );
 
   return (
     <Box

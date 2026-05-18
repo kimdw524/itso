@@ -21,11 +21,9 @@ export default async function CompanyPage({
   const result = companyFilterSchema.safeParse(search);
   const filter = (result.success ? result.data : {}) as CompanyFilter;
 
-  await queryClient.prefetchInfiniteQuery({
-    initialPageParam: undefined,
-    queryKey: CompanyService.queryKeys.list(filter),
-    queryFn: () => CompanyService.getCompanyList(filter),
-  });
+  await queryClient.prefetchInfiniteQuery(
+    CompanyService.queries.getCompanyList(filter),
+  );
 
   return (
     <Box

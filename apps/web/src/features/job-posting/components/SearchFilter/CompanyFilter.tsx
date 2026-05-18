@@ -1,5 +1,7 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
+
 import { CompanyService } from '@/features/company/services';
 import { FilterChip } from '@/shared/components';
 
@@ -9,7 +11,9 @@ export const CompanyFilter = () => {
   const [filter, setFilter] = useJobPostingFilter();
 
   const companyId = filter.companyId ?? 0;
-  const { data, isSuccess } = CompanyService.useFetchCompany({ id: companyId });
+  const { data, isSuccess } = useQuery(
+    CompanyService.queries.getCompany({ id: companyId }),
+  );
 
   if (!isSuccess || !data) {
     return null;

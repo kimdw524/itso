@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MESSAGE } from '@/shared/constants';
 import type { RequestType, ResponseType } from '@/shared/utils';
 
-import { queryKeys } from '../queries';
+import { queries } from '../queries';
 import { service } from '../service';
 
 export const useCreateBookmark = (
@@ -13,7 +13,7 @@ export const useCreateBookmark = (
   const queryClient = useQueryClient();
   const { alert } = useDialog();
 
-  const queryKey = queryKeys.isBookmarked(params);
+  const queryKey = queries.getIsBookmarked(params).queryKey;
 
   return useMutation({
     mutationFn: () => service.createBookmark(params),

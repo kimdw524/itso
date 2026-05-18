@@ -2,17 +2,18 @@ import type { RequestType } from '@/shared/utils';
 
 import { service } from './service';
 
-export const queryKeys = {
-  isBookmarked: (params: RequestType<typeof service.getIsBookmarked>) => [
+const queryKeys = {
+  getIsBookmarked: (params: RequestType<typeof service.getIsBookmarked>) => [
     'bookmark',
     'isBookmarked',
     params.type,
+    params.id,
   ],
 };
 
-export const queryOptions = {
-  isBookmarked: (params: RequestType<typeof service.getIsBookmarked>) => ({
-    queryKey: queryKeys.isBookmarked(params),
+export const queries = {
+  getIsBookmarked: (params: RequestType<typeof service.getIsBookmarked>) => ({
+    queryKey: queryKeys.getIsBookmarked(params),
     queryFn: () => service.getIsBookmarked(params),
   }),
 };

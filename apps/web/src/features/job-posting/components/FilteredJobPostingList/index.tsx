@@ -1,3 +1,7 @@
+'use client';
+
+import { useSuspenseScrollQuery } from '@/shared/hooks';
+
 import type { JobPostingSearchFilter } from '../../models';
 import { JobPostingService } from '../../services';
 import { EmptyJobPostingList } from '../EmptyJobPostingList';
@@ -10,8 +14,9 @@ interface FilteredJobPostingListProps {
 export const FilteredJobPostingList = ({
   params,
 }: FilteredJobPostingListProps) => {
-  const { data, trigger, isFetchingNextPage } =
-    JobPostingService.useFetchListSuspense(params);
+  const { data, trigger, isFetchingNextPage } = useSuspenseScrollQuery(
+    JobPostingService.queries.getJobPostingList(params),
+  );
 
   if (!data.pages[0]?.data.length) {
     return (
