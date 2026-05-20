@@ -39,6 +39,9 @@ export const useToggleBookmark = ({
       next
         ? BookmarkService.createBookmark({ type, id })
         : BookmarkService.deleteBookmark({ type, id }),
+    onMutate: (next) => {
+      setCurrent(next);
+    },
     onError: (error: Response, next) => {
       // 로그인하지 않은 사용자가 북마크를 추가/삭제하려고 하는 경우
       if (error.status === 401) {
