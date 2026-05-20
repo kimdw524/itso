@@ -1,14 +1,14 @@
 import { service } from './service';
 
-export const queryKeys = {
-  info: ['user', 'info'],
+const queryKeys = {
+  getInfo: () => ['user', 'info'],
 };
 
-export const queryOptions = {
-  info: {
-    queryKey: queryKeys.info,
+export const queries = {
+  getInfo: () => ({
+    queryKey: queryKeys.getInfo(),
     queryFn: service.getInfo,
     staleTime: 3600 * 1000,
     gcTime: 0,
-  },
+  }),
 };

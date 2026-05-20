@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { useSuspenseScrollQuery } from '@/shared/hooks';
+
 import type { CompanyFilter } from '../../models';
 import { CompanyService } from '../../services';
 import { CompanyItem } from '../CompanyItem';
@@ -13,7 +15,7 @@ interface CompanyListProps {
 
 export const CompanyList = ({ params }: CompanyListProps) => {
   const { data, trigger, isFetchingNextPage } =
-    CompanyService.useFetchListSuspense(params);
+    useSuspenseScrollQuery(CompanyService.queries.getCompanyList(params));
 
   return (
     <>

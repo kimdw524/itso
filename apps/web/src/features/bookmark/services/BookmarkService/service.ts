@@ -11,7 +11,6 @@ export const service = {
       return await http.get<{ isBookmarked: boolean }>(
         `/bookmark/${params.type}/${params.id}`,
         {
-          params,
           throwOnError: true,
         },
       );

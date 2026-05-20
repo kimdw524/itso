@@ -6,8 +6,8 @@ import { Button } from '@kimdw-rtk/ui';
 import { theme } from '@kimdw-rtk/ui/theme';
 import { StarIcon } from 'lucide-react';
 
+import { useToggleBookmark } from '../../hooks';
 import type { BookmarkType } from '../../models';
-import { BookmarkService } from '../../services/BookmarkService';
 
 interface BookmarkButtonProps extends React.ComponentProps<typeof Button> {
   bookmarkType: BookmarkType;
@@ -21,7 +21,7 @@ export const BookmarkButton = ({
   isBookmarked,
   ...rest
 }: BookmarkButtonProps) => {
-  const { toggle, current } = BookmarkService.useToggleBookmark({
+  const { toggle, isPending, current } = useToggleBookmark({
     type: bookmarkType,
     id: targetId,
     isBookmarked,
@@ -33,7 +33,7 @@ export const BookmarkButton = ({
     toggle();
   };
   return (
-    <Button {...rest} onClick={handleClick}>
+    <Button {...rest} disabled={isPending} onClick={handleClick}>
       {current ? (
         <StarIcon fill={`rgb(${theme.color.yellow[300]})`} strokeWidth="0" />
       ) : (

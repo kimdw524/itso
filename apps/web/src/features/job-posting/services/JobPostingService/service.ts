@@ -5,7 +5,7 @@ import type { JobPosting, JobPostingSummary } from '../../models';
 
 export const service = {
   async getJobPosting(params: { id: number }) {
-    return http.get<JobPosting>(`/job-posting/${params.id}`, { params });
+    return http.get<JobPosting>(`/job-posting/${params.id}`);
   },
 
   async getJobPostingList(params: {

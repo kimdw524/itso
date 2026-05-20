@@ -1,5 +1,7 @@
 'use client';
 
+import { useSuspenseScrollQuery } from '@/shared/hooks';
+
 import { JOB_POSTING } from '../../constants';
 import { JobPostingService } from '../../services';
 import { EmptyJobPostingList } from '../EmptyJobPostingList';
@@ -7,9 +9,11 @@ import { JobPostingList } from '../JobPostingList/JobPostingList';
 
 export const BookmarkedJobPostingList = () => {
   const { data, trigger, isFetchingNextPage } =
-    JobPostingService.useFetchBookmarkedListSuspense({
-      limit: JOB_POSTING.LIST_LIMIT,
-    });
+    useSuspenseScrollQuery(
+      JobPostingService.queries.getBookmarkedJobPostingList({
+        limit: JOB_POSTING.LIST_LIMIT,
+      }),
+    );
 
   if (!data.pages[0]?.data.length) {
     return (
